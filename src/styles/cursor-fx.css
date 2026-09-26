@@ -1,0 +1,50 @@
+/* ---------- custom cursor ---------- */
+.cursor-dot, .cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-dot { width: 6px; height: 6px; background: var(--gold); }
+
+.cursor-ring {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(var(--accent-rgb), 0.5);
+  transition: width 0.3s, height 0.3s, background 0.3s;
+}
+
+.cursor-ring.hovering {
+  width: 64px;
+  height: 64px;
+  background: rgba(var(--accent-rgb), 0.08);
+}
+
+@media (hover: none) {
+  .cursor-dot, .cursor-ring { display: none; }
+}
+
+/* Hidden while the process-section video puck is standing in for the
+   cursor (see ProcessCursorVideo) — two cursor replacements at once would
+   look broken. */
+body.process-cursor-hover .cursor-dot,
+body.process-cursor-hover .cursor-ring { opacity: 0; }
+
+/* ---------- hero ripple shader canvas ---------- */
+.ripple-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ripple-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: saturate(1.08) contrast(1.04) brightness(0.92);
+}

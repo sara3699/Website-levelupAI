@@ -1,0 +1,32 @@
+/* Glass on a dark ground is a light *veil*, not a white pane: a low-alpha
+   white fill over dark reads as frosted, while the light theme's 0.6 alpha
+   would read as a solid grey slab and blow out the neon behind it. */
+.glass {
+  background: rgba(var(--text-rgb), 0.07);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+/* No backdrop-filter: fall back to an opaque panel colour, since a
+   translucent veil with nothing blurred behind it just looks washed out. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(28, 23, 48, 0.92);
+  }
+}
+
+.glass-light {
+  background: rgba(var(--text-rgb), 0.04);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-light {
+    background: rgba(20, 17, 30, 0.9);
+  }
+}
+
+.glass-gold-border { border: 1px solid rgba(var(--accent-rgb), 0.4); }

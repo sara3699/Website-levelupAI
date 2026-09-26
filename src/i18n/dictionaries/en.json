@@ -1,0 +1,475 @@
+{
+    "meta": {
+        "title": "LevelUp AI — Websites, AI Video & Automation",
+        "description": "LevelUp AI builds affordable websites, AI-powered commercial videos, and smart business automations for small businesses and startups."
+    },
+    "nav": {
+        "ariaLabel": "Main navigation",
+        "brandHome": "LevelUp AI home",
+        "openMenu": "Open navigation",
+        "closeMenu": "Close navigation",
+        "cta": "Start a project",
+        "languageLabel": "Change language",
+        "links": {
+            "services": "Services",
+            "pricing": "Pricing",
+            "work": "Our work",
+            "process": "Process",
+            "faq": "FAQ"
+        }
+    },
+    "hero": {
+        "eyebrow": [
+            "AI-Powered",
+            "Digital Marketing Agency"
+        ],
+        "headline": [
+            "Website design.",
+            "AI Photoshoots & Videos.",
+            "Digital Creation & Branding & Content Creation & SEO."
+        ],
+        "copy": "LevelUp AI helps businesses and startups look bigger, move faster, and grow smarter with affordable websites, AI commercial videos, and practical automations.",
+        "proof": [
+            "Built for every business",
+            "Fast, focused delivery",
+            "Human-guided AI"
+        ],
+        "ctaPrimary": "Let's build your project",
+        "ctaSecondary": "Explore services",
+        "showText": "Show text",
+        "hideText": "Hide text"
+    },
+    "media": {
+        "playWithSound": "Turn sound on",
+        "soundOn": "Turn sound on",
+        "muteSound": "Turn sound off",
+        "soundOff": "Turn sound off"
+    },
+    "screens": {
+        "hero": {
+            "nav": [
+                "Services",
+                "Work",
+                "Contact"
+            ],
+            "title": "A sharper website for your next chapter.",
+            "copy": "Clear strategy, beautiful design, built to turn curious visitors into confident customers.",
+            "button": "See the work"
+        },
+        "services": {
+            "kicker": "What we do",
+            "title": "Three ways to level up.",
+            "items": [
+                {
+                    "label": "Website / e-commerce site"
+                },
+                {
+                    "label": "AI video / branding"
+                },
+                {
+                    "label": "Automation / SEO"
+                }
+            ]
+        },
+        "work": {
+            "kicker": "What it looks like",
+            "title": "One studio. Many ways to grow.",
+            "tags": [
+                "Website experience",
+                "AI product commercial",
+                "Smart automation"
+            ]
+        }
+    },
+    "phone": {
+        "header": "Lead follow-up",
+        "live": "Live",
+        "notifications": [
+            {
+                "label": "New lead",
+                "title": "Sarah M.",
+                "detail": "Website contact form"
+            },
+            {
+                "label": "AI qualifying",
+                "title": "Budget confirmed",
+                "detail": "Ready for outreach"
+            },
+            {
+                "label": "Follow-up sent",
+                "title": "Call booked",
+                "detail": "Tomorrow, 2:00 PM"
+            }
+        ]
+    },
+    "marquee": [
+        "Websites that work",
+        "AI videos that sell",
+        "Automations that save time"
+    ],
+    "services": {
+        "kicker": "What we do",
+        "title": "Four packs to level up your business.",
+        "lead": "You do not need a giant agency budget. Pick the pack that matches where your business is today — website, visuals, and video, bundled at one clear price.",
+        "packs": [
+            {
+                "number": "PACK 01",
+                "title": "Discovery Pack",
+                "price": "From 890 TND",
+                "copy": "The simplest way to get started. Pick what your business needs most right now, and let's do it properly.",
+                "list": [
+                    "AI showcase website (5-6 pages)",
+                    "or AI product shoot (10 visuals)",
+                    "The ideal first step for a new brand"
+                ],
+                "cta": "",
+                "summary": "AI showcase website (5 to 6 pages) or AI e-commerce website (quote on request) or AI product shoot (10 visuals)"
+            },
+            {
+                "number": "PACK 02",
+                "title": "Launch Pack",
+                "price": "1,890 TND",
+                "copy": "Everything you need to go live with confidence: a website, a full set of visuals, and your first video.",
+                "list": [
+                    "AI showcase website",
+                    "AI product shoot (10 visuals)",
+                    "4 videos"
+                ],
+                "cta": "Launch my brand",
+                "summary": "AI showcase website + AI product shoot (10 visuals) + 4 videos"
+            },
+            {
+                "number": "PACK 03",
+                "title": "Growth Pack",
+                "price": "3,490 TND",
+                "copy": "Built for brands already selling. More visuals, more video, and enough content to stay visible every week.",
+                "list": [
+                    "AI showcase website",
+                    "AI product shoot (20 visuals)",
+                    "6 videos"
+                ],
+                "cta": "Grow my business",
+                "summary": "AI showcase website + AI product shoot (20 visuals) + 6 videos"
+            },
+            {
+                "number": "PACK 04",
+                "title": "Pro Max Pack",
+                "price": "4,900 TND",
+                "copy": "Our complete package. A full content library for brands that want to dominate their market all year.",
+                "list": [
+                    "AI showcase website",
+                    "AI product shoot (40 visuals)",
+                    "8 videos"
+                ],
+                "cta": "Go Pro Max",
+                "summary": "AI showcase website + AI product shoot (40 visuals) + 8 videos"
+            }
+        ],
+        "showDetails": "See details",
+        "hideDetails": "Hide details",
+        "addToCart": "Add to cart"
+    },
+    "pricing": {
+        "kicker": "Services",
+        "title": "AI-powered marketing, at a fraction of the cost.",
+        "lead": "Level Up is expanding into one of the first players on the market offering fully AI-powered digital marketing services. Websites, product shoots, and videos, produced faster, at the same quality bar, for noticeably more competitive rates. Built for businesses that want a professional digital presence without the delays and costs of classic production, and for existing clients ready to go further in their digital transformation.",
+        "servicesIntro": "Everything we can build for you, powered end to end by AI.",
+        "aiServices": [
+            {
+                "title": "AI websites",
+                "copy": "Professional, fast, optimized showcase sites. Delivered in days instead of weeks."
+            },
+            {
+                "title": "AI-Powered E-Commerce Website",
+                "copy": "Complete online store with payments, orders, products, inventory, and delivery. Automated emails, WhatsApp, cart recovery, customer follow-ups, and sales tracking."
+            },
+            {
+                "title": "AI-Powered Product Photography & Video",
+                "copy": "High-quality product photos and videos created with AI for your social media, advertising, and e-commerce — with a premium look and faster production."
+            },
+            {
+                "title": "AI copywriting",
+                "copy": "Product sheets, e-commerce descriptions, and ad copy written and tailored to the client's brand voice."
+            },
+            {
+                "title": "Voiceover & multilingual dubbing",
+                "copy": "Videos available in multiple languages with no new shoot, so you can reach international markets."
+            },
+            {
+                "title": "Avatars & virtual spokespeople",
+                "copy": "Regular on-camera presence for the brand without needing a real person for every shoot."
+            },
+            {
+                "title": "Chatbots & automation",
+                "copy": "Conversational agents for customer support or booking, on WhatsApp, your website, or Messenger."
+            },
+            {
+                "title": "SEO, search engine optimization, automated email marketing",
+                "copy": "Search engine optimization and pages built to be found, plus automated email campaigns: segmentation, personalization, and follow-ups driven by AI."
+            },
+            {
+                "title": "Express visual identity",
+                "copy": "Logo and brand guidelines generated quickly for businesses just getting started."
+            }
+        ],
+        "subscriptionsTitle": "Monthly subscriptions",
+        "subscriptionsLead": "For an ongoing digital presence, maintained continuously.",
+        "tableHeaders": {
+            "plan": "Plan",
+            "content": "Content",
+            "price": "Price"
+        },
+        "subscriptions": [
+            {
+                "name": "Starter",
+                "content": "12 visuals + 4 videos per month.",
+                "price": "1,190 TND/mo"
+            },
+            {
+                "name": "Pro",
+                "content": "20 visuals + 6 videos per month.",
+                "price": "1,490 TND/mo"
+            },
+            {
+                "name": "Social media management",
+                "content": "Feed management (Instagram, Facebook, LinkedIn).",
+                "price": "290 TND/mo"
+            }
+        ],
+        "cta": "Talk to us about a pack"
+    },
+    "fit": {
+        "kicker": "Built for momentum",
+        "title": "Agency-quality thinking. Business reality.",
+        "lead": "We keep the process clear, collaborative, and focused on what will actually help your business grow.",
+        "items": [
+            {
+                "title": "Start with the business goal",
+                "copy": "We do not add AI just because it is trendy. We begin with the customer, the bottleneck, and the result you want."
+            },
+            {
+                "title": "Design for clarity",
+                "copy": "Your website, video, or automation should feel simple to use and easy to understand - even when the technology behind it is advanced."
+            },
+            {
+                "title": "Build the right-sized solution",
+                "copy": "No bloated package. No unnecessary complexity. You get what your business needs now, with room to grow later."
+            },
+            {
+                "title": "Stay human where it matters",
+                "copy": "AI helps us move faster, but your voice, judgment, and customer relationships stay at the center."
+            }
+        ]
+    },
+    "work": {
+        "kicker": "What it can look like",
+        "title": "One studio. Many ways to grow.",
+        "lead": "From the first impression to the follow-up behind the scenes, we help your business feel more professional and more capable.",
+        "websiteTag": "Website experience",
+        "commercialTag": "AI product commercial",
+        "mockupEyebrow": "SMALL BUSINESS / BIG PRESENCE",
+        "mockupTitle": "Turn your idea into a brand customers trust.",
+        "productFallback": [
+            "YOUR",
+            "PRODUCT"
+        ]
+    },
+    "carousel": {
+        "kicker": "More from the studio",
+        "title": "What we can build for you.",
+        "lead": "A look at the kind of cinematic style we produce — not client work, just the range.",
+        "labels": {
+            "clip-7": "Fashion",
+            "clip-8": "Pharmaceutical",
+            "clip-9": "hotellerie / airbnb",
+            "clip-10": "Real estate"
+        },
+        "playWithSound": "Play {label} with sound",
+        "close": "Close video"
+    },
+    "commercials": {
+        "kicker": "Real AI output",
+        "title": "Commercials, made by AI.",
+        "lead": "Five real product spots, fully generated — no camera, no studio, no crew. Tap any card to watch with sound.",
+        "clips": {
+            "mascara": {
+                "label": "Beauty commercial",
+                "title": "Volume, in motion."
+            },
+            "grape-beauty": {
+                "label": "Makeup commercial",
+                "title": "Lipstick, in full colour."
+            },
+            "eyeshadow": {
+                "label": "Macro detail",
+                "title": "Every shade, up close."
+            },
+            "lumea": {
+                "label": "Restaurant commercial",
+                "title": "Food, worth the table."
+            },
+            "jewel": {
+                "label": "Jewelry campaign",
+                "title": "The jewel is the look."
+            }
+        },
+        "playWithSound": "Play {title} with sound",
+        "previous": "Previous clip",
+        "next": "Next clip",
+        "close": "Close"
+    },
+    "process": {
+        "kicker": "Our process",
+        "title": "Clear from idea to launch.",
+        "lead": "A focused process keeps projects moving, decisions easy, and surprises to a minimum.",
+        "steps": [
+            {
+                "title": "Discover",
+                "copy": "We understand your business, audience, offer, and the result you need."
+            },
+            {
+                "title": "Shape",
+                "copy": "We define the right scope, creative direction, message, and project plan."
+            },
+            {
+                "title": "Build",
+                "copy": "We create, test, and refine the experience with your feedback."
+            },
+            {
+                "title": "Launch",
+                "copy": "We deliver the final project, explain how it works, and help you move forward."
+            }
+        ]
+    },
+    "quote": {
+        "text": "AI should make your business feel more capable - not more complicated.",
+        "attribution": "That is the LevelUp AI standard."
+    },
+    "faq": {
+        "kicker": "Questions",
+        "title": "Good to know.",
+        "lead": "Every project is different, but these are the questions small businesses ask us most.",
+        "items": [
+            {
+                "question": "Are your websites really affordable for a small business?",
+                "answer": "Yes. We shape the scope around what your business needs most, so you can launch a professional site without paying for unnecessary pages or features."
+            },
+            {
+                "question": "Can you create an AI commercial without a traditional video shoot?",
+                "answer": "Yes. Depending on the concept, we can combine product images, AI-generated scenes, motion, voiceover, music, and editing to create a polished commercial."
+            },
+            {
+                "question": "What kind of business tasks can you automate?",
+                "answer": "Common examples include lead capture, qualification, follow-up emails, appointment reminders, content generation, document workflows, and updates between business tools."
+            },
+            {
+                "question": "Do I need to understand AI or technology?",
+                "answer": "No. We explain the project in business language, keep the system practical, and show you exactly how to use what we build."
+            }
+        ]
+    },
+    "contact": {
+        "kicker": "Start a conversation",
+        "title": "Ready to level up?",
+        "copy": "Tell us what you are building, promoting, or trying to simplify. We will help you choose the smartest first step.",
+        "mailSubject": "LevelUp AI Project Inquiry",
+        "ctaPrimary": "Email the studio",
+        "ctaSecondary": "Review services",
+        "cardTitle": "A good first message includes:",
+        "points": [
+            {
+                "title": "What your business does",
+                "copy": "A short description is enough."
+            },
+            {
+                "title": "What you want to create",
+                "copy": "Website, video, automation, or a combination."
+            },
+            {
+                "title": "Your goal and timing",
+                "copy": "What success looks like and when you need it."
+            }
+        ]
+    },
+    "footer": {
+        "items": [
+            "Websites",
+            "AI Commercial Video",
+            "Business Automation"
+        ],
+        "copyright": "© {year} LevelUp AI"
+    },
+    "chat": {
+        "title": "Ask us anything",
+        "subtitle": "About our services, packs and pricing.",
+        "placeholder": "Type your question…",
+        "send": "Send",
+        "open": "Open chat",
+        "close": "Close chat",
+        "greeting": "Hi! I'm the LevelUp AI assistant. Ask me about our packs, services or pricing.",
+        "error": "Sorry, something went wrong. Please try again or email hello@levelupai.studio.",
+        "thinking": "Thinking…",
+        "buddy": {
+            "suggestions": [
+                {
+                    "label": "Our packs",
+                    "question": "What packs do you offer?"
+                },
+                {
+                    "label": "Subscriptions",
+                    "question": "What are your monthly subscriptions?"
+                },
+                {
+                    "label": "Services",
+                    "question": "What services do you offer?"
+                },
+                {
+                    "label": "How it works",
+                    "question": "How does the process work?"
+                },
+                {
+                    "label": "How to order",
+                    "question": "How do I order?"
+                },
+                {
+                    "label": "Contact",
+                    "question": "How can I reach you?"
+                }
+            ],
+            "labels": {
+                "help": "Help",
+                "packs": "Packs",
+                "subscriptions": "Subscriptions",
+                "services": "Services",
+                "process": "How it works",
+                "contact": "Contact",
+                "order": "How to order"
+            },
+            "unsupported": "I can only answer questions about LevelUp AI — our packs, services, pricing, process and how to reach us. For anything else, write to hello@levelupai.studio. Here is what you can ask me:",
+            "ambiguous": "Did you mean: {options}?",
+            "noEvidence": "I don't have that detail. Write to hello@levelupai.studio and we'll answer you directly.",
+            "help": "Here is what you can ask me:",
+            "or": "or",
+            "packsIntro": "Here are our packs:",
+            "packsOutro": "Ask me about a pack by name to see what it includes.",
+            "packIncludes": "Includes:",
+            "subscriptionsIntro": "Our monthly subscriptions:",
+            "servicesIntro": "What we do:",
+            "processIntro": "How a project runs:",
+            "contactIntro": "You can reach us at hello@levelupai.studio.",
+            "orderHelp": "Pick a pack in the Pricing section and click “Add to cart”: you'll be taken to your LevelUp AI account (levelupia.app), where you can follow your project and pay. Prefer a quote first? Write to hello@levelupai.studio.",
+            "greeting": "Hello! I'm the LevelUp AI assistant. What would you like to know?",
+            "thanks": "You're welcome! Anything else?",
+            "bye": "See you soon! If you need us: hello@levelupai.studio.",
+            "budgetIntro": "With a budget of {budget} TND, here is what you can choose:",
+            "budgetSubs": "And as a monthly plan:",
+            "budgetNone": "No pack fits a budget of {budget} TND — the first one starts at {min} TND. Two options:",
+            "budgetQuote": "E-commerce websites are quoted on request: write to hello@levelupai.studio.",
+            "needIntro": "For “{need}”, here is what matches:",
+            "needNone": "I can't find an offer that mentions “{need}”. Write to hello@levelupai.studio and we'll answer precisely.",
+            "compareIntro": "Comparison:",
+            "compareCommon": "Both include:",
+            "compareOnly": "Only in {title}:"
+        }
+    }
+}

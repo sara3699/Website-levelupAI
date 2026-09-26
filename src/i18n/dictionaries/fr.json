@@ -1,0 +1,475 @@
+{
+    "meta": {
+        "title": "LevelUp AI — Sites web, vidéo IA & automatisation",
+        "description": "LevelUp AI crée des sites web accessibles, des vidéos commerciales générées par IA et des automatisations concrètes pour les PME et les startups."
+    },
+    "nav": {
+        "ariaLabel": "Navigation principale",
+        "brandHome": "Accueil LevelUp AI",
+        "openMenu": "Ouvrir le menu",
+        "closeMenu": "Fermer le menu",
+        "cta": "Démarrer un projet",
+        "languageLabel": "Changer de langue",
+        "links": {
+            "services": "Services",
+            "pricing": "Tarifs",
+            "work": "Réalisations",
+            "process": "Méthode",
+            "faq": "FAQ"
+        }
+    },
+    "hero": {
+        "eyebrow": [
+            "Digital Marketing",
+            "Agency par IA"
+        ],
+        "headline": [
+            "Website.",
+            "Shooting & vidéo IA.",
+            "Création digitale & Branding & Content création & SEO."
+        ],
+        "copy": "LevelUp AI aide les business et les startups à gagner en crédibilité, à avancer plus vite et à croître plus intelligemment : sites web accessibles, vidéos commerciales IA et automatisations concrètes.",
+        "proof": [
+            "Pensé pour tous les business",
+            "Livraison rapide et ciblée",
+            "IA guidée par l'humain"
+        ],
+        "ctaPrimary": "Lançons votre projet",
+        "ctaSecondary": "Découvrir les services",
+        "showText": "Afficher le texte",
+        "hideText": "Masquer le texte"
+    },
+    "media": {
+        "playWithSound": "Activer le son",
+        "soundOn": "Activer le son",
+        "muteSound": "Désactiver le son",
+        "soundOff": "Désactiver le son"
+    },
+    "screens": {
+        "hero": {
+            "nav": [
+                "Services",
+                "Projets",
+                "Contact"
+            ],
+            "title": "Un site à la hauteur de votre prochain chapitre.",
+            "copy": "stratégie claire, design soigné, Résultat : des visiteurs curieux qui deviennent clients.",
+            "button": "Voir les projets"
+        },
+        "services": {
+            "kicker": "Ce que nous faisons",
+            "title": "Trois façons de passer au niveau supérieur.",
+            "items": [
+                {
+                    "label": "Site web / site e-commerce"
+                },
+                {
+                    "label": "Vidéo IA / charte graphique / branding"
+                },
+                {
+                    "label": "Automatisation / SEO"
+                }
+            ]
+        },
+        "work": {
+            "kicker": "À quoi ça ressemble",
+            "title": "Un studio. Mille façons de grandir.",
+            "tags": [
+                "Expérience web",
+                "Publicité IA",
+                "Automatisation intelligente"
+            ]
+        }
+    },
+    "phone": {
+        "header": "Suivi des prospects",
+        "live": "En direct",
+        "notifications": [
+            {
+                "label": "Nouveau prospect",
+                "title": "Sarah M.",
+                "detail": "Formulaire de contact"
+            },
+            {
+                "label": "Qualification IA",
+                "title": "Budget confirmé",
+                "detail": "Prêt pour la relance"
+            },
+            {
+                "label": "Relance envoyée",
+                "title": "Appel programmé",
+                "detail": "Demain, 14h00"
+            }
+        ]
+    },
+    "marquee": [
+        "Des sites qui fonctionnent",
+        "Des vidéos IA qui vendent",
+        "Des automatisations qui font gagner du temps"
+    ],
+    "services": {
+        "kicker": "Ce que nous faisons",
+        "title": "Quatre packs pour faire décoller votre activité.",
+        "lead": "Pas besoin d'un budget d'agence. Choisissez le pack qui correspond à votre situation aujourd'hui — site web, visuels et vidéo, réunis à un tarif clair.",
+        "packs": [
+            {
+                "number": "PACK 01",
+                "title": "Pack Découverte",
+                "price": "À partir de 890 TND",
+                "copy": "La façon la plus simple de commencer. Choisissez ce dont votre entreprise a le plus besoin maintenant, et faisons-le bien.",
+                "list": [
+                    "Site vitrine IA (5-6 pages)",
+                    "ou shooting produit IA (10 visuels)",
+                    "La première étape idéale pour une nouvelle marque"
+                ],
+                "cta": "",
+                "summary": "Site vitrine IA (5 à 6 pages) ou site marchand IA (devis sur demande) ou shooting produit IA (10 visuels)"
+            },
+            {
+                "number": "PACK 02",
+                "title": "Pack Lancement",
+                "price": "1 890 TND",
+                "copy": "Tout ce qu'il faut pour vous lancer en confiance : un site web, une série complète de visuels et votre première vidéo.",
+                "list": [
+                    "Site vitrine IA",
+                    "Shooting produit IA (10 visuels)",
+                    "4 vidéos"
+                ],
+                "cta": "Lancer ma marque",
+                "summary": "Site vitrine IA + shooting produit IA (10 visuels) + 4 vidéos"
+            },
+            {
+                "number": "PACK 03",
+                "title": "Pack Croissance",
+                "price": "3 490 TND",
+                "copy": "Conçu pour les marques qui vendent déjà. Plus de visuels, plus de vidéo, et et de quoi rester visible chaque semaine.",
+                "list": [
+                    "Site vitrine IA",
+                    "Shooting produit IA (20 visuels)",
+                    "6 vidéos"
+                ],
+                "cta": "Développer mon activité",
+                "summary": "Site vitrine IA + shooting produit IA (20 visuels) + 6 vidéos"
+            },
+            {
+                "number": "PACK 04",
+                "title": "Pack Pro Max",
+                "price": "4 900 TND",
+                "copy": "Notre offre complète. Toute une bibliothèque de contenu entière pour les marques qui veulent dominer leur marché toute l'année.",
+                "list": [
+                    "Site vitrine IA",
+                    "Shooting produit IA (40 visuels)",
+                    "8 vidéos"
+                ],
+                "cta": "Passer en Pro Max",
+                "summary": "Site vitrine IA + shooting produit IA (40 visuels) + 8 vidéos"
+            }
+        ],
+        "showDetails": "Voir le détail",
+        "hideDetails": "Masquer le détail",
+        "addToCart": "Ajouter au panier"
+    },
+    "pricing": {
+        "kicker": "Services",
+        "title": "Le marketing propulsé par l'IA, à une fraction du coût.",
+        "lead": "Level Up AI devient l'un des premiers acteurs du marché à proposer des services de marketing digital entièrement propulsés par l'IA. Sites web, shootings produit et vidéos, livrés plus rapidement, au même niveau de qualité, à des tarifs nettement plus compétitifs. Pensé pour les entreprises qui veulent une présence digitale professionnelle sans les délais et les coûts de la production classique, et pour les clients déjà accompagnés qui souhaitent aller plus loin dans leur transformation digitale.",
+        "servicesIntro": "Tout ce que nous pouvons créer pour vous, propulsé de bout en bout par l'IA.",
+        "aiServices": [
+            {
+                "title": "Sites web IA",
+                "copy": "Des sites vitrines professionnels, rapides et optimisés. Livrés en quelques jours plutôt qu'en semaines."
+            },
+            {
+                "title": "Site marchand IA",
+                "copy": "Boutique en ligne complète avec paiement, commandes et suivi client. Automatisation des emails, WhatsApp, paniers abandonnés et relances.Gestion des produits, stocks, livraisons, promotions et analyse des ventes."
+            },
+            {
+                "title": "Shootings & vidéos IA",
+                "copy": "Photos et vidéos produits générées par l’IA pour vos réseaux sociaux, vos publicités et votre e-commerce, avec un rendu haut de gamme et rapide à produire."
+            },
+            {
+                "title": "Rédaction IA",
+                "copy": "Fiches produit, descriptions e-commerce et textes publicitaires rédigés et adaptés à la voix de la marque du client."
+            },
+            {
+                "title": "Voix off & doublage multilingue",
+                "copy": "Vos vidéos disponibles en plusieurs langues sans nouveau tournage, pour atteindre les marchés internationaux."
+            },
+            {
+                "title": "Avatars & porte-parole virtuels",
+                "copy": "Une présence régulière à l'image pour la marque, sans mobiliser une personne réelle à chaque tournage."
+            },
+            {
+                "title": "Chatbots & automatisation",
+                "copy": "Des agents conversationnels pour le support client ou la prise de rendez-vous, sur WhatsApp, votre site ou Messenger."
+            },
+            {
+                "title": "SEO, référencement, email marketing automatisé",
+                "copy": "Référencement naturel et pages optimisées pour être trouvé, plus des campagnes email automatisées : segmentation, personnalisation et relances pilotées par l'IA."
+            },
+            {
+                "title": "Identité visuelle express",
+                "copy": "Logo et charte graphique générés rapidement pour les entreprises qui démarrent."
+            }
+        ],
+        "subscriptionsTitle": "Abonnements mensuels",
+        "subscriptionsLead": "Pour une présence digitale continue entretenue en continu.",
+        "tableHeaders": {
+            "plan": "Formule",
+            "content": "Contenu",
+            "price": "Prix"
+        },
+        "subscriptions": [
+            {
+                "name": "Starter",
+                "content": "12 visuels + 4 vidéos par mois.",
+                "price": "1 190 TND/mois"
+            },
+            {
+                "name": "Pro",
+                "content": "20 visuels + 6 vidéos par mois.",
+                "price": "1 490 TND/mois"
+            },
+            {
+                "name": "Gestion des réseaux sociaux",
+                "content": "Gestion de feed (Instagram, Facebook, LinkedIn).",
+                "price": "290 TND/mois"
+            }
+        ],
+        "cta": "Parlons de votre pack"
+    },
+    "fit": {
+        "kicker": "Pensé pour avancer",
+        "title": "La rigueur d'une agence. La réalité d'un business.",
+        "lead": "Nous gardons un processus clair, collaboratif et centré sur ce qui fera réellement grandir votre entreprise.",
+        "items": [
+            {
+                "title": "Partir de l'objectif business",
+                "copy": "Nous n'ajoutons pas de l'IA parce que c'est à la mode. Nous partons du client, du point de blocage et du résultat que vous visez."
+            },
+            {
+                "title": "Concevoir pour la clarté",
+                "copy": "Votre site, votre vidéo ou votre automatisation doit rester simple à utiliser et facile à comprendre — même quand la technologie derrière est avancée."
+            },
+            {
+                "title": "Construire à la bonne échelle",
+                "copy": "Pas de package surdimensionné. Pas de complexité inutile. Vous obtenez ce dont votre entreprise a besoin maintenant, avec de la marge pour grandir."
+            },
+            {
+                "title": "Rester humain là où ça compte",
+                "copy": "L'IA nous fait avancer plus vite, mais votre voix, votre jugement et vos relations clients restent au centre."
+            }
+        ]
+    },
+    "work": {
+        "kicker": "À quoi ça peut ressembler",
+        "title": "Un studio. Mille façons de grandir.",
+        "lead": "De la première impression au suivi en coulisses, nous aidons votre entreprise à paraître plus professionnelle et plus performante.",
+        "websiteTag": "Expérience web",
+        "commercialTag": "PUB GÉNÉRÉE PAR IA",
+        "mockupEyebrow": "PETITE ENTREPRISE / GRANDE PRÉSENCE",
+        "mockupTitle": "Transformez votre idée en une marque de confiance.",
+        "productFallback": [
+            "VOTRE",
+            "PRODUIT"
+        ]
+    },
+    "carousel": {
+        "kicker": "Plus du studio",
+        "title": "Ce que nous pouvons créer pour vous.",
+        "lead": "Un aperçu du style cinématographique que nous produisons — pas des projets clients, juste l'étendue de nos possibilités.",
+        "labels": {
+            "clip-7": "Mode",
+            "clip-8": "Pharmaceutique",
+            "clip-9": "Hôtellerie / Maisons d'hôtes",
+            "clip-10": "Immobilier"
+        },
+        "playWithSound": "Lire {label} avec le son",
+        "close": "Fermer la vidéo"
+    },
+    "commercials": {
+        "kicker": "Vrais rendus IA",
+        "title": "Des publicités créées par l'IA.",
+        "lead": "5 vraies publicités produites, entièrement générées — sans caméra, sans studio, sans équipe. Touchez une carte pour l'écouter avec le son.",
+        "clips": {
+            "mascara": {
+                "label": "Publicité beauté",
+                "title": "Le volume, en mouvement."
+            },
+            "grape-beauty": {
+                "label": "Publicité maquillage",
+                "title": "Rouge à lèvres"
+            },
+            "eyeshadow": {
+                "label": "Détail macro",
+                "title": "Chaque teinte, de très près."
+            },
+            "lumea": {
+                "label": "Publicité restauration",
+                "title": "Une cuisine qui donne envie."
+            },
+            "jewel": {
+                "label": "Campagne joaillerie",
+                "title": "Le bijou fait le regard."
+            }
+        },
+        "playWithSound": "Lire {title} avec le son",
+        "previous": "Clip précédent",
+        "next": "Clip suivant",
+        "close": "Fermer"
+    },
+    "process": {
+        "kicker": "Notre méthode",
+        "title": "De l'idée au lancement, en toute clarté.",
+        "lead": "Un processus resserré garde les projets en mouvement, les décisions simples et les imprévus au minimum.",
+        "steps": [
+            {
+                "title": "Découvrir",
+                "copy": "Nous comprenons votre entreprise, votre audience, votre offre et le résultat attendu."
+            },
+            {
+                "title": "Cadrer",
+                "copy": "Nous définissons le bon périmètre, la direction créative, le message et le plan de projet."
+            },
+            {
+                "title": "Créer",
+                "copy": "Nous concevons, testons et affinons l'expérience avec vos retours."
+            },
+            {
+                "title": "Lancer",
+                "copy": "Nous livrons le projet final, expliquons son fonctionnement et vous aidons à avancer."
+            }
+        ]
+    },
+    "quote": {
+        "text": "L'IA devrait rendre votre entreprise plus capable — pas plus compliquée.",
+        "attribution": "C'est la promesse LevelUp AI."
+    },
+    "faq": {
+        "kicker": "Questions",
+        "title": "Bon à savoir.",
+        "lead": "Chaque projet est différent, mais voici les questions que les petites entreprises nous posent le plus.",
+        "items": [
+            {
+                "question": "Vos sites sont-ils vraiment adaptés à une petite entreprise?",
+                "answer": "Oui. Nous ajustons le périmètre à ce dont votre entreprise a le plus besoin, pour que vous puissiez lancer un site professionnel sans payer des pages ou des fonctionnalités inutiles."
+            },
+            {
+                "question": "Pouvez-vous créer une publicité IA sans tournage vidéo classique ?",
+                "answer": "Oui. Selon le concept, nous combinons images produit, scènes générées par IA, animation, voix off, musique et montage pour créer une publicité soignée."
+            },
+            {
+                "question": "Quelles tâches d'entreprise pouvez-vous automatiser ?",
+                "answer": "Par exemple : la collecte et la qualification des prospects, les emails de relance, les rappels de rendez-vous, la génération de contenu, les flux documentaires et la synchronisation entre vos outils."
+            },
+            {
+                "question": "Dois-je m'y connaître en IA ou en technologie ?",
+                "answer": "Non. Nous expliquons le projet dans un langage business, gardons le système simple et vous montrons exactement comment utiliser ce que nous créons."
+            }
+        ]
+    },
+    "contact": {
+        "kicker": "Démarrons la conversation",
+        "title": "Prêt à passer au niveau supérieur ?",
+        "copy": "Dites-nous ce que vous construisez, ce que vous promouvez ou ce que vous cherchez à simplifier. Nous vous aiderons à choisir la première étape la plus pertinente.",
+        "mailSubject": "Demande de projet LevelUp AI",
+        "ctaPrimary": "Écrire au studio",
+        "ctaSecondary": "Voir les services",
+        "cardTitle": "Un bon premier message contient :",
+        "points": [
+            {
+                "title": "Ce que fait votre entreprise",
+                "copy": "Une courte description suffit."
+            },
+            {
+                "title": "Ce que vous voulez créer",
+                "copy": "Site web, vidéo, automatisation, ou une combinaison."
+            },
+            {
+                "title": "Votre objectif et vos délais",
+                "copy": "À quoi ressemble la réussite et pour quand vous en avez besoin."
+            }
+        ]
+    },
+    "footer": {
+        "items": [
+            "Sites web",
+            "Vidéo commerciale IA",
+            "Automatisation d'entreprise"
+        ],
+        "copyright": "© {year} LevelUp AI"
+    },
+    "chat": {
+        "title": "Posez-nous vos questions",
+        "subtitle": "Sur nos services, nos packs et nos tarifs.",
+        "placeholder": "Écrivez votre question…",
+        "send": "Envoyer",
+        "open": "Ouvrir le chat",
+        "close": "Fermer le chat",
+        "greeting": "Bonjour ! Je suis l'assistant LevelUp AI. Posez-moi vos questions sur nos packs, services ou tarifs.",
+        "error": "Désolé, une erreur est survenue. Réessayez ou écrivez-nous à hello@levelupai.studio.",
+        "thinking": "Réflexion…",
+        "buddy": {
+            "suggestions": [
+                {
+                    "label": "Nos packs",
+                    "question": "Quels sont vos packs ?"
+                },
+                {
+                    "label": "Abonnements",
+                    "question": "Quels sont vos abonnements mensuels ?"
+                },
+                {
+                    "label": "Services",
+                    "question": "Quels services proposez-vous ?"
+                },
+                {
+                    "label": "Comment ça marche",
+                    "question": "Comment se déroule un projet ?"
+                },
+                {
+                    "label": "Commander",
+                    "question": "Comment commander ?"
+                },
+                {
+                    "label": "Contact",
+                    "question": "Comment vous joindre ?"
+                }
+            ],
+            "labels": {
+                "help": "Aide",
+                "packs": "Packs",
+                "subscriptions": "Abonnements",
+                "services": "Services",
+                "process": "Comment ça marche",
+                "contact": "Contact",
+                "order": "Commander"
+            },
+            "unsupported": "Je réponds uniquement aux questions sur LevelUp AI — nos packs, services, tarifs, notre façon de travailler et comment nous joindre. Pour toute autre demande, écrivez-nous à hello@levelupai.studio. Voici ce que vous pouvez me demander :",
+            "ambiguous": "Vouliez-vous dire : {options} ?",
+            "noEvidence": "Je n'ai pas ce détail. Écrivez-nous à hello@levelupai.studio et nous vous répondrons directement.",
+            "help": "Voici ce que vous pouvez me demander :",
+            "or": "ou",
+            "packsIntro": "Voici nos packs :",
+            "packsOutro": "Demandez-moi un pack par son nom pour voir ce qu'il comprend.",
+            "packIncludes": "Comprend :",
+            "subscriptionsIntro": "Nos abonnements mensuels :",
+            "servicesIntro": "Ce que nous faisons :",
+            "processIntro": "Le déroulement d'un projet :",
+            "contactIntro": "Vous pouvez nous joindre à hello@levelupai.studio.",
+            "orderHelp": "Choisissez un pack dans la section Tarifs et cliquez sur « Ajouter au panier » : vous arrivez sur votre espace LevelUp AI (levelupia.app), où vous suivez votre projet et réglez. Vous préférez un devis d'abord ? Écrivez-nous à hello@levelupai.studio.",
+            "greeting": "Bonjour ! Je suis l'assistant LevelUp AI. Que voulez-vous savoir ?",
+            "thanks": "Avec plaisir ! Autre chose ?",
+            "bye": "À bientôt ! Et si besoin : hello@levelupai.studio.",
+            "budgetIntro": "Avec un budget de {budget} TND, voici ce que vous pouvez choisir :",
+            "budgetSubs": "Et en formule mensuelle :",
+            "budgetNone": "Aucun pack n'entre dans un budget de {budget} TND — le premier commence à {min} TND. Deux pistes :",
+            "budgetQuote": "Le site marchand se fait sur devis : écrivez-nous à hello@levelupai.studio.",
+            "needIntro": "Pour « {need} », voici ce qui correspond :",
+            "needNone": "Je ne trouve pas d'offre qui mentionne « {need} ». Écrivez-nous à hello@levelupai.studio, nous vous répondrons précisément.",
+            "compareIntro": "Comparaison :",
+            "compareCommon": "Les deux comprennent :",
+            "compareOnly": "En plus dans {title} :"
+        }
+    }
+}

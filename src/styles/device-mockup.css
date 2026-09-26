@@ -1,0 +1,669 @@
+/* ---------- Automation phone ---------- */
+.automation-phone {
+  position: relative;
+  width: 200px;
+  border-radius: 34px;
+  padding: 12px;
+  overflow: hidden;
+}
+.automation-phone-glow {
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle at 50% 20%, rgba(var(--accent-rgb), 0.5), transparent 68%);
+  animation: phoneGlow 5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes phoneGlow {
+  50% { opacity: 0.55; }
+}
+.automation-phone-screen {
+  position: relative;
+  z-index: 1;
+  min-height: 220px;
+  border-radius: 24px;
+  background: linear-gradient(150deg, #8ae8ea 0%, #62cfe0 28%, #3fa8c6 62%, #2590b6 100%);
+  --screen-ink: #052029;
+  --screen-body: rgba(var(--ground-rgb), 0.9);
+  --screen-dim: rgba(var(--ground-rgb), 0.88);
+  --screen-card: rgba(255, 255, 255, 0.34);
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.automation-phone-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--screen-dim);
+}
+/* The status badge is two short words ("En direct", "Live") that read as one
+   token — broken across lines it looks like a layout bug, so it keeps its
+   width and the title label absorbs the wrapping instead. */
+.automation-phone-header .live {
+  white-space: nowrap;
+  flex: none;
+}
+.automation-phone-stack {
+  position: relative;
+  min-height: 80px;
+}
+.automation-phone-toast {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.automation-phone-toast-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--screen-ink);
+}
+.automation-phone-toast-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--screen-ink);
+}
+.automation-phone-toast-detail {
+  font-size: 11px;
+  color: var(--screen-body);
+}
+.automation-phone-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: auto;
+}
+.automation-phone-dots .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(var(--ground-rgb), 0.3);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.automation-phone-dots .dot-active {
+  background: var(--screen-ink);
+  transform: scale(1.3);
+}
+
+/* ---------- Laptop device mockup ---------- */
+.laptop-stage {
+  position: relative;
+  width: 100%;
+}
+.laptop-tilt {
+  position: relative;
+  width: min(680px, 92%);
+  margin: 0 auto;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.laptop-screen-panel {
+  position: relative;
+  border-radius: 18px 18px 6px 6px;
+  padding: 20px 20px 30px;
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.16), var(--shadow);
+}
+.laptop-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--ink);
+}
+.laptop-screen {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(150deg, #8ae8ea 0%, #62cfe0 28%, #3fa8c6 62%, #2590b6 100%);
+  /* The screen is a bright surface inside a dark page, so it carries its
+     own inverted text scale. White copy only reaches ~1.5:1 on the cyan
+     end of this gradient; these dark tokens clear 4.5:1 across every stop. */
+  --screen-ink: #052029;
+  --screen-body: rgba(var(--ground-rgb), 0.9);
+  --screen-dim: rgba(var(--ground-rgb), 0.88);
+  --screen-card: rgba(255, 255, 255, 0.28);
+  --screen-line: rgba(var(--ground-rgb), 0.18);
+}
+.laptop-hinge {
+  height: 8px;
+  margin: 0 6%;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(180deg, var(--panel-raised), var(--panel));
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
+}
+.laptop-base {
+  height: 16px;
+  margin: 0 -2%;
+  border-radius: 0 0 14px 14px;
+  background: linear-gradient(180deg, var(--panel-raised), var(--panel));
+  position: relative;
+}
+.laptop-base::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 5px;
+  border-radius: 0 0 8px 8px;
+  background: var(--ink);
+}
+
+/* ---------- Screen preview track (scroll-linked panels) ---------- */
+.laptop-screen-track {
+  position: absolute;
+  inset: 0 0 auto 0;
+  width: 100%;
+  height: 300%;
+  will-change: transform;
+}
+.screen-panel {
+  height: 33.3334%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5.4% 9%;
+}
+.screen-mini-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: clamp(9px, 1.4vw, 11px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--screen-dim);
+  margin-bottom: clamp(24px, 5vw, 44px);
+}
+.screen-mini-logo { color: var(--screen-ink); }
+.screen-panel-kicker {
+  font-size: clamp(9px, 1.4vw, 11px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--screen-ink);
+  margin-bottom: clamp(8px, 1.8vw, 13px);
+}
+.screen-panel-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(26px, 4.6vw, 44px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--screen-ink);
+  margin-bottom: 10px;
+  max-width: 92%;
+}
+.screen-panel-copy {
+  font-size: clamp(12px, 1.7vw, 15px);
+  line-height: 1.55;
+  color: var(--screen-body);
+  max-width: 85%;
+}
+.screen-mini-button {
+  display: inline-block;
+  width: fit-content;
+  margin-top: 22px;
+  padding: 10px 18px;
+  border-radius: 99px;
+  background: var(--screen-ink);
+  color: var(--text);
+  font-size: clamp(10px, 1.5vw, 12px);
+  font-weight: 700;
+}
+/* Three service cards on one row. The first label ("Site web / site
+   e-commerce") must stay on a single line, and at equal widths it needed
+   168px in a 141px card, so it broke at its hyphen. The first and last
+   columns are therefore sized to their own labels (max-content) and the
+   middle card, whose label is the longest and wraps anyway, takes the rest.
+   `align-items: stretch` keeps all three the same height. */
+.screen-panel-cards {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) max-content;
+  align-items: stretch;
+  gap: clamp(7px, 1.1vw, 11px);
+  margin-top: clamp(10px, 1.8vw, 16px);
+}
+/* On desktop the panel is a fixed slice (33.33%) of a 16/10 laptop screen
+   and cannot grow, so card padding and type stay compact; they tighten
+   further on narrow screens (see the media queries below). */
+.screen-panel-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 6px;
+  padding: clamp(9px, 1.4vw, 13px) clamp(9px, 1.5vw, 12px);
+  border-radius: 10px;
+  border: 1px solid var(--screen-line);
+  background: var(--screen-card);
+}
+/* Never break the first card's label, including at the hyphen in
+   "e-commerce". Its column is sized to fit it (see .screen-panel-cards). */
+.screen-panel-card:first-child strong { white-space: nowrap; }
+.screen-panel-card strong {
+  font-size: clamp(10px, 1.5vw, 12.5px);
+  line-height: 1.2;
+  color: var(--screen-ink);
+  /* A label longer than its card wraps inside it instead of overflowing
+     (the first card is exempt: see the nowrap rule above). */
+  overflow-wrap: anywhere;
+}
+.screen-panel-card span {
+  font-size: clamp(9px, 1.4vw, 11px);
+  line-height: 1.4;
+  color: var(--screen-body);
+}
+/* Responsive steps for the three service cards. The panel is a fixed 33.33%
+   slice of a 16/10 laptop screen and cannot grow, so each step trades width
+   for height: three columns, then two, with padding and type stepping down
+   so every card stays inside the panel. Ordered widest-first because these
+   all have the same specificity and the last matching rule wins. */
+@media (max-width: 980px) {
+  .screen-panel-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: clamp(5px, 0.9vw, 8px); }
+  /* Two columns here: the first card takes the whole first row so its
+     one-line label always has room; the other two share the second row. */
+  .screen-panel-card:first-child { grid-column: 1 / -1; }
+  .screen-panel-card { padding: clamp(6px, 1.1vw, 10px) clamp(5px, 1vw, 9px); gap: 4px; }
+}
+@media (max-width: 740px) {
+  .screen-panel-title { font-size: clamp(17px, 3.2vw, 24px); margin-bottom: 6px; }
+  .screen-panel-cards { margin-top: 6px; gap: 4px; }
+  .screen-panel-card { padding: 5px 6px; gap: 2px; }
+  .screen-panel-card strong { font-size: 8.5px; line-height: 1.15; }
+}
+@media (max-width: 430px) {
+  .screen-panel-cards { gap: 3px; margin-top: 4px; }
+  .screen-panel-card { padding: 4px 5px; gap: 1px; }
+  .screen-panel-card strong { font-size: 7.6px; line-height: 1.1; }
+  .screen-panel-title { font-size: clamp(13px, 2.5vw, 18px); margin-bottom: 3px; }
+  .screen-panel-kicker { margin-bottom: 3px; font-size: 8px; }
+}
+
+/* ---------- The panels without the pan ---------- */
+/* Two cases share one fallback, because they share one cause: nothing pans
+   the track.
+   1. prefers-reduced-motion — Hero.tsx bails out of its whole GSAP setup.
+   2. Narrow screens — the scroll-pin is gated to min-width: 980px, and a pin
+      on a phone fights native scrolling over a full-bleed video.
+   Either way panels 2 and 3 sat outside `.laptop-screen`'s clip and were
+   simply unreachable. Rather than animate them on a timer (which stalls
+   whenever the tab is backgrounded, and which reduced-motion users are
+   explicitly asking not to get), the screen stops being a fixed 16/10 window
+   and grows to its content, stacking all three. Scrolling the page reveals
+   them. No JavaScript, nothing to stall; the desktop animated path above
+   980px is untouched. */
+@media (prefers-reduced-motion: reduce), (max-width: 979px) {
+  .laptop-screen {
+    aspect-ratio: auto;
+    overflow: visible;
+  }
+  .laptop-screen-track {
+    position: static;
+    height: auto;
+  }
+  .screen-panel {
+    height: auto;
+    padding-block: 7%;
+  }
+  /* A hairline between the stacked panels, so three screens' worth of
+     content still reads as three distinct views rather than one long page. */
+  .screen-panel + .screen-panel {
+    border-top: 1px solid var(--screen-line);
+  }
+}
+
+.screen-panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(8px, 1.4vw, 12px);
+  margin-top: clamp(18px, 3vw, 28px);
+}
+.screen-panel-tag {
+  padding: clamp(7px, 1.2vw, 10px) clamp(12px, 1.8vw, 16px);
+  border-radius: 999px;
+  border: 1px solid var(--screen-line);
+  background: var(--screen-card);
+  font-size: clamp(9px, 1.4vw, 11px);
+  font-weight: 700;
+  color: var(--screen-ink);
+  /* Containment guarantee, not a style change: the tags carry service
+     names that can be long ("Vidéo IA / Charte graphique / Branding"),
+     and at 320px that pill clears the panel's inner edge by only ~8px.
+     This caps a pill at the panel width so an even narrower viewport — or
+     a fallback font measuring wider than the loaded one — wraps the label
+     inside the pill instead of pushing it out of the laptop screen. It has
+     no effect at any width where the pill already fits, so the row of tags
+     looks exactly as before. */
+  max-width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 980px) {
+  .laptop-tilt { width: min(560px, 96%); }
+  .automation-phone { width: 176px; }
+}
+
+@media (max-width: 740px) {
+  .laptop-tilt { width: 100%; }
+  /* The notification copy ("Website contact form", "Suivi des leads") is the
+     narrowest thing on the page. At 150px the toast had ~96px of text column
+     and broke three-deep into unreadable slivers, so the phone gets a little
+     more width and the chrome around the text gets tighter — the gain all
+     goes to the text column, not the shell. */
+  .automation-phone { width: 172px; padding: 9px; border-radius: 28px; }
+  .automation-phone-screen {
+    min-height: 0;
+    border-radius: 21px;
+    padding: 12px 10px;
+    gap: 10px;
+  }
+  /* French runs long here ("Suivi des prospects" + "En direct"). Dropping the
+     tracking to zero and letting the label shrink keeps this strip to one
+     line; it is quiet chrome, so the smaller size costs nothing. */
+  /* French runs long here ("Suivi des prospects" + "En direct"). Tighter
+     tracking buys back most of it; when the title still needs two lines the
+     badge sits on the first one rather than floating in the middle. */
+  .automation-phone-header {
+    font-size: 8px;
+    letter-spacing: 0;
+    gap: 5px;
+    align-items: flex-start;
+    line-height: 1.25;
+  }
+  /* Was a fixed 80px with the toast absolutely positioned inside it: any copy
+     that needed a third line spilled past the card's rounded edge. Letting the
+     stack size to its content keeps every line inside the toast. */
+  .automation-phone-stack { min-height: 72px; }
+  .automation-phone-toast { padding: 10px 9px; gap: 2px; border-radius: 13px; }
+  .automation-phone-toast-label { font-size: 8px; letter-spacing: 0.05em; }
+  .automation-phone-toast-title { font-size: 13px; line-height: 1.15; }
+  .automation-phone-toast-detail { font-size: 9.5px; line-height: 1.3; }
+  .screen-panel { padding: 6.4% 9%; }
+}
+
+/* Smallest phones (iPhone SE and down): one more step so the third line of
+   "Website contact form" still clears the toast's bottom edge. */
+@media (max-width: 380px) {
+  .automation-phone { width: 158px; }
+  .automation-phone-toast-title { font-size: 12px; }
+}
+
+/* ---------- Video carousel ---------- */
+.video-carousel-section { padding-top: 60px; }
+.video-carousel-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding: 10px var(--wrap-gutter, 20px) 20px;
+  margin: 0 calc(50% - 50vw);
+  padding-left: max(20px, calc(50vw - 590px));
+  padding-right: max(20px, calc(50vw - 590px));
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+}
+.video-carousel-track::-webkit-scrollbar { display: none; }
+.video-carousel-track:active { cursor: grabbing; }
+.video-carousel-card {
+  flex: 0 0 min(340px, 78vw);
+  scroll-snap-align: start;
+  transform: rotate(var(--card-rotate, 0deg));
+  cursor: pointer;
+  transition: transform .3s ease;
+}
+.video-carousel-card:hover { transform: rotate(var(--card-rotate, 0deg)) translateY(-6px); }
+.video-carousel-card:focus-visible { outline: 2px solid var(--champagne); outline-offset: 6px; border-radius: var(--radius); }
+.video-carousel-glass {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  height: 420px;
+}
+.video-carousel-label {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: rgba(7, 7, 10, 0.55);
+  border: 1px solid var(--line-strong);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--champagne);
+  backdrop-filter: blur(8px);
+}
+.video-carousel-video-slot { position: absolute; inset: 0; }
+.video-carousel-fallback {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, var(--panel), var(--panel-raised));
+}
+
+/* ---------- Video lightbox ---------- */
+.video-lightbox {
+  position: fixed;
+  inset: 0;
+  /* Matches .ai-commercials-lightbox — above the nav (40) and cursor-fx. */
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(7, 7, 10, 0.88);
+  backdrop-filter: blur(10px);
+}
+.video-lightbox-frame {
+  position: relative;
+  width: min(1100px, 100%);
+  max-height: calc(100vh - 96px);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, .6);
+  /* Cancels the .video-carousel-card rotation inherited visually around it —
+     the lightbox is a sibling of the track, so it renders unrotated. */
+  background: #000;
+}
+.video-lightbox-video {
+  display: block;
+  width: 100%;
+  max-height: calc(100vh - 96px);
+  object-fit: contain;
+}
+.video-lightbox-close {
+  position: fixed;
+  z-index: 301;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--text-rgb), 0.28);
+  background: rgba(7, 7, 10, 0.6);
+  color: var(--text);
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.video-lightbox-close:hover { background: rgba(7, 7, 10, 0.9); transform: scale(1.06); }
+.video-lightbox-close svg { width: 20px; }
+
+@media (max-width: 740px) {
+  .video-lightbox { padding: 14px; }
+  .video-lightbox-close { top: 12px; right: 12px; width: 38px; height: 38px; }
+}
+
+@media (max-width: 740px) {
+  .video-carousel-glass { height: 340px; }
+  .video-carousel-card { flex-basis: min(280px, 82vw); }
+}
+
+/* ---------- AI commercials showcase ---------- */
+/* Asymmetric "reel wall": the one landscape clip spans both rows on the
+   left at 16:9, the four portrait/reel clips fill a 2x2 grid on the right
+   at 9:16 — deliberately mixed aspect ratios in one grid rather than
+   forcing everything into uniform cards, since that's the actual shape of
+   the source clips (1 landscape hero + 4 vertical reels). */
+.ai-commercials-grid {
+  display: grid;
+  grid-template-columns: 1.35fr repeat(2, 1fr);
+  grid-template-rows: repeat(2, 260px);
+  gap: 16px;
+  margin-top: 10px;
+}
+.ai-commercials-cell-landscape { grid-row: span 2; }
+.ai-commercials-card { height: 100%; border-radius: var(--radius-sm); overflow: hidden; }
+.ai-commercials-trigger {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+.ai-commercials-thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ai-commercials-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 7, 10, 0.05) 0%, rgba(7, 7, 10, 0.1) 55%, rgba(7, 7, 10, 0.82) 100%);
+  transition: background .25s ease;
+}
+.ai-commercials-trigger:hover .ai-commercials-scrim { background: linear-gradient(180deg, rgba(7, 7, 10, 0.15) 0%, rgba(7, 7, 10, 0.2) 45%, rgba(7, 7, 10, 0.88) 100%); }
+.ai-commercials-meta {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ai-commercials-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--gold-bright); }
+.ai-commercials-title { font-family: var(--font-display); font-weight: 600; font-size: 19px; color: var(--text); line-height: 1.08; }
+.ai-commercials-play {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(7, 7, 10, 0.5);
+  border: 1px solid rgba(var(--text-rgb), 0.3);
+  color: var(--text);
+  backdrop-filter: blur(6px);
+  transition: transform .25s ease, background .25s ease;
+}
+.ai-commercials-trigger:hover .ai-commercials-play { transform: scale(1.1); background: var(--gold); color: var(--on-accent); }
+
+/* Lightbox */
+.ai-commercials-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  background: rgba(4, 4, 6, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.ai-commercials-lightbox-frame {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(var(--text-rgb), 0.12);
+  background: #000;
+}
+.ai-commercials-lightbox-frame-landscape { width: min(1000px, 88vw); aspect-ratio: 16 / 9; }
+.ai-commercials-lightbox-frame-portrait { width: min(420px, 82vw); aspect-ratio: 9 / 16; max-height: 86vh; }
+.ai-commercials-lightbox-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ai-commercials-lightbox-caption {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 20px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+.ai-commercials-lightbox-caption .ai-commercials-title { font-size: 24px; }
+
+.ai-commercials-close,
+.ai-commercials-nav {
+  position: fixed;
+  z-index: 301;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(var(--text-rgb), 0.1);
+  border: 1px solid rgba(var(--text-rgb), 0.25);
+  color: var(--text);
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: transform .2s ease, background .2s ease;
+}
+.ai-commercials-close:hover,
+.ai-commercials-nav:hover { background: var(--gold); color: var(--on-accent); }
+.ai-commercials-close { top: 24px; right: 24px; width: 44px; height: 44px; }
+.ai-commercials-nav { top: 50%; width: 50px; height: 50px; transform: translateY(-50%); }
+.ai-commercials-nav:hover { transform: translateY(-50%) scale(1.08); }
+.ai-commercials-nav-prev { left: 24px; }
+.ai-commercials-nav-next { right: 24px; }
+
+@media (max-width: 980px) {
+  .ai-commercials-grid { grid-template-columns: 1.2fr repeat(2, 1fr); grid-template-rows: repeat(2, 220px); }
+}
+
+@media (max-width: 740px) {
+  .ai-commercials-grid {
+    display: flex;
+    grid-template-columns: unset;
+    grid-template-rows: unset;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    gap: 14px;
+    margin: 10px calc(-1 * var(--wrap-gutter, 14px)) 0;
+    padding: 4px var(--wrap-gutter, 14px) 10px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .ai-commercials-grid::-webkit-scrollbar { display: none; }
+  .ai-commercials-cell { flex: 0 0 auto; scroll-snap-align: start; }
+  .ai-commercials-cell-landscape .ai-commercials-card { width: min(320px, 78vw); aspect-ratio: 16 / 9; }
+  .ai-commercials-cell-portrait .ai-commercials-card { width: min(200px, 62vw); aspect-ratio: 9 / 16; }
+  .ai-commercials-nav { width: 42px; height: 42px; }
+  .ai-commercials-nav-prev { left: 10px; }
+  .ai-commercials-nav-next { right: 10px; }
+  .ai-commercials-close { top: 14px; right: 14px; width: 38px; height: 38px; }
+  .ai-commercials-lightbox-frame-portrait { width: min(340px, 88vw); }
+}
