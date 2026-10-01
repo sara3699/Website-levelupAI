@@ -47,10 +47,12 @@ function writePreference(wantsSound: boolean) {
  *      autoplay settings.
  *   2. on rejection, re-mute and play() silently, so the footage still
  *      runs; the toggle stays on screen reading "Activer le son".
- *   3. arm one-shot pointerdown/keydown/touchstart listeners — the first
- *      real interaction anywhere on the page is a trusted gesture, which
- *      is what the policy actually requires, so the same upgrade is tried
- *      again there and the listeners are removed once it lands.
+ *   3. arm one-shot gesture listeners — the first real interaction
+ *      anywhere on the page is a trusted gesture, which is what the policy
+ *      actually requires, so the same upgrade is tried again there and the
+ *      listeners are removed once it lands. Phones only count the END of a
+ *      tap (touchend), never touchstart, so that is what makes a tap work
+ *      there; a refused attempt puts the silent clip back where it was.
  *
  * Audible autoplay is never guaranteed: Chrome gates it on a per-origin
  * Media Engagement Index, Safari on explicit per-site permission, and
@@ -86,6 +88,10 @@ export function useUnmutableVideo() {
   const detachSyncRef = useRef<(() => void) | null>(null);
   /** The element's `loop` as rendered, restored when it goes silent again. */
   const baseLoopRef = useRef(true);
+  /** The audible attempt in flight, shared by every caller until it settles. */
+  const attemptRef = useRef<Promise<boolean> | null>(null);
+  /** Frame handle for the autoplay ladder scheduled by the latest attach. */
+  const startRef = useRef<number | null>(null);
 
   useEffect(() => {
     wantsSoundRef.current = readPreference();
@@ -102,24 +108,42 @@ export function useUnmutableVideo() {
     void video.play().catch(() => {});
   }, []);
 
-  /** Attempts audible playback. Resolves true only if the browser allowed it. */
+  /** Attempts audible playback. Resolves true only if the browser allowed it.
+   *
+   *  Only one attempt runs at a time; a second caller gets the same promise.
+   *  On an iPhone (2026-09-30) two overlapping attempts made one fail and
+   *  re-mute the clip, while the other's play() then resolved for that muted
+   *  playback: the hook reported sound on, React unmuted the element without
+   *  a gesture, and iOS froze the video. The result is also checked against
+   *  what the element is really doing, not just the promise. */
   const tryPlayWithSound = useCallback(
-    async (video: HTMLVideoElement): Promise<boolean> => {
-      // One pass, from the first sentence. `loop` is also dropped by
-      // VideoSlot once `unmuted` flips, but that only lands after play()
-      // resolves — set it here so a loop can never slip in first.
-      video.loop = false;
-      if (video.currentTime > START_EPSILON) video.currentTime = 0;
-      video.muted = false;
-      video.volume = 1;
-      try {
-        await video.play();
-        setUnmuted(true);
-        return true;
-      } catch {
-        playMuted(video);
-        return false;
-      }
+    (video: HTMLVideoElement): Promise<boolean> => {
+      if (attemptRef.current) return attemptRef.current;
+      const attempt = (async () => {
+        const resumeAt = video.currentTime;
+        // One pass, from the first sentence. `loop` is also dropped by
+        // VideoSlot once `unmuted` flips, but that only lands after play()
+        // resolves — set it here so a loop can never slip in first.
+        video.loop = false;
+        if (video.currentTime > START_EPSILON) video.currentTime = 0;
+        video.muted = false;
+        video.volume = 1;
+        try {
+          await video.play();
+          if (video.muted || video.paused) throw new Error("play() resolved but the clip is not audible");
+          setUnmuted(true);
+          return true;
+        } catch {
+          // A refused attempt must not restart the silent clip.
+          if (resumeAt > START_EPSILON) video.currentTime = resumeAt;
+          playMuted(video);
+          return false;
+        } finally {
+          attemptRef.current = null;
+        }
+      })();
+      attemptRef.current = attempt;
+      return attempt;
     },
     [playMuted]
   );
@@ -128,8 +152,21 @@ export function useUnmutableVideo() {
   const armFirstInteraction = useCallback(() => {
     if (disarmRef.current) return;
 
-    const events = ["pointerdown", "keydown", "touchstart"] as const;
+    // Which events can start sound (2026-09-30, checked on an iPhone):
+    // a finger only counts at the END of a tap, so touchend carries phones.
+    // iOS fires no click for a tap on plain content and leaves
+    // navigator.userActivation false during touchend, yet accepts play()
+    // there, so nothing is filtered on userActivation. touchstart and a
+    // touch pointerdown never count; trying on them would only occupy the
+    // single attempt slot and make the touchend that follows wait.
+    const events = ["pointerdown", "pointerup", "keydown", "touchend", "click"] as const;
+    const canStartSound = (event: Event) => {
+      if (event.type === "pointerdown") return (event as PointerEvent).pointerType === "mouse";
+      if (event.type === "pointerup") return (event as PointerEvent).pointerType === "pen";
+      return true;
+    };
     const onFirstInteraction = (event: Event) => {
+      if (!canStartSound(event)) return;
       // The sound button's own click decides for itself. Upgrading here on
       // its pointerdown made the click that follows see an unmuted video
       // and mute it straight back, restarting the ad on every press.
@@ -168,6 +205,11 @@ export function useUnmutableVideo() {
       // Same element again: already set up. Re-running the ladder here
       // would rewind the ad and start it over.
       if (video && video === videoRef.current) return;
+      // A start scheduled by an attach that has since been undone must not run.
+      if (startRef.current !== null) {
+        cancelAnimationFrame(startRef.current);
+        startRef.current = null;
+      }
       // VideoSlot swaps `src` on breakpoint crossings rather than
       // remounting, but a remount is still possible — drop the previous
       // element's listener before adopting a new one so repeated attaches
@@ -229,13 +271,22 @@ export function useUnmutableVideo() {
         detachSyncRef.current = null;
       };
 
-      if (!wantsSoundRef.current) {
-        playMuted(video);
-        return;
-      }
-
-      void tryPlayWithSound(video).then((ok) => {
-        if (!ok) armFirstInteraction();
+      // Start on the next frame, not inside the ref callback. In development
+      // React attaches, detaches and re-attaches the same element in one go;
+      // the detach pauses it, which aborted the sound attempt the first
+      // attach had started, and the re-attach then shared that doomed
+      // attempt, so the clip always opened muted (2026-09-30). Waiting a
+      // frame lets only the attach that stays run the ladder.
+      startRef.current = requestAnimationFrame(() => {
+        startRef.current = null;
+        if (videoRef.current !== video) return;
+        if (!wantsSoundRef.current) {
+          playMuted(video);
+          return;
+        }
+        void tryPlayWithSound(video).then((ok) => {
+          if (!ok) armFirstInteraction();
+        });
       });
     },
     [armFirstInteraction, playMuted, tryPlayWithSound]
