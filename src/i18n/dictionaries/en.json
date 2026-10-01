@@ -227,8 +227,9 @@
                 "copy": "Logo and brand guidelines generated quickly to improve your image and keep up with the latest technology."
             }
         ],
-        "subscriptionsTitle": "Monthly subscriptions",
-        "subscriptionsLead": "For an ongoing digital presence, maintained continuously.",
+        "subscriptionsTitle": "Monthly subscriptions - Shooting: Photo & video",
+        "subscriptionsLead": "",
+        "subscriptionOffers": ["For 6 months, one month free", "For one year, 2 months free"],
         "tableHeaders": {
             "plan": "Plan",
             "content": "Content",

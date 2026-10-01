@@ -1142,6 +1142,10 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 }
 .section-dark .pricing-table tbody tr:not(:last-child) td { border-bottom-color: rgba(32, 199, 208, 0.14); }
 .section-dark .pricing-price { color: var(--gold-bright); text-shadow: 0 0 12px rgba(32, 199, 208, 0.5); }
+/* The 6-month / 1-year offers under each subscription price (2026-10-01):
+   lighter and smaller than the price so the monthly figure still leads. */
+.pricing-offers { display: block; margin-top: 6px; }
+.pricing-offers > span { display: block; font-size: 13px; font-weight: 500; line-height: 1.5; color: #e9f1f8; text-shadow: none; }
 /* Plan names glitter like the pack names (same recipe as .service h3). */
 .section-dark .plan-name {
   position: relative;

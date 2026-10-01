@@ -75,7 +75,8 @@ export default async function Services({ lang }: { lang: string }) {
             sits directly beneath the pack cards it relates to. */}
         <Reveal className="pricing-block-head subscriptions-head">
           <h3>{t.pricing.subscriptionsTitle}</h3>
-          <p>{t.pricing.subscriptionsLead}</p>
+          {/* Empty in both languages since 2026-10-01 (Sarra deleted the line). */}
+          {t.pricing.subscriptionsLead && <p>{t.pricing.subscriptionsLead}</p>}
         </Reveal>
         <Reveal>
           <GlassCard className="pricing-table-card">
@@ -95,7 +96,18 @@ export default async function Services({ lang }: { lang: string }) {
                       <span className="plan-name">{sub.name}</span>
                     </td>
                     <td data-label={t.pricing.tableHeaders.content}>{sub.content}</td>
-                    <td data-label={t.pricing.tableHeaders.price} className="pricing-price">{localizePrice(sub.price, currency)}</td>
+                    <td data-label={t.pricing.tableHeaders.price} className="pricing-price">
+                      {localizePrice(sub.price, currency)}
+                      {/* Longer commitments (Sarra, 2026-10-01): shown under
+                          every formula's price. Display only: the cart still
+                          sends the same code (ABO_STARTER…) with no duration,
+                          so the platform does not know about these offers. */}
+                      <span className="pricing-offers">
+                        {t.pricing.subscriptionOffers.map((offer) => (
+                          <span key={offer}>{offer}</span>
+                        ))}
+                      </span>
+                    </td>
                     <td className="pricing-action">
                       <SubscribeButton name={sub.name} label={t.services.addToCart} addedLabel={t.services.addedToCart} />
                     </td>
