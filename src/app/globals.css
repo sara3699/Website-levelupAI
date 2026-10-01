@@ -12,16 +12,16 @@ body {
      saturated indigo base. Alphas are high on purpose — the reference
      gradients are luminous, so a timid wash over near-black reads as a
      dark grey page with a hint of colour, which is exactly what this
-     palette should not look like. The base itself is already deep teal, so
-     the auras deepen and shift hue rather than fighting a black ground.
-     Alphas are lower than the old violet set on purpose: large grounds have
-     to stay DARKER and more restrained than the buttons, which is what lets
-     the teal CTA gradient read as the brightest thing on the page. */
+     palette should not look like. Violet blooms at the top left, blue at
+     the right and turquoise toward the bottom (2026-09-29), over a deep navy
+     base. Large grounds stay darker and more restrained than the buttons,
+     which is what lets the violet-to-blue CTA read as the brightest thing on
+     the page. */
   background:
-    radial-gradient(1300px 900px at 6% -5%, rgba(var(--digital-blue-rgb), 0.38), transparent 62%),
-    radial-gradient(1100px 800px at 100% 12%, rgba(140, 196, 255, 0.14), transparent 58%),
+    radial-gradient(1300px 900px at 6% -5%, rgba(120, 40, 247, 0.42), transparent 62%),
+    radial-gradient(1100px 800px at 100% 12%, rgba(var(--accent-deep-rgb), 0.22), transparent 58%),
     radial-gradient(1000px 1000px at 45% 105%, rgba(var(--band-teal-rgb), 0.75), transparent 62%),
-    radial-gradient(900px 800px at 82% 78%, rgba(140, 196, 255, 0.10), transparent 58%),
+    radial-gradient(900px 800px at 82% 78%, rgba(var(--accent-rgb), 0.14), transparent 58%),
     linear-gradient(160deg, var(--panel), var(--paper) 45%, var(--ink) 100%);
   background-attachment: fixed;
   font-family: var(--font-body);
@@ -91,8 +91,8 @@ button { color: inherit; }
 .brand-mark svg { width: 20px; }
 .nav-links { display: flex; align-items: center; gap: 14px; font-weight: 600; font-size: 14px; }
 .nav-links a { position: relative; }
-/* Services / Tarifs / Réalisations / FAQ sit on the same blue fill as
-   "Démarrer un projet" (2026-09-26, Sarra's brief), as compact pills: shorter
+/* Services / Tarifs / Réalisations / FAQ sit on the same fill as
+   "Démarrer un projet" (2026-09-26, Sarra's brief; purple like the hero pill since 2026-09-29), as compact pills: shorter
    and tighter than the CTA, which stays the largest and keeps its glow. The
    solid fill carries the label's contrast over the video, so these links no
    longer need the text-shadow the transparent nav used to give them. */
@@ -104,26 +104,26 @@ button { color: inherit; }
   border: 1px solid var(--button-edge);
   border-radius: 999px;
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
   box-shadow: 0 4px 14px rgba(var(--shade-rgb), 0.35);
   transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
 }
-.nav-links-desktop .nav-cta { margin-left: 8px; box-shadow: 0 6px 20px rgba(var(--digital-blue-rgb), 0.4); }
+.nav-links-desktop .nav-cta { margin-left: 8px; box-shadow: 0 6px 20px rgba(var(--action-rgb), 0.4); }
 
 /* Selected item (2026-09-26): a click makes the pill pop forward like an
    icon in the macOS Dock, then settle back to normal size (SiteNav, Web
-   Animations API); the selected one keeps a white rim and a blue glow.
-   Transform and box-shadow only, so nothing reflows. Hover only brightens;
+   Animations API); the selected one keeps a white rim and a glow.
+   Transform and box-shadow only, so nothing reflows. Hover only glows;
    a press dips the pill slightly before the pop. */
 .nav-links a {
   transform-origin: center;
   transition: transform .38s cubic-bezier(.2, .8, .2, 1), box-shadow .38s ease, background .25s ease, border-color .25s ease, filter .15s ease;
 }
 @media (hover: hover) and (pointer: fine) {
-  /* Hover brightens; the growth itself is the Dock magnification below. */
+  /* Hover glows; the growth itself is the Dock magnification below. */
   .nav-links a:not(.is-active):hover {
     background: var(--button-fill-hover);
-    box-shadow: 0 8px 20px rgba(var(--digital-blue-rgb), 0.35);
+    box-shadow: 0 8px 20px rgba(var(--action-rgb), 0.35);
   }
 }
 .nav-links a.is-active {
@@ -133,14 +133,14 @@ button { color: inherit; }
   transform: none;
   /* The change has to read at a glance next to four pills of the same
      colour, so the active one gets a white rim and a strong glow on top of
-     the size; the fill stays in the range where the white label clears
-     4.5:1 (#2474E0 -> #1A6BD6). */
+     the size; the white label keeps at least 4.8:1 across the fill (see
+     --button-fill in tokens.css). */
   background: var(--button-fill-hover);
   border-color: #ffffff;
   box-shadow:
     0 0 0 2px rgba(255, 255, 255, 0.85),
     0 16px 34px rgba(var(--shade-rgb), 0.5),
-    0 0 34px rgba(var(--digital-blue-rgb), 0.85);
+    0 0 34px rgba(var(--action-rgb), 0.85);
 }
 .nav-links a:active { filter: brightness(1.15); }
 
@@ -164,25 +164,22 @@ button { color: inherit; }
   border: 1px solid var(--button-edge);
   border-radius: 999px;
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
   font-weight: 700;
   cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease;
 }
 .nav-cta { min-height: 43px; padding: 0 18px; }
-.nav-cta:hover, .button:hover { transform: translateY(-3px); background: var(--button-fill-hover); box-shadow: 0 10px 30px rgba(var(--digital-blue-rgb), 0.45); }
-/* Secondary actions ("Découvrir les services", "Voir les services"): the
-   same blue, one step deeper and flat, so the primary still leads. Solid
-   rather than see-through so the label holds over the brightest video frame. */
-.button.secondary { background: var(--blue-deep); color: var(--on-blue); border-color: var(--button-edge); }
-.button.secondary:hover { background: var(--blue-fill-to); box-shadow: 0 10px 30px rgba(var(--digital-blue-rgb), 0.35); border-color: var(--blue-light); }
-/* Keyboard focus: a white ring with a blue halo reads on the dark bands and
+.nav-cta:hover, .button:hover { transform: translateY(-3px); background: var(--button-fill-hover); box-shadow: 0 10px 30px rgba(var(--action-rgb), 0.45); }
+.button.secondary { background: transparent; color: var(--text); border-color: var(--line-strong); }
+.button.secondary:hover { background: rgba(var(--text-rgb), 0.08); box-shadow: none; border-color: var(--gold); }
+/* Keyboard focus: a white ring with a violet halo reads on the dark bands and
    on the brightest video frame alike. */
 .nav-links a:focus-visible, .button:focus-visible, .nav-cta:focus-visible, .nav-links-mobile a:focus-visible,
 .service-cart:focus-visible, .cart-checkout:focus-visible, .chat-launcher:focus-visible, .locale-option:focus-visible {
   outline: 2px solid #ffffff;
   outline-offset: 3px;
-  box-shadow: 0 0 0 5px rgba(var(--digital-blue-rgb), 0.6);
+  box-shadow: 0 0 0 5px rgba(var(--action-rgb), 0.6);
 }
 .menu-button { display: none; border: 0; background: transparent; padding: 8px; cursor: pointer; color: var(--text); position: relative; z-index: 2; }
 
@@ -242,7 +239,7 @@ button { color: inherit; }
   letter-spacing: .1em;
   text-transform: uppercase;
   background: rgba(var(--accent-rgb), 0.12);
-  color: #d1e4f8;
+  color: #d2d7f2;
 }
 /* In the hero the eyebrow reads as the headline's cap rule rather than a
    loose tag, so it spans the H1's own measure (same 690px max) instead of
@@ -271,9 +268,10 @@ button { color: inherit; }
   letter-spacing: -.01em;
   line-height: 1.15;
   color: #ffffff;
-  background: rgba(var(--accent-rgb), 0.1);
-  border-color: rgba(var(--accent-rgb), 0.45);
-  box-shadow: 0 6px 26px rgba(var(--accent-rgb), 0.18);
+  /* Purple like the sections below (2026-09-29, Sarra). */
+  background: rgba(120, 40, 247, 0.5);
+  border-color: rgba(169, 139, 255, 0.7);
+  box-shadow: 0 6px 26px rgba(120, 40, 247, 0.35);
   /* Carries the contrast against bright video frames without painting a
      scrim over them — same technique the transparent nav's links use. */
   text-shadow: 0 2px 10px rgba(var(--shade-rgb), 0.85), 0 0 26px rgba(var(--shade-rgb), 0.5);
@@ -311,10 +309,10 @@ button { color: inherit; }
      is top-aligned rather than centred. */
   margin-top: .38em;
   flex: none;
-  background: var(--digital-blue);
-  box-shadow: 0 0 14px rgba(var(--digital-blue-rgb), 0.9);
+  background: #ffffff;
+  box-shadow: 0 0 14px rgba(169, 139, 255, 0.95);
 }
-.eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--digital-blue); animation: pulse 1.8s ease-in-out infinite; }
+.eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--action); animation: pulse 1.8s ease-in-out infinite; }
 h1, h2, h3, p { margin-top: 0; }
 h1, h2, h3, blockquote { font-family: var(--font-display); }
 /* The services headline, at its original size and spacing, on the video.
@@ -331,8 +329,10 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 }
 .reveal-line-mask { display: block; overflow: hidden; }
 .reveal-line-inner { display: block; }
-.hero-h1 .underline { position: relative; display: inline-block; font-style: italic; color: #6fb4ff; } /* the action blue, lifted to read over the video */
+.hero-h1 .underline { position: relative; display: inline-block; font-style: italic; color: #9b6bff; text-shadow: 0 2px 10px rgba(var(--shade-rgb), 0.85); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 18px; }
+.hero-actions .button.secondary { color: var(--text); border-color: rgba(var(--text-rgb), 0.35); }
+.hero-actions .button.secondary:hover { background: rgba(var(--text-rgb), 0.08); border-color: var(--gold); }
 
 /* ---------- Cinematic backgrounds ---------- */
 .cine-bg {
@@ -376,10 +376,12 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   cursor: pointer;
   transition: transform .2s ease, border-color .2s ease, background .2s ease;
 }
-.video-slot-sound:hover { transform: translateY(-2px); border-color: var(--gold-bright); background: rgba(7, 7, 10, 0.65); }
+.video-slot-sound:hover { transform: translateY(-2px); border-color: rgba(173, 133, 214, 0.85); background: rgba(7, 7, 10, 0.65); }
 /* Sound currently audible — matches the cinematic toggle's own pressed
    treatment so the two controls in the row read as one set. */
-.video-slot-sound[aria-pressed="true"] { border-color: var(--gold-bright); background: rgba(var(--accent-rgb), 0.35); }
+/* On: the purple glass of the hero's "Digital Marketing Agency par IA" pill
+   (2026-09-29, was turquoise). */
+.video-slot-sound[aria-pressed="true"] { border-color: rgba(169, 139, 255, 0.7); background: rgba(120, 40, 247, 0.5); }
 
 /* Sits in the same top-right control row as .video-slot-sound, always to
    its left — right offset accounts for the sound button's own width plus
@@ -387,7 +389,9 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    currently rendered (it disappears once unmuted). */
 .hero-cinematic-toggle {
   position: absolute;
-  right: 154px;
+  /* Clears the sound button at its widest label ("Désactiver le son",
+     163px, from right: 20px) with an 8px gap; at 154px they overlapped. */
+  right: 192px;
   top: 100px;
   z-index: 41;
   display: inline-flex;
@@ -406,10 +410,10 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   cursor: pointer;
   transition: transform .2s ease, border-color .2s ease, background .2s ease;
 }
-.hero-cinematic-toggle:hover { transform: translateY(-2px); border-color: var(--gold-bright); background: rgba(7, 7, 10, 0.65); }
-.hero-cinematic-toggle[aria-pressed="true"] { border-color: var(--gold-bright); background: rgba(var(--accent-rgb), 0.35); }
+.hero-cinematic-toggle:hover { transform: translateY(-2px); border-color: rgba(173, 133, 214, 0.85); background: rgba(7, 7, 10, 0.65); }
+.hero-cinematic-toggle[aria-pressed="true"] { border-color: rgba(169, 139, 255, 0.7); background: rgba(120, 40, 247, 0.5); }
 .cine-glow { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .5; }
-.cine-glow-gold { width: 46%; aspect-ratio: 1; background: var(--digital-blue); top: -10%; left: -8%; }
+.cine-glow-gold { width: 46%; aspect-ratio: 1; background: var(--theme-violet); top: -10%; left: -8%; }
 .cine-glow-bronze { width: 40%; aspect-ratio: 1; background: var(--bronze); bottom: -14%; right: -6%; opacity: .35; }
 .cine-glow-champagne { width: 38%; aspect-ratio: 1; background: var(--champagne); top: 30%; right: 10%; opacity: .12; }
 .cine-glow-soft { opacity: .22; }
@@ -439,7 +443,10 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    bridge the handoff (see CinematicBackground fallback and
    .section-dark-bridge below), then deepens toward purple at its bottom
    edge to hand off into Pricing. */
-.marquee { background: linear-gradient(100deg, var(--band-cyan), var(--band-teal) 55%, var(--blue-deep)); overflow: hidden; }
+/* position/z-index: the hero's sticky video overlaps this strip, and a
+   static block's background paints under it (only the moving text showed).
+   Positioned, the strip paints above the video. */
+.marquee { position: relative; z-index: 1; background: linear-gradient(100deg, #6a1fe0, #8438ff 55%, #6a1fe0); overflow: hidden; }
 .marquee-track { display: flex; width: max-content; padding: 17px 0; animation: ticker 27s linear infinite; }
 .marquee-item { display: flex; align-items: center; }
 .marquee-pair { display: flex; align-items: center; gap: 26px; padding-right: 26px; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--text); }
@@ -453,12 +460,12 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    palette regardless of the global --ink/--text flip, and a scrim sits
    between the video and content so text stays legible over any footage. */
 .section-dark {
-  --ink: #071527;
-  --panel: #0d2c53;
-  --panel-raised: #12345f;
-  --text: #f2f5f9;
-  --muted: #ccd9e8;
-  --muted-dim: #c9d5e5;
+  --ink: #0a0e24;
+  --panel: #6e29db;
+  --panel-raised: #1a2560;
+  --text: #ffffff;
+  --muted: #eef0fb;
+  --muted-dim: #bcc3e4;
   --line: rgba(var(--text-rgb), 0.12);
   --line-strong: rgba(var(--text-rgb), 0.22);
   background: var(--panel);
@@ -496,8 +503,10 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(var(--digital-blue-rgb), 0.35) 0%, transparent 18%),
-    linear-gradient(0deg, var(--band-blue) 0%, rgba(var(--band-blue-rgb), 0.72) 12%, rgba(var(--band-blue-rgb), 0.32) 24%, transparent 34%);
+    linear-gradient(0deg, var(--band-blue) 0%, rgba(var(--band-blue-rgb), 0.72) 12%, rgba(var(--band-blue-rgb), 0.32) 24%, transparent 34%),
+    /* Sarra's bright violet over the grey texture video (2026-09-29): the
+       footage still moves underneath, at about 15%. White text 7:1. */
+    linear-gradient(180deg, rgba(120, 40, 247, 0.86) 0%, rgba(101, 54, 236, 0.86) 60%, rgba(120, 40, 247, 0.9) 100%);
 }
 .section-head { display: grid; grid-template-columns: 1fr .72fr; gap: 50px; align-items: end; margin-bottom: 54px; }
 .section-kicker { color: var(--gold); text-transform: uppercase; letter-spacing: .13em; font-size: 12px; font-weight: 700; }
@@ -516,16 +525,19 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    bands carrying LIGHT text — the band gradients below were rebuilt from
    the brand colours, so text/lines/glass all invert to match. */
 .section-vivid {
-  --text: #f2f5f9;
-  --muted: #ccd9e8;
-  --muted-dim: #c9d5e5;
+  /* White on the bright bands: 4.6:1 or more everywhere text sits. The
+     lighter greys used on navy fall under 4.5:1 on the blue stops. */
+  --text: #ffffff;
+  --muted: #ffffff;
+  --muted-dim: #f4f5fd;
   --line: rgba(var(--text-rgb), 0.16);
   --line-strong: rgba(var(--text-rgb), 0.28);
-  --on-accent: #f2f5f9;
+  --on-accent: #f3f4fb;
   color: var(--text);
   isolation: isolate;
 }
-.section-vivid .section-kicker { color: var(--brand-cyan); }
+.section-vivid .section-kicker,
+.section-dark .section-kicker { color: #ffffff; }
 /* Glass panels on the vivid bands (the subscriptions table, FitList's
    index rail) need a substantially more opaque fill than the site default:
    the bands behind them are bright and saturated, so a 0.28 veil left the
@@ -537,7 +549,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    through and washed the panel back toward the band's own colour. Killing
    the filter and the translucency puts the copy on one known surface. */
 .section-vivid .glass {
-  background: #0d294c;
+  background: #101633;
   border-color: rgba(var(--text-rgb), 0.3);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -548,16 +560,13 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 
 /* Ends on --band-magenta, where WorkShowcase starts, now that FitList (the
    band that used to bridge purple -> magenta) is off the page (2026-09-25). */
-.section-vivid-pricing { background: linear-gradient(180deg, var(--band-blue) 0%, var(--band-indigo) 40%, var(--band-purple) 75%, var(--band-magenta) 100%); }
+.section-vivid-pricing { background: linear-gradient(180deg, var(--grad-1) 0%, var(--grad-2) 35%, var(--grad-3) 70%, var(--grad-4) 100%); }
 /* Pricing's head is rebalanced against the site default: the "Services"
    kicker carries more weight (it's the nav's landing label) while the long
    headline drops a step so it stops dwarfing it. Scoped to #pricing so the
-   other sections keep the global 12px/70px scale.
-   Electric Gold (#FFD500) is deliberately off-palette — it's the one warm
-   accent on an all-cool page, which is what makes this section's label
-   read as the landing marker rather than another cyan kicker. It clears
-   6.3:1 on the band-blue it sits over. The #id selector (1,1,0) already
-   outranks `.section-vivid .section-kicker` (0,2,0), so no !important. */
+   other sections keep the global 12px/70px scale. The #id selector
+   (1,1,0) already outranks `.section-vivid .section-kicker` (0,2,0), so no
+   !important. */
 /* Set in the display serif at sentence case — the same typeface and
    treatment as the section headings like "Quatre packs pour faire décoller
    votre activité." — rather than the uppercase sans the kicker uses
@@ -583,11 +592,11 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
      VideoCarousel   pink -> sky
      AICommercials   sky -> mint -> lavender
      ProcessTimeline lavender -> pink -> peach -> coral */
-.section-vivid-work { background: linear-gradient(180deg, var(--band-magenta) 0%, var(--band-purple) 100%); }
-.section-vivid-carousel { background: linear-gradient(180deg, var(--band-purple) 0%, var(--band-teal) 100%); }
+.section-vivid-work { background: linear-gradient(180deg, var(--grad-4) 0%, var(--grad-5) 100%); }
+.section-vivid-carousel { background: linear-gradient(180deg, var(--grad-5) 0%, var(--grad-6) 100%); }
 /* Ends on --band-magenta, where the quote band starts, since the process
    section that used to sit between them left the page (2026-09-25). */
-.section-vivid-reels { background: linear-gradient(180deg, var(--band-teal) 0%, var(--band-cyan) 50%, var(--band-magenta) 100%); }
+.section-vivid-reels { background: linear-gradient(180deg, var(--grad-6) 0%, var(--grad-7) 100%); }
 .section-vivid-process { background: linear-gradient(180deg, var(--band-indigo) 0%, var(--band-purple) 40%, var(--band-magenta) 75%, var(--band-magenta) 100%); }
 /* ProcessTimeline's GSAP ScrollTrigger pin (see its own comment) wraps the
    section in a `.pin-spacer` sized to the full scroll runway (several
@@ -605,7 +614,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .glass-card-content { position: relative; height: 100%; }
 
 /* ---------- Services ---------- */
-.services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 10px; align-items: stretch; }
+.services { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 10px; align-items: stretch; perspective: 1000px; }
 /* Each card is wrapped in a <Reveal>, so the wrapper is the grid item and
    stretches while the card inside only grew to its own text. Passing the
    row height down is what puts all four cart buttons on one line. */
@@ -733,27 +742,28 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 .service-cart svg { width: 18px; height: 18px; flex: none; }
-/* ---------- Pack cards: neon cyan (2026-09-25, Sarra's pick "A") ----------
-   Near-black glass inside an electric-cyan edge that turns slowly: ::before
+/* ---------- Pack cards: neon edge (2026-09-25, Sarra's pick "A") ----------
+   Near-black glass inside a neon edge that turns slowly (violet, blue,
+   turquoise, aqua since 2026-09-29): ::before
    is an oversized conic gradient spinning behind the card, ::after the dark
    glass laid over it 1.5px in, so only a thin ring of the gradient shows.
    Each card turns on its own offset (--spark-shift, set per card below).
    Pack names glitter (see .service h3). Cart buttons keep the site's
-   turquoise "Démarrer un projet" gradient. These rules come after the
+   "Démarrer un projet" gradient. These rules come after the
    per-pack colour rules above and win on specificity. */
 .section-dark .service {
   --accent: var(--gold-bright);
   isolation: isolate;
   background: transparent;
   border: 0;
-  box-shadow: 0 0 30px rgba(22, 135, 255, 0.24), 0 18px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 30px rgba(56, 104, 220, 0.24), 0 18px 50px rgba(0, 0, 0, 0.5);
 }
 .section-dark .service::before {
   content: "";
   position: absolute;
   inset: -50%;
   z-index: -2;
-  background: conic-gradient(from 0deg, #1687ff, #8cc4ff, #2f8cff, #0e3567 40%, #1687ff 60%, #8cc4ff, #1687ff);
+  background: conic-gradient(from 0deg, #7828f7, #3868dc, #20c7d0, #79dbe5 40%, #7828f7 60%, #3868dc, #7828f7);
   animation: neon-edge 6s linear infinite;
   animation-delay: calc(var(--spark-shift, 0s) * 3);
 }
@@ -764,15 +774,31 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   z-index: -1;
   border-radius: calc(var(--radius) - 1.5px);
   background:
-    radial-gradient(120% 60% at 85% 0%, rgba(22, 135, 255, 0.16), transparent 55%),
-    linear-gradient(160deg, #0d2749, #051222);
+    radial-gradient(120% 60% at 85% 0%, rgba(120, 40, 247, 0.16), transparent 55%),
+    linear-gradient(160deg, #141b47, #0b1030);
 }
 @keyframes neon-edge { to { transform: rotate(360deg); } }
-.section-dark .service:hover { box-shadow: 0 0 44px rgba(22, 135, 255, 0.42), 0 24px 60px rgba(0, 0, 0, 0.55); }
+.section-dark .service:hover { box-shadow: 0 0 44px rgba(56, 104, 220, 0.42), 0 24px 60px rgba(0, 0, 0, 0.55); }
+/* Hover spotlight (2026-09-29, Sarra's pick "C"): the pack under the pointer
+   rises and glows purple, the other three step back. Mouse and trackpad only,
+   so a tap on a phone never leaves a card stuck raised; the lift itself is
+   skipped for visitors who reduce motion (the dimming and glow stay). The
+   hover target is the card's wrapper (Reveal), hence `> :hover .service`.
+   The lift uses `translate` and `scale`, not `transform`: GlassCard already
+   tilts the card toward the cursor with an inline transform, which would
+   override a CSS one; the separate properties add to that tilt instead. */
+@media (hover: hover) and (pointer: fine) {
+  .section-dark .services .service { transition: transform .28s cubic-bezier(.16, 1, .3, 1), translate .35s cubic-bezier(.2, .9, .3, 1.2), scale .35s cubic-bezier(.2, .9, .3, 1.2), box-shadow .35s ease, border-color .28s ease, opacity .35s ease, filter .35s ease; }
+  .services:has(> :hover) > :not(:hover) .service { opacity: .72; filter: saturate(.8); }
+  .section-dark .services > :hover .service { box-shadow: 0 0 46px rgba(120, 40, 247, 0.6), 0 30px 60px rgba(0, 0, 0, 0.55); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .section-dark .services > :hover .service { translate: 0 -16px; scale: 1.04; }
+}
 .section-dark .service .service-number {
   font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
-  color: #6fb4ff;
-  text-shadow: 0 0 14px rgba(22, 135, 255, 0.7);
+  color: #79dbe5;
+  text-shadow: 0 0 14px rgba(32, 199, 208, 0.7);
 }
 /* Glittering pack name: aqua letters with white glitter specks drifting
    inside them and a bright highlight sweeping across, plus a star that
@@ -781,16 +807,17 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .section-dark .service h3 {
   position: relative;
   width: fit-content;
-  /* Logo gradient (2026-09-26, Sarra's pick "D"): DIGITAL BLUE #1687FF to
-     AI PURPLE #8527FF from the charter, lifted 25% so it reads on the dark
-     glass. Titles are 22-27px, where 3:1 is the bar; the violet end clears
-     it. The star after the name still twinkles. */
-  background: linear-gradient(95deg, #1687ff 0%, #5b6dff 55%, #8527ff 100%);
+  background:
+    radial-gradient(circle, #ffffff 0 0.8px, transparent 1.5px) 0 0 / 13px 10px,
+    radial-gradient(circle, #ffffff 0 0.6px, transparent 1.3px) 5px 4px / 17px 13px,
+    linear-gradient(100deg, #79dbe5 0%, #b8f1f5 22%, #ffffff 30%, #b8f1f5 38%, #a98bff 60%, #79dbe5 100%) 0 0 / 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   text-shadow: none;
-  filter: drop-shadow(0 0 10px rgba(22, 135, 255, 0.35)) brightness(1.25);
+  filter: drop-shadow(0 0 7px rgba(121, 219, 229, 0.55));
+  animation: name-glitter 5s linear infinite;
+  animation-delay: calc(var(--spark-shift, 0s) * 2);
 }
 .section-dark .service h3::after {
   content: "✦";
@@ -800,7 +827,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   font-size: 13px;
   -webkit-text-fill-color: #ffffff;
   color: #ffffff;
-  text-shadow: 0 0 10px rgba(22, 135, 255, 0.95);
+  text-shadow: 0 0 10px rgba(32, 199, 208, 0.95);
   animation: sparkle-twinkle 2.2s ease-in-out infinite;
   animation-delay: var(--spark-shift, 0s);
 }
@@ -815,20 +842,20 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .section-dark .service .service-summary,
 .section-dark .service .service-toggle { color: #ffffff; }
 .section-dark .service .service-summary,
-.section-dark .service .service-toggle { border-top-color: rgba(209, 228, 248, 0.22); }
+.section-dark .service .service-toggle { border-top-color: rgba(197, 203, 234, 0.22); }
 .section-dark .service .service-copy,
-.section-dark .service .service-list { color: rgba(242, 245, 249, 0.85); }
-.section-dark .service .service-list li { border-top-color: rgba(209, 228, 248, 0.18); }
+.section-dark .service .service-list { color: rgba(243, 244, 251, 0.85); }
+.section-dark .service .service-list li { border-top-color: rgba(197, 203, 234, 0.18); }
 .section-dark .service .service-contact { color: var(--gold-bright); }
-/* One button style site-wide: the "Démarrer un projet" fill (action blue
-   since 2026-09-26, see tokens.css). */
+/* One button style site-wide: the "Démarrer un projet" fill (see
+   --button-fill in tokens.css). */
 .section-dark .service .service-cart {
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
   border: 1px solid var(--button-edge);
-  box-shadow: 0 8px 22px rgba(var(--digital-blue-rgb), 0.3);
+  box-shadow: 0 8px 22px rgba(var(--action-rgb), 0.3);
 }
-.section-dark .service .service-cart:hover { background: var(--button-fill-hover); box-shadow: 0 12px 30px rgba(var(--digital-blue-rgb), 0.45); }
+.section-dark .service .service-cart:hover { background: var(--button-fill-hover); box-shadow: 0 12px 30px rgba(var(--action-rgb), 0.45); }
 .section-dark .service .service-cart[data-in-cart] {
   background: rgba(var(--ground-rgb), 0.45);
   color: var(--text);
@@ -845,8 +872,8 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   overflow: hidden;
   border-radius: inherit;
   pointer-events: none;
-  color: rgba(220, 236, 255, 0.95);
-  text-shadow: 0 0 10px rgba(140, 196, 255, 0.95), 0 0 2px #ffffff;
+  color: rgba(216, 246, 249, 0.95);
+  text-shadow: 0 0 10px rgba(32, 199, 208, 0.95), 0 0 2px #ffffff;
 }
 .service-sparkles span {
   position: absolute;
@@ -941,7 +968,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   background:
     linear-gradient(150deg, rgba(var(--text-rgb), 0.07), rgba(var(--text-rgb), 0) 58%),
     var(--tint, rgba(var(--text-rgb), 0.05)),
-    #0d294c;
+    #101633;
   border: 1px solid color-mix(in srgb, var(--deep, #fff) 50%, transparent);
   /* MUST be explicit, not merely omitted. These cards are rendered by
      GlassCard, which always applies the `.glass` class, and `.glass` sets
@@ -965,9 +992,9 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .pricing-service .glass-card-glow { display: none; }
 .pricing-service h3 { font-size: 22px; letter-spacing: -.01em; margin-bottom: 12px; line-height: 1.2; color: var(--deep, var(--text)); }
 .pricing-service p { margin: 0; color: var(--tint-body); font-size: 16px; line-height: 1.65; }
-/* Service cards in the packs' neon-cyan look (2026-09-25): near-black glass
-   inside a turning cyan edge, glittering titles. Same construction as
-   `.section-dark .service` (see "Pack cards: neon cyan"): ::before is the
+/* Service cards in the packs' neon look (2026-09-25): near-black glass
+   inside a turning neon edge, glittering titles. Same construction as
+   `.section-dark .service` (see "Pack cards: neon edge"): ::before is the
    spinning conic gradient, ::after the dark glass laid 1.5px inside it.
    Neighbouring cards start their turn at different points. */
 .section-vivid .pricing-service {
@@ -976,14 +1003,14 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   overflow: hidden;
   background: transparent;
   border: 0;
-  box-shadow: 0 0 26px rgba(22, 135, 255, 0.2), 0 16px 44px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 26px rgba(56, 104, 220, 0.2), 0 16px 44px rgba(0, 0, 0, 0.45);
 }
 .section-vivid .pricing-service::before {
   content: "";
   position: absolute;
   inset: -50%;
   z-index: -2;
-  background: conic-gradient(from 0deg, #1687ff, #8cc4ff, #2f8cff, #0e3567 40%, #1687ff 60%, #8cc4ff, #1687ff);
+  background: conic-gradient(from 0deg, #7828f7, #3868dc, #20c7d0, #79dbe5 40%, #7828f7 60%, #3868dc, #7828f7);
   animation: neon-edge 8s linear infinite;
 }
 .section-vivid .pricing-service::after {
@@ -993,30 +1020,29 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   z-index: -1;
   border-radius: calc(var(--radius-sm) - 1.5px);
   background:
-    radial-gradient(120% 70% at 88% 0%, rgba(22, 135, 255, 0.13), transparent 55%),
-    linear-gradient(160deg, #0d2749, #051222);
+    radial-gradient(120% 70% at 88% 0%, rgba(120, 40, 247, 0.13), transparent 55%),
+    linear-gradient(160deg, #141b47, #0b1030);
 }
 .pricing-services > :nth-child(3n+2) .pricing-service::before { animation-delay: -2.7s; }
 .pricing-services > :nth-child(3n) .pricing-service::before { animation-delay: -5.3s; }
 .section-vivid .pricing-service:hover {
   transform: translateY(-3px);
-  box-shadow: 0 0 40px rgba(22, 135, 255, 0.4), 0 22px 54px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 40px rgba(56, 104, 220, 0.4), 0 22px 54px rgba(0, 0, 0, 0.5);
 }
-.section-vivid .pricing-service p { color: rgba(242, 245, 249, 0.86); }
+.section-vivid .pricing-service p { color: rgba(243, 244, 251, 0.86); }
 /* Glittering title, same recipe as the pack names. */
 .section-vivid .pricing-service h3 {
   position: relative;
   width: fit-content;
-  /* Logo gradient (2026-09-26, Sarra's pick "D"): DIGITAL BLUE #1687FF to
-     AI PURPLE #8527FF from the charter, lifted 25% so it reads on the dark
-     glass. Titles are 22-27px, where 3:1 is the bar; the violet end clears
-     it. The star after the name still twinkles. */
-  background: linear-gradient(95deg, #1687ff 0%, #5b6dff 55%, #8527ff 100%);
+  background:
+    radial-gradient(circle, #ffffff 0 0.8px, transparent 1.5px) 0 0 / 13px 10px,
+    radial-gradient(circle, #ffffff 0 0.6px, transparent 1.3px) 5px 4px / 17px 13px,
+    linear-gradient(100deg, #79dbe5 0%, #b8f1f5 22%, #ffffff 30%, #b8f1f5 38%, #a98bff 60%, #79dbe5 100%) 0 0 / 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  text-shadow: none;
-  filter: drop-shadow(0 0 10px rgba(22, 135, 255, 0.35)) brightness(1.25);
+  filter: drop-shadow(0 0 7px rgba(121, 219, 229, 0.5));
+  animation: name-glitter 5s linear infinite;
 }
 .section-vivid .pricing-service h3::after {
   content: "✦";
@@ -1026,7 +1052,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   font-size: 12px;
   -webkit-text-fill-color: #ffffff;
   color: #ffffff;
-  text-shadow: 0 0 10px rgba(22, 135, 255, 0.95);
+  text-shadow: 0 0 10px rgba(32, 199, 208, 0.95);
   animation: sparkle-twinkle 2.4s ease-in-out infinite;
 }
 .pricing-services > :nth-child(3n+2) .pricing-service h3 { animation-delay: -1.6s; }
@@ -1054,7 +1080,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    pricing cards: .glass's saturate() would pull the video behind it
    through the panel and wash the copy out. */
 .section-dark .pricing-table-card {
-  background: #0d294c;
+  background: #101633;
   border-color: rgba(var(--text-rgb), 0.25);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -1068,8 +1094,8 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .pricing-price { font-weight: 700; white-space: nowrap; color: var(--on-accent); }
 .section-dark .pricing-price { color: var(--gold-bright); }
 .pricing-cta { display: flex; justify-content: center; }
-/* Subscriptions table in the packs' neon-cyan look (2026-09-25): dark glass
-   inside a turning cyan edge, cyan monospace headers, glittering plan names,
+/* Subscriptions table in the packs' neon look (2026-09-25): dark glass
+   inside a turning neon edge, aqua monospace headers, glittering plan names,
    glowing prices. The card clips the spinning edge; sideways scrolling on
    narrow screens moves to the inner content box so the edge stays put.
    The table is wide and short, so the spinning layer is a square wider than
@@ -1080,7 +1106,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   overflow: hidden;
   background: transparent;
   border: 0;
-  box-shadow: 0 0 30px rgba(22, 135, 255, 0.2), 0 18px 50px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 30px rgba(56, 104, 220, 0.2), 0 18px 50px rgba(0, 0, 0, 0.45);
 }
 .section-dark .pricing-table-card .glass-card-content { overflow-x: auto; }
 .section-dark .pricing-table-card::before {
@@ -1091,7 +1117,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   width: 150%;
   aspect-ratio: 1;
   z-index: -2;
-  background: conic-gradient(from 0deg, #1687ff, #8cc4ff, #2f8cff, #0e3567 40%, #1687ff 60%, #8cc4ff, #1687ff);
+  background: conic-gradient(from 0deg, #7828f7, #3868dc, #20c7d0, #79dbe5 40%, #7828f7 60%, #3868dc, #7828f7);
   animation: neon-edge-centered 9s linear infinite;
 }
 .section-dark .pricing-table-card::after {
@@ -1101,8 +1127,8 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   z-index: -1;
   border-radius: calc(var(--radius) - 1.5px);
   background:
-    radial-gradient(80% 90% at 90% 0%, rgba(22, 135, 255, 0.12), transparent 55%),
-    linear-gradient(160deg, #0d2749, #051222);
+    radial-gradient(80% 90% at 90% 0%, rgba(120, 40, 247, 0.12), transparent 55%),
+    linear-gradient(160deg, #141b47, #0b1030);
 }
 @keyframes neon-edge-centered {
   from { transform: translate(-50%, -50%) rotate(0deg); }
@@ -1110,23 +1136,25 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 }
 .section-dark .pricing-table thead th {
   font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
-  color: #6fb4ff;
-  text-shadow: 0 0 12px rgba(22, 135, 255, 0.6);
-  border-bottom-color: rgba(22, 135, 255, 0.3);
+  color: #79dbe5;
+  text-shadow: 0 0 12px rgba(32, 199, 208, 0.6);
+  border-bottom-color: rgba(32, 199, 208, 0.3);
 }
-.section-dark .pricing-table tbody tr:not(:last-child) td { border-bottom-color: rgba(22, 135, 255, 0.14); }
-.section-dark .pricing-price { color: var(--gold-bright); text-shadow: 0 0 12px rgba(22, 135, 255, 0.5); }
+.section-dark .pricing-table tbody tr:not(:last-child) td { border-bottom-color: rgba(32, 199, 208, 0.14); }
+.section-dark .pricing-price { color: var(--gold-bright); text-shadow: 0 0 12px rgba(32, 199, 208, 0.5); }
 /* Plan names glitter like the pack names (same recipe as .service h3). */
 .section-dark .plan-name {
   position: relative;
   display: inline-block;
-  /* Same logo gradient as the pack titles, on lighter stops: plan names are
-     small text, and #8527FF itself would fall under 4.5:1 here. */
-  background: linear-gradient(95deg, #5aa9ff 0%, #8f8bff 55%, #b085ff 100%);
+  background:
+    radial-gradient(circle, #ffffff 0 0.8px, transparent 1.5px) 0 0 / 13px 10px,
+    radial-gradient(circle, #ffffff 0 0.6px, transparent 1.3px) 5px 4px / 17px 13px,
+    linear-gradient(100deg, #79dbe5 0%, #b8f1f5 22%, #ffffff 30%, #b8f1f5 38%, #a98bff 60%, #79dbe5 100%) 0 0 / 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 0 8px rgba(22, 135, 255, 0.35));
+  filter: drop-shadow(0 0 6px rgba(121, 219, 229, 0.5));
+  animation: name-glitter 5s linear infinite;
 }
 .section-dark .pricing-table tbody tr:nth-child(2) .plan-name { animation-delay: -1.7s; }
 .section-dark .pricing-table tbody tr:nth-child(3) .plan-name { animation-delay: -3.4s; }
@@ -1178,9 +1206,9 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   align-items: center;
   gap: 9px;
   padding: 7px 16px 7px 9px;
-  border: 1px solid rgba(140, 196, 255, 0.45);
+  border: 1px solid rgba(32, 199, 208, 0.45);
   border-radius: 999px;
-  background: rgba(5, 18, 34, 0.55);
+  background: rgba(16, 22, 51, 0.55);
   color: var(--gold-bright);
   font-size: 15px;
   font-weight: 700;
@@ -1188,7 +1216,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   white-space: nowrap;
   transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.work-instagram:hover { transform: translateY(-2px); border-color: #6fb4ff; box-shadow: 0 0 22px rgba(22, 135, 255, 0.35); }
+.work-instagram:hover { transform: translateY(-2px); border-color: #20c7d0; box-shadow: 0 0 22px rgba(56, 104, 220, 0.35); }
 .work-instagram:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .work-instagram:hover { transform: none; } }
 .work-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 420px; gap: 18px; }
@@ -1206,7 +1234,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .work-card { position: relative; border-radius: 25px; height: 100%; }
 .work-tag { position: absolute; top: 18px; left: 18px; z-index: 2; padding: 8px 11px; border-radius: 999px; background: rgba(7,7,10,0.55); border: 1px solid var(--line-strong); font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--champagne); backdrop-filter: blur(8px); }
 .website-showcase { position: absolute; inset: 0; padding: 83px 38px 35px; }
-.website-window { height: 100%; border: 1px solid var(--line-strong); border-radius: 14px; background: linear-gradient(165deg, #1687ff, #60a0e8 55%, #a8d3ff 100%); overflow: hidden; transform: rotate(-2deg); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+.website-window { height: 100%; border: 1px solid var(--line-strong); border-radius: 14px; background: linear-gradient(165deg, #7828f7, #3868dc 55%, #20c7d0 100%); overflow: hidden; transform: rotate(-2deg); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
 .website-window-top { height: 36px; background: var(--panel-raised); border-bottom: 1px solid var(--line); }
 .website-window-body { padding: 18px 22px 16px; color: var(--text); }
 .website-window-body strong { color: var(--gold); font-size: 12px; }
@@ -1214,8 +1242,8 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .website-lines { width: 65%; display: grid; gap: 8px; }
 .website-lines span { height: 7px; border-radius: 99px; background: var(--line-strong); }
 .website-lines span:last-child { width: 67%; }
-.video-showcase { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(160deg, #10325e, var(--bronze)); }
-.video-product { width: 108px; height: 176px; border-radius: 31px 31px 22px 22px; background: linear-gradient(165deg, #a8d3ff, #60a0e8 55%, #1687ff 100%); transform: rotate(9deg); box-shadow: 0 20px 50px rgba(0,0,0,.5); display: grid; place-items: center; color: var(--on-accent); font-weight: 700; font-size: 18px; text-align: center; line-height: .95; }
+.video-showcase { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(160deg, #172050, var(--bronze)); }
+.video-product { width: 108px; height: 176px; border-radius: 31px 31px 22px 22px; background: linear-gradient(165deg, #b8f1f5, #79dbe5 55%, #a98bff 100%); transform: rotate(9deg); box-shadow: 0 20px 50px rgba(0,0,0,.5); display: grid; place-items: center; color: var(--on-accent); font-weight: 700; font-size: 18px; text-align: center; line-height: .95; }
 /* Fills the work card edge to edge (VideoSlot's own .video-slot-video does the
    `cover` cropping). Distinct from .video-showcase, whose bronze gradient is
    tuned to the product-commercial card's fallback. */
@@ -1232,10 +1260,10 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .process-step h3 { position: relative; z-index: 1; margin-bottom: 12px; font-size: 20px; font-family: var(--font-display); font-weight: 600; }
 .process-step p { position: relative; z-index: 1; color: var(--muted); font-size: 13px; line-height: 1.6; }
 
-/* Process steps in the packs' neon-cyan look (2026-09-25): same build as
+/* Process steps in the packs' neon look (2026-09-25): same build as
    `.section-vivid .pricing-service`. ::before is the spinning conic
    gradient, ::after the dark glass laid 1.5px inside it, so only a thin
-   turning cyan ring shows. The scroll-scrubbed dimming (ProcessTimeline)
+   turning neon ring shows. The scroll-scrubbed dimming (ProcessTimeline)
    fades .process-step-inner, not the card, so the edge stays lit on every
    step and only the words dim. (The per-card step videos phones used to
    play here were removed the same day, with the desktop video cursor.) */
@@ -1245,14 +1273,14 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   overflow: hidden;
   background: transparent;
   border: 0;
-  box-shadow: 0 0 26px rgba(22, 135, 255, 0.2), 0 16px 44px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 0 26px rgba(56, 104, 220, 0.2), 0 16px 44px rgba(0, 0, 0, 0.45);
 }
 .section-vivid .process-step.glass::before {
   content: "";
   position: absolute;
   inset: -50%;
   z-index: -2;
-  background: conic-gradient(from 0deg, #1687ff, #8cc4ff, #2f8cff, #0e3567 40%, #1687ff 60%, #8cc4ff, #1687ff);
+  background: conic-gradient(from 0deg, #7828f7, #3868dc, #20c7d0, #79dbe5 40%, #7828f7 60%, #3868dc, #7828f7);
   animation: neon-edge 8s linear infinite;
 }
 .section-vivid .process-step.glass::after {
@@ -1262,8 +1290,8 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   z-index: -1;
   border-radius: calc(var(--radius-sm) - 1.5px);
   background:
-    radial-gradient(120% 70% at 88% 0%, rgba(22, 135, 255, 0.13), transparent 55%),
-    linear-gradient(160deg, #0d2749, #051222);
+    radial-gradient(120% 70% at 88% 0%, rgba(120, 40, 247, 0.13), transparent 55%),
+    linear-gradient(160deg, #141b47, #0b1030);
 }
 .process > .process-step:nth-child(2)::before { animation-delay: -2s; }
 .process > .process-step:nth-child(3)::before { animation-delay: -4s; }
@@ -1271,26 +1299,26 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .section-vivid .process-step-number {
   font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
   font-size: 15px;
-  color: #6fb4ff;
-  text-shadow: 0 0 14px rgba(22, 135, 255, 0.7);
+  color: #79dbe5;
+  text-shadow: 0 0 14px rgba(32, 199, 208, 0.7);
 }
-.section-vivid .process-step-track { background: rgba(22, 135, 255, 0.16); }
+.section-vivid .process-step-track { background: rgba(120, 40, 247, 0.16); }
 .section-vivid .process-step-fill {
-  background: linear-gradient(90deg, #1687ff, #8cc4ff);
-  box-shadow: 0 0 10px rgba(22, 135, 255, 0.8);
+  background: linear-gradient(90deg, #7828f7, #20c7d0);
+  box-shadow: 0 0 10px rgba(56, 104, 220, 0.8);
 }
-.section-vivid .process-step p { color: rgba(242, 245, 249, 0.86); }
+.section-vivid .process-step p { color: rgba(243, 244, 251, 0.86); }
 /* Glittering step name, same recipe as the pack names. */
 .section-vivid .process-step h3 {
   width: fit-content;
   background:
     radial-gradient(circle, #ffffff 0 0.8px, transparent 1.5px) 0 0 / 13px 10px,
     radial-gradient(circle, #ffffff 0 0.6px, transparent 1.3px) 5px 4px / 17px 13px,
-    linear-gradient(100deg, #6fb4ff 0%, #b7d9ff 22%, #ffffff 30%, #b7d9ff 38%, #6fb4ff 55%, #9ccbff 100%) 0 0 / 250% 100%;
+    linear-gradient(100deg, #79dbe5 0%, #b8f1f5 22%, #ffffff 30%, #b8f1f5 38%, #a98bff 60%, #79dbe5 100%) 0 0 / 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 0 7px rgba(111, 180, 255, 0.5));
+  filter: drop-shadow(0 0 7px rgba(121, 219, 229, 0.5));
   animation: name-glitter 5s linear infinite;
 }
 .section-vivid .process-step h3::after {
@@ -1301,7 +1329,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   font-size: 12px;
   -webkit-text-fill-color: #ffffff;
   color: #ffffff;
-  text-shadow: 0 0 10px rgba(22, 135, 255, 0.95);
+  text-shadow: 0 0 10px rgba(32, 199, 208, 0.95);
   animation: sparkle-twinkle 2.4s ease-in-out infinite;
 }
 .process > .process-step:nth-child(2) h3 { animation-delay: -1.2s; }
@@ -1386,13 +1414,178 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 /* QuoteBox is the last light band before the page goes dark. The FAQ used
    to paint the second half of this gradient; it now sits on the closing
    area's starry background instead (see `.closing-area` below). */
-.section-wash-loop-start { background: linear-gradient(180deg, var(--band-magenta) 0%, var(--band-purple) 100%); }
+.section-wash-loop-start { background: linear-gradient(180deg, var(--grad-7) 0%, var(--grad-8) 40%, var(--grad-8) 100%); }
+/* Same turquoise as the FAQ below it (2026-09-29, Sarra), so the text on
+   it is navy and the accent deep violet, as in the closing area. */
+.quote-section {
+  --text: #101633;
+  --muted: #2a3566;
+  --text-rgb: 16, 22, 51;
+  --gold: #4a18b8;
+  --gold-bright: #4a18b8;
+}
 
 .quote-section { padding: 40px 0 110px; }
 .quote-box { position: relative; padding: 65px; border-radius: 32px; overflow: hidden; }
-.quote-box::after { content: "AI"; position: absolute; right: -30px; bottom: -100px; color: rgba(232,116,138,.08); font-size: 260px; font-weight: 700; line-height: 1; font-family: var(--font-display); }
+.quote-box::after { content: "AI"; position: absolute; right: -30px; bottom: -100px; color: rgba(16,22,51,.06); font-size: 260px; font-weight: 700; line-height: 1; font-family: var(--font-display); }
 .quote-box blockquote { position: relative; z-index: 1; max-width: 950px; margin: 0; font-size: clamp(34px, 5vw, 62px); line-height: 1; letter-spacing: -.02em; font-weight: 600; color: var(--text); }
-.quote-box p { position: relative; z-index: 1; margin: 31px 0 0; font-weight: 600; color: var(--gold); }
+.quote-box p { position: relative; z-index: 1; margin: 31px 0 0; font-weight: 600; color: var(--gold-bright); }
+/* White card on the turquoise, like the FAQ list: navy quote 13:1, violet
+   signature 7.4:1. */
+.quote-box.glass { background: rgba(255, 255, 255, 0.62); border-color: rgba(255, 255, 255, 0.75); }
+
+/* ---------- About us (2026-09-30) ---------- */
+/* The two co-founders, on their own band, "deep ocean" (Sarra's pick,
+   2026-09-30): it picks up the quote section's turquoise and deepens into
+   dark teal, and the starry FAQ fades in from that teal. White title, aqua
+   labels. Cards (Sarra: "neon, futuristic, the box can move"): the packs'
+   turning neon edge around dark navy glass, shimmering names with a
+   twinkling star, a fly-in entrance (Reveal variant="fly") and a hover
+   spotlight. Body text #e9f1f8 on the card: 12:1. */
+.section.about {
+  --text: #ffffff;
+  --muted: #e9f1f8;
+  --text-rgb: 243, 244, 251;
+  --gold: #ffffff;
+  --gold-bright: #79dbe5;
+  --about-fill: radial-gradient(120% 60% at 88% 0%, rgba(120, 40, 247, 0.22), transparent 55%), linear-gradient(160deg, #141b47 0%, #0b1030 100%);
+  --about-name: linear-gradient(100deg, #79dbe5 0%, #b8f1f5 22%, #ffffff 30%, #b8f1f5 38%, #a98bff 60%, #79dbe5 100%);
+  --about-star: #ffffff;
+  --about-glow: 0 0 30px rgba(56, 104, 220, 0.3), 0 18px 50px rgba(0, 0, 0, 0.45);
+  color: var(--text);
+  background: linear-gradient(180deg, var(--grad-8) 0%, #0f7f8f 12%, #0b5e70 45%, #0a3f55 100%);
+}
+.about .section-kicker { color: var(--gold); }
+.about-head { margin-bottom: 44px; }
+.about-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: stretch; perspective: 1000px; }
+.about-grid > * { height: 100%; }
+.about-card {
+  position: relative;
+  height: 100%;
+  padding: 32px 32px 28px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow: var(--about-glow);
+}
+/* .glass brings its own fill and border; the neon ring replaces both. */
+.about-card.glass { background: transparent; border: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.about-card::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: -2;
+  background: conic-gradient(from 0deg, #7828f7, #3868dc, #20c7d0, #79dbe5 40%, #7828f7 60%, #3868dc, #7828f7);
+  animation: neon-edge 8s linear infinite;
+}
+.about-grid > :nth-child(2) .about-card::before { animation-delay: -4s; }
+/* Always moving (Sarra, 2026-09-30: "the boxes moving, not static"): each
+   card floats up and down with a slight tilt, each at its own pace. Uses
+   `transform`, so the hover lift (`translate`/`scale`) adds on top. */
+.about-card { animation: about-float 6s ease-in-out infinite; }
+.about-grid > :nth-child(2) .about-card { animation-duration: 7.2s; animation-delay: -2.6s; }
+@keyframes about-float {
+  0%, 100% { transform: translateY(0) rotate(-0.35deg); }
+  50% { transform: translateY(-14px) rotate(0.35deg); }
+}
+.about-card::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  z-index: -1;
+  border-radius: calc(var(--radius) - 2px);
+  background: var(--about-fill);
+}
+.about-top { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; }
+.about-avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid var(--button-edge);
+  background: var(--button-fill);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  box-shadow: 0 0 0 4px rgba(120, 40, 247, 0.12), 0 8px 24px rgba(var(--action-rgb), 0.35);
+}
+.about-name {
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.1;
+  background: var(--about-name) 0 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: about-shimmer 6s linear infinite;
+}
+.about-name::after {
+  content: "\2726";
+  position: absolute;
+  top: -8px;
+  right: -16px;
+  font-size: 12px;
+  color: var(--about-star);
+  -webkit-text-fill-color: var(--about-star);
+  animation: sparkle-twinkle 2.4s ease-in-out infinite;
+}
+@keyframes about-shimmer { to { background-position: -250% 0; } }
+.about-role { display: block; margin-top: 7px; color: var(--gold-bright); text-transform: uppercase; letter-spacing: .13em; font-size: 12px; font-weight: 700; }
+.about-bio p { margin: 0 0 14px; color: var(--muted); font-size: 16px; line-height: 1.7; }
+.about-bio p:last-child { margin-bottom: 0; }
+/* Hover spotlight, as on the packs: mouse and trackpad only; no lift for
+   visitors who reduce motion. */
+@media (hover: hover) and (pointer: fine) {
+  .about-card { transition: translate .35s cubic-bezier(.2, .9, .3, 1.2), scale .35s cubic-bezier(.2, .9, .3, 1.2), box-shadow .35s ease, opacity .35s ease; }
+  .about-grid:has(> :hover) > :not(:hover) .about-card { opacity: .8; }
+  .about-grid > :hover .about-card { box-shadow: 0 0 46px rgba(120, 40, 247, 0.55), 0 26px 56px rgba(0, 0, 0, 0.45); }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .about-grid > :hover .about-card { translate: 0 -10px; scale: 1.02; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-card, .about-card::before, .about-name, .about-name::after { animation: none; }
+}
+
+/* Packs and service boxes always moving too (Sarra, 2026-09-30: "make
+   services boxes and the packs boxes move too"). The float sits on the
+   Reveal wrapper and animates the `translate`/`rotate` properties only, so it
+   adds to the fly-in (framer-motion's inline `transform`), the cursor tilt
+   (GlassCard's inline `transform`) and the pack hover lift (`translate` on
+   .service) instead of cancelling them. Staggered delays make each row a
+   slow wave. */
+.services > * { animation: box-float 6.5s ease-in-out infinite; }
+.services > :nth-child(2) { animation-delay: -1.6s; }
+.services > :nth-child(3) { animation-delay: -3.2s; }
+.services > :nth-child(4) { animation-delay: -4.8s; }
+.pricing-services > * { animation: box-float-soft 7s ease-in-out infinite; }
+.pricing-services > :nth-child(3n+2) { animation-delay: -2.3s; }
+.pricing-services > :nth-child(3n) { animation-delay: -4.6s; }
+.pricing-services > :nth-child(even) { animation-duration: 8s; }
+.pricing-services > :nth-child(n+7) { animation-duration: 7.6s; }
+@keyframes box-float {
+  0%, 100% { translate: 0 0; rotate: -0.4deg; }
+  50% { translate: 0 -12px; rotate: 0.4deg; }
+}
+@keyframes box-float-soft {
+  0%, 100% { translate: 0 0; rotate: -0.3deg; }
+  50% { translate: 0 -10px; rotate: 0.3deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .services > *, .pricing-services > * { animation: none; }
+}
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .about-card { padding: 26px 22px 24px; }
+}
 
 /* ---------- FAQ ---------- */
 .faq-layout { display: grid; grid-template-columns: .72fr 1.28fr; gap: 70px; }
@@ -1401,7 +1594,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .faq-item:last-child { border-bottom: 0; }
 .faq-question { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 0; border: 0; background: transparent; text-align: left; font-weight: 600; cursor: pointer; color: var(--text); }
 .faq-plus { width: 29px; height: 29px; flex: 0 0 29px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: 50%; transition: transform .25s ease, background .25s ease, color .25s ease; }
-.faq-item.open .faq-plus { background: var(--button-fill); color: var(--on-blue); border-color: var(--button-edge); }
+.faq-item.open .faq-plus { background: var(--gold); color: var(--on-accent); border-color: var(--gold); }
 .faq-answer { overflow: hidden; color: var(--muted); }
 .faq-answer p { padding: 0 48px 23px 0; line-height: 1.65; font-size: 14px; margin: 0; }
 
@@ -1414,12 +1607,15 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    down, so FAQ and Contact read their colours from the same place. */
 .closing-area {
   position: relative;
-  --ink: #051324;
-  --panel: #0b2343;
-  --panel-raised: #11325e;
-  --text: #f2f5f9;
-  --muted: #ccd9e8;
-  --muted-dim: #c9d5e5;
+  /* Keeps its dark starry video background (Sarra, 2026-09-29: "keep this
+     section like this, only the background"); the bright gradient stops at
+     the quote section above it. */
+  --ink: #080c20;
+  --panel: #0e1540;
+  --panel-raised: #16205a;
+  --text: #f3f4fb;
+  --muted: #c5cbea;
+  --muted-dim: #bcc3e4;
   --line: rgba(var(--text-rgb), 0.12);
   --line-strong: rgba(var(--text-rgb), 0.22);
   background: var(--panel);
@@ -1436,7 +1632,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   pointer-events: none;
 }
 /* Fade from the quote band into the starry video. It starts on the exact
-   colour the quote section ends on (--band-purple), fully opaque, so the
+   colour the section above ends on (#0a3f55, the deep teal of "Qui sommes-nous"), fully opaque, so the
    boundary has no visible line, then dissolves to transparent. As a
    z-index:-1 pseudo-element that comes after the video in paint order, it
    sits above the video and below the FAQ content, and it never takes
@@ -1451,7 +1647,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   right: 0;
   height: clamp(96px, 9vw, 136px);
   z-index: -1;
-  background: linear-gradient(180deg, var(--band-purple) 0%, transparent 100%);
+  background: linear-gradient(180deg, #0a3f55 0%, transparent 100%);
   pointer-events: none;
 }
 /* The video layer drifts +/-60px with the scroll (useParallaxY(60) in
@@ -1480,7 +1676,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .contact-card h3 { font-size: 22px; letter-spacing: -.01em; font-family: var(--font-display); font-weight: 600; }
 .contact-points { display: grid; gap: 16px; margin-top: 25px; }
 .contact-point { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 13px 0; border-top: 1px solid var(--line); }
-.contact-point span:first-child { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--button-fill); color: var(--on-blue); font-weight: 700; }
+.contact-point span:first-child { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--gold); color: var(--on-accent); font-weight: 700; }
 .contact-point strong { display: block; font-size: 13px; }
 .contact-point small { color: var(--muted); }
 
@@ -1534,17 +1730,19 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
 }
 
 /* ---------- Nav on narrower screens (2026-09-26) ----------
-   With the links on blue pills, the full French row (logo, four links,
-   "Démarrer un projet", cart, EN/FR) needs about 870px. So the pills get a
-   little more compact up to 1100px, and from 900px down the links move into
-   the hamburger panel phones already used (it was 740px before). */
+   With the links on pills, the full French row (logo, five links since
+   "Qui sommes-nous" joined on 2026-09-30, "Démarrer un projet", cart, EN/FR)
+   needs about 1230px at full size and about 1090px compact. So the pills
+   get more compact up to 1260px, and from 1100px down the links move into
+   the hamburger panel phones already use (it was 1100px and 900px with four
+   links). */
 .nav-links a { white-space: nowrap; }
-@media (max-width: 1100px) {
+@media (max-width: 1260px) {
   .nav-links { gap: 12px; }
   .nav-links a:not(.nav-cta) { padding: 0 11px; font-size: 13px; }
   .nav-links-desktop .nav-cta { padding: 0 14px; font-size: 13px; margin-left: 4px; }
 }
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .menu-button { display: block; }
   .nav-links-desktop { display: none; }
   .nav-links-mobile {
@@ -1563,12 +1761,12 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
     -webkit-backdrop-filter: none;
     box-shadow: var(--shadow);
   }
-  /* Same blue pills as the desktop links, stacked. The active one grows a
+  /* Same pills as the desktop links, stacked. The active one grows a
      little less than on desktop (the pills are full width) and glows. */
   /* Growth and tap press come from framer-motion in SiteNav (its inline
      transform would override a CSS one); the glow and brighter fill are here. */
-  .nav-links-mobile a { padding: 11px 16px; font-weight: 600; border: 1px solid var(--button-edge); border-radius: 999px; background: var(--button-fill); color: var(--on-blue); transition: box-shadow .3s ease, background .2s ease, filter .15s ease; }
-  .nav-links-mobile a.is-active { background: var(--button-fill-hover); border-color: #ffffff; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 0 26px rgba(var(--digital-blue-rgb), 0.75); }
+  .nav-links-mobile a { padding: 11px 16px; font-weight: 600; border: 1px solid var(--button-edge); border-radius: 999px; background: var(--button-fill); color: var(--on-action); transition: box-shadow .3s ease, background .2s ease, filter .15s ease; }
+  .nav-links-mobile a.is-active { background: var(--button-fill-hover); border-color: #ffffff; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 0 26px rgba(var(--action-rgb), 0.75); }
   .nav-links-mobile a:active { filter: brightness(1.12); transition-duration: .08s; }
   .nav-links-mobile .nav-cta { justify-content: flex-start; min-height: 0; }
 }
@@ -1624,7 +1822,7 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
   /* Reduced motion: no growth or bounce (the hook is off too); hover and
      keyboard focus get a white rim and a glow instead. */
   .nav-links a.is-active, .nav-links a:hover, .nav-links a:active, .nav-links a:focus-visible { transform: none !important; }
-  .nav-links a:hover, .nav-links a:focus-visible { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 0 22px rgba(var(--digital-blue-rgb), 0.6); }
+  .nav-links a:hover, .nav-links a:focus-visible { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 0 22px rgba(var(--action-rgb), 0.6); }
 }
 
 @media (pointer: coarse) {
@@ -1651,7 +1849,7 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
   flex: none;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  background: rgba(var(--ground-rgb), 0.4);
+  background: rgba(var(--ground-rgb), 0.78);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: var(--text);
@@ -1672,11 +1870,11 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
   padding: 0 5px;
   border-radius: 999px;
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
   font-size: 11px;
   font-weight: 800;
   line-height: 1;
-  box-shadow: 0 0 0 2px rgba(var(--ground-rgb), 0.9), 0 4px 12px rgba(var(--digital-blue-rgb), 0.5);
+  box-shadow: 0 0 0 2px rgba(var(--ground-rgb), 0.9), 0 4px 12px rgba(var(--action-rgb), 0.5);
   animation: cart-pop .5s cubic-bezier(.2, 1.6, .4, 1);
 }
 @keyframes cart-pop { 0% { transform: scale(.3); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
@@ -1713,7 +1911,7 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
   border: 1px solid var(--button-edge);
   border-radius: 999px;
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
   font: inherit;
   font-size: 14px;
   font-weight: 700;
@@ -1736,6 +1934,8 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
   .nav-cart { width: 36px; height: 36px; }
 }
 @media (prefers-reduced-motion: reduce) { .nav-cart:hover { transform: none; } .nav-cart-count { animation: none; } }
+/* 0.78 navy rather than a light veil (2026-09-29): the nav now floats over
+   bright violet and aqua sections, where a see-through pill lost its label. */
 .locale-switcher {
   display: inline-flex;
   align-items: center;
@@ -1743,7 +1943,7 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
   padding: 3px;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  background: rgba(var(--ground-rgb), 0.4);
+  background: rgba(var(--ground-rgb), 0.78);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -1762,7 +1962,7 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
 .locale-option:hover { color: var(--text); }
 .locale-option-active {
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
 }
 .nav-mobile-locale { display: flex; justify-content: center; padding-top: 14px; }
 
@@ -1796,10 +1996,18 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
    button's own pair) instead of the original dark navy, while the swoosh
    keeps its designed colours. Light enough to sit straight on the
    transparent nav — no plate, no border, no filter. */
+/* 2026-09-29: the new "LEVEL UP | AI" lockup is 5.3:1 against the old 3.15:1.
+   On wide screens it is 38px tall (201px wide); from 1260px down each
+   height keeps the logo at the width the old one had (164px, 139px, 107px),
+   so the nav row, which has only a few px to spare in French at 901px, is
+   untouched. */
 .brand-logo {
   display: block;
-  height: 52px;
+  height: 38px;
   width: auto;
+}
+@media (max-width: 1260px) {
+  .brand-logo { height: 31px; }
 }
 /* Over the hero's video the transparent lockup lost almost all contrast
    on bright frames (white ceilings, daylight windows). A white plate is
@@ -1825,15 +2033,15 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
   margin-left: calc(-1 * clamp(0px, (100vw - 1180px - 96px) / 2, 56px));
 }
 .brand { gap: 0; }
-footer .brand-logo { height: 50px; }
+footer .brand-logo { height: 40px; }
 
 @media (max-width: 980px) {
-  .brand-logo { height: 44px; }
+  .brand-logo { height: 26px; }
   .nav .brand { padding: 7px 14px; border-radius: 12px; }
 }
 
 @media (max-width: 740px) {
-  .brand-logo { height: 34px; }
+  .brand-logo { height: 20px; }
   .nav .brand { padding: 6px 11px; border-radius: 10px; }
 }
 
@@ -1865,12 +2073,12 @@ footer .brand-logo { height: 50px; }
   border: 1px solid var(--button-edge);
   border-radius: 50%;
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(var(--digital-blue-rgb), 0.45);
+  box-shadow: 0 10px 30px rgba(var(--action-rgb), 0.45);
   transition: transform .2s ease, box-shadow .2s ease;
 }
-.chat-launcher:hover { transform: translateY(-3px); background: var(--button-fill-hover); box-shadow: 0 16px 40px rgba(var(--digital-blue-rgb), 0.55); }
+.chat-launcher:hover { transform: translateY(-3px); background: var(--button-fill-hover); box-shadow: 0 16px 40px rgba(var(--action-rgb), 0.55); }
 .chat-launcher svg { width: 26px; height: 26px; }
 
 .chat-panel {
@@ -1887,7 +2095,7 @@ footer .brand-logo { height: 50px; }
   border-radius: 20px;
   /* Opaque, like the pricing cards: a translucent panel over the page's
      bright bands makes the transcript hard to read. */
-  background: #0d294c;
+  background: #101633;
   box-shadow: 0 24px 70px rgba(var(--shade-rgb), 0.65);
 }
 .chat-head {
@@ -1925,7 +2133,7 @@ footer .brand-logo { height: 50px; }
 .chat-msg-user {
   align-self: flex-end;
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
   font-weight: 600;
 }
 .chat-msg-pending { opacity: .7; font-style: italic; }
@@ -1958,7 +2166,7 @@ footer .brand-logo { height: 50px; }
   border: 0;
   border-radius: 50%;
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
   cursor: pointer;
   transition: opacity .2s ease;
 }
@@ -1986,17 +2194,17 @@ footer .brand-logo { height: 50px; }
   border-radius: 999px;
   /* Same fill as "Démarrer un projet" and the pack cart buttons. */
   background: var(--button-fill);
-  color: var(--on-blue);
+  color: var(--on-action);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: -.01em;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 8px 22px rgba(var(--digital-blue-rgb), 0.3);
+  box-shadow: 0 8px 22px rgba(var(--action-rgb), 0.3);
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 .pricing-cart svg { width: 16px; height: 16px; flex: none; }
-.pricing-cart:hover { transform: translateY(-2px); background: var(--button-fill-hover); box-shadow: 0 12px 30px rgba(var(--digital-blue-rgb), 0.45); }
+.pricing-cart:hover { transform: translateY(-2px); background: var(--button-fill-hover); box-shadow: 0 12px 30px rgba(var(--action-rgb), 0.45); }
 .pricing-cart:active { transform: translateY(0); filter: brightness(.95); }
 .pricing-cart:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 /* Already in the cart: an outlined button that opens the cart panel. */

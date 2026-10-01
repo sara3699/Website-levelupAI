@@ -71,3 +71,11 @@ with ffmpeg's `accurate_rnd+full_chroma_int` flags: without them, a frame that g
 one that does not, which looks like a colour shift that is not in the files.
 
 The `_perfume` files and all earlier ones are kept, unused.
+
+## 2026-09-29: purple lettering
+
+`hero-{fr,en}-desktop-{2160p,1080p}_2026-09-29_purple.mp4` and `hero-{fr,en}-mobile-1440x2540_2026-09-29_purple.mp4`: the `_ai`
+files with the blue "Powered by Level up AI" and "DM / Level up AI" lettering turned to the site's violet (#9B6BFF hue, the
+letters' own shading kept). Everything before the join keyframe is copied from the `_ai` file without re-encoding (computer:
+frame 803 at 4K, 808 at 1080p; phone: frame 900), the rest re-encoded with the same settings. Checked: same frame count and
+length, sound identical, frames before the join identical, no decode errors. The `_ai` files are kept, unused.

@@ -53,7 +53,9 @@ export default async function Services({ lang }: { lang: string }) {
 
         <div className="services">
           {packs.map((service, index) => (
-            <Reveal key={service.number} delay={index * 0.1}>
+            // Fly in one by one (2026-09-29, Sarra's pick "E"); the hover
+            // spotlight ("C") is in globals.css.
+            <Reveal key={service.number} delay={index * 0.14} variant="fly">
               <ServicePackCard
                 pack={service}
                 accent={service.accent}

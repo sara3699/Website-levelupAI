@@ -35,18 +35,18 @@ const cinematicContent: Variants = {
  *  Sources and why each is the size it is: see public/videos/hero/README.md. */
 const HERO_VIDEOS: Record<string, { desktop: string; desktop4k?: string; mobile: string; poster: string }> = {
   en: {
-    desktop: "/videos/hero/hero-en-desktop-1080p_2026-09-26_ai.mp4",
+    desktop: "/videos/hero/hero-en-desktop-1080p_2026-09-29_purple.mp4",
     // AI-upscaled (not native) 4K, served to high-resolution screens only.
-    desktop4k: "/videos/hero/hero-en-desktop-2160p_2026-09-26_ai.mp4",
+    desktop4k: "/videos/hero/hero-en-desktop-2160p_2026-09-29_purple.mp4",
     // Made from the AI 4K upscale. A phone shows the hero full-height,
     // ~2,550 physical px, so this is 1440x2540 rather than 1080 wide.
-    mobile: "/videos/hero/hero-en-mobile-1440x2540_2026-09-26_ai.mp4",
+    mobile: "/videos/hero/hero-en-mobile-1440x2540_2026-09-29_purple.mp4",
     poster: "/videos/hero/hero-en-poster_2026-09-25_from-4k.jpg",
   },
   fr: {
-    desktop: "/videos/hero/hero-fr-desktop-1080p_2026-09-26_ai.mp4",
-    desktop4k: "/videos/hero/hero-fr-desktop-2160p_2026-09-26_ai.mp4",
-    mobile: "/videos/hero/hero-fr-mobile-1440x2540_2026-09-26_ai.mp4",
+    desktop: "/videos/hero/hero-fr-desktop-1080p_2026-09-29_purple.mp4",
+    desktop4k: "/videos/hero/hero-fr-desktop-2160p_2026-09-29_purple.mp4",
+    mobile: "/videos/hero/hero-fr-mobile-1440x2540_2026-09-29_purple.mp4",
     poster: "/videos/hero/hero-fr-poster_2026-09-25_from-4k.jpg",
   },
 };

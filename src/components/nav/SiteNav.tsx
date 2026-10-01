@@ -18,6 +18,7 @@ const LINKS = [
   // section (#services). Both used to land in the Services section.
   { href: "#packs", key: "pricing" },
   { href: "#work", key: "work" },
+  { href: "#about", key: "about" },
   { href: "#faq", key: "faq" },
 ] as const;
 
@@ -28,6 +29,7 @@ const SECTIONS: readonly SectionRange[] = [
   { href: "#services", from: "pricing" },
   { href: "#packs", from: "packs" },
   { href: "#work", from: "work", to: "ai-commercials" },
+  { href: "#about", from: "about" },
   { href: "#faq", from: "faq" },
   { href: "#contact", from: "contact" },
 ];
@@ -118,18 +120,17 @@ export default function SiteNav() {
           {/* Full lockup — it already contains the wordmark and tagline, so
               it replaces both the old icon and the "LevelUp AI" text. The
               anchor carries the accessible name.
-              This is the master artwork (dark navy wordmark, violet "AI"
-              and swoosh), not the all-violet BRAND recolour the footer
-              still uses: the nav lockup now sits on a white plate, where
-              the master's own dark-on-light contrast is what it was drawn
-              for. The footer stays on BRAND because it sits on a dark
-              ground, where a navy wordmark would disappear. */}
+              Sarra's new lockup (2026-09-29): "LEVEL UP | AI", navy
+              wordmark with violet bars and "AI", tagline underneath. Drawn
+              dark-on-white, so it sits on the nav's white plate. Cropped
+              copy of `level up ai/logo LevelupAI/logo level up AI.png`;
+              the previous logo is still in public/LEVEL_UP_AI.png. */}
           <Image
             className="brand-logo"
-            src="/LEVEL_UP_AI.png"
+            src="/LEVEL_UP_AI_2026-09-29.png"
             alt=""
-            width={1150}
-            height={365}
+            width={1999}
+            height={377}
             priority
           />
         </a>

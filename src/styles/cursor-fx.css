@@ -9,19 +9,21 @@
   transform: translate(-50%, -50%);
 }
 
-.cursor-dot { width: 6px; height: 6px; background: var(--digital-blue); }
+/* Purple like the buttons (2026-09-29): the dot in the light violet used for
+   text on dark, so it shows over the videos; the ring in the buttons' rim. */
+.cursor-dot { width: 6px; height: 6px; background: var(--theme-violet-text); }
 
 .cursor-ring {
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(var(--accent-rgb), 0.5);
+  border: 1px solid rgba(173, 133, 214, 0.7);
   transition: width 0.3s, height 0.3s, background 0.3s;
 }
 
 .cursor-ring.hovering {
   width: 64px;
   height: 64px;
-  background: rgba(var(--accent-rgb), 0.08);
+  background: rgba(120, 40, 247, 0.1);
 }
 
 @media (hover: none) {

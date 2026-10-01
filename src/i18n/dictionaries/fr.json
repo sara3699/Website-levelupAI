@@ -15,6 +15,7 @@
             "services": "Services",
             "pricing": "Tarifs",
             "work": "Nos références",
+            "about": "Qui sommes-nous",
             "process": "Méthode",
             "faq": "FAQ"
         }
@@ -191,7 +192,7 @@
         "aiServices": [
             {
                 "title": "Sites web IA",
-                "copy": "Des sites vitrines professionnels, rapides et optimisés. Livrés en quelques jours plutôt qu'en semaines."
+                "copy": "Des sites vitrines professionnels, rapides et optimisés. Livrés en quelques jours."
             },
             {
                 "title": "Site marchand IA",
@@ -219,11 +220,11 @@
             },
             {
                 "title": "SEO, référencement, email marketing automatisé",
-                "copy": "Référencement naturel et pages optimisées pour être trouvé, plus des campagnes email automatisées : segmentation, personnalisation et relances pilotées par l'IA."
+                "copy": "Référencement naturel et pages optimisées pour avoir plus d'impact et être plus compétitifs sur le marché, plus des campagnes email automatisées : segmentation, personnalisation et relances pilotées par l'IA."
             },
             {
                 "title": "Identité visuelle express",
-                "copy": "Logo et charte graphique générés rapidement pour les entreprises qui démarrent."
+                "copy": "Logo et charte graphique générés rapidement pour améliorer votre image et être à la pointe de la technologie."
             }
         ],
         "subscriptionsTitle": "Abonnements mensuels",
@@ -367,8 +368,36 @@
         ]
     },
     "quote": {
-        "text": "L'IA devrait rendre votre entreprise plus performante — pas plus compliquée.",
+        "text": "L'IA devrait rendre votre entreprise plus performante et plus impactante.",
         "attribution": "C'est la promesse LevelUp AI."
+    },
+    "about": {
+        "kicker": "Level Up AI",
+        "title": "Qui sommes-nous",
+        "people": [
+            {
+                "name": "Chedlia Belhaj",
+                "role": "Co-fondatrice",
+                "initials": "CB",
+                "bio": [
+                    "Spécialiste de la communication digitale depuis plusieurs années, Chedlia Belhaj combine vision stratégique, sensibilité artistique et compréhension des enjeux des marques.",
+                    "Issue d'une formation en commerce et en marketing, elle a développé une approche où créativité, image, stratégie marketing et performance digitale se rencontrent pour construire des communications fortes et différenciantes.",
+                    "Co-fondatrice de Level Up AI, elle apporte au projet son expérience du digital, sa formation en marketing, son regard créatif et sa volonté d'exploiter l'intelligence artificielle comme un véritable amplificateur de créativité, de stratégie et de performance."
+                ]
+            },
+            {
+                "name": "Sarra Dhaouadi",
+                "role": "Co-fondatrice",
+                "initials": "SD",
+                "bio": [
+                    "Ingénieure de formation, Sarra Dhaouadi a très tôt compris que la véritable valeur naît de la rencontre entre technologie de pointe et vision business.",
+                    "Après un MBA aux États-Unis, elle décide de s'y installer et se passionne pour l'intelligence artificielle et ses multiples applications.",
+                    "Basée à Los Angeles, Sarra Dhaouadi occupe le poste de Cheffe de Projet au sein d'une multinationale de la high-tech. Elle vit l'évolution de l'IA de l'intérieur, au quotidien.",
+                    "En tant que co-fondatrice de Level Up AI, Sarra apporte cette expertise de terrain ainsi qu'un réseau solide au cœur de la Silicon Valley. Sa force : allier rigueur stratégique et approche créative pour faire de l'IA un véritable levier de croissance.",
+                    "Convaincue que l'IA doit être accessible à tous, elle a choisi de partager sa passion sur les réseaux sociaux, où elle décrypte l'actualité IA avec une approche simple, ludique et proche de sa communauté."
+                ]
+            }
+        ]
     },
     "faq": {
         "kicker": "Questions",

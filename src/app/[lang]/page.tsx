@@ -9,6 +9,7 @@ import VideoCarousel from "@/components/sections/VideoCarousel";
 import AICommercials from "@/components/sections/AICommercials";
 import QuoteBox from "@/components/sections/QuoteBox";
 import Faq from "@/components/sections/Faq";
+import About from "@/components/sections/About";
 import Contact from "@/components/sections/Contact";
 import ClosingArea from "@/components/sections/ClosingArea";
 import Footer from "@/components/sections/Footer";
@@ -36,6 +37,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             2026-09-25 at Sarra's request; the component and its texts are
             kept, and the chat assistant still describes the four steps. */}
         <QuoteBox />
+        {/* "Qui sommes-nous" / "About us", before the FAQ (2026-09-30). Its own
+            band, continuing the quote's turquoise into aqua; the FAQ and
+            contact keep the starry background below. */}
+        <About />
         <ClosingArea>
           <Faq />
           <Contact lang={lang} />

@@ -15,6 +15,7 @@
             "services": "Services",
             "pricing": "Pricing",
             "work": "Our references",
+            "about": "About us",
             "process": "Process",
             "faq": "FAQ"
         }
@@ -191,7 +192,7 @@
         "aiServices": [
             {
                 "title": "AI websites",
-                "copy": "Professional, fast, optimized showcase sites. Delivered in days instead of weeks."
+                "copy": "Professional, fast, optimized showcase sites. Delivered in a few days."
             },
             {
                 "title": "AI-Powered E-Commerce Website",
@@ -219,11 +220,11 @@
             },
             {
                 "title": "SEO, search engine optimization, automated email marketing",
-                "copy": "Search engine optimization and pages built to be found, plus automated email campaigns: segmentation, personalization, and follow-ups driven by AI."
+                "copy": "Search engine optimization and pages built to make more impact and be more competitive in your market, plus automated email campaigns: segmentation, personalization, and follow-ups driven by AI."
             },
             {
                 "title": "Express visual identity",
-                "copy": "Logo and brand guidelines generated quickly for businesses just getting started."
+                "copy": "Logo and brand guidelines generated quickly to improve your image and keep up with the latest technology."
             }
         ],
         "subscriptionsTitle": "Monthly subscriptions",
@@ -367,8 +368,36 @@
         ]
     },
     "quote": {
-        "text": "AI should make your business more efficient - not more complicated.",
+        "text": "AI should make your business more efficient and more impactful.",
         "attribution": "That is the LevelUp AI standard."
+    },
+    "about": {
+        "kicker": "Level Up AI",
+        "title": "About us",
+        "people": [
+            {
+                "name": "Chedlia Belhaj",
+                "role": "Co-Founder",
+                "initials": "CB",
+                "bio": [
+                    "With several years of experience in digital communication, Chedlia Belhaj combines strategic vision, artistic sensitivity, and a strong understanding of brands and their challenges.",
+                    "With a background in business and marketing, she has developed an approach where creativity, visual identity, strategy, and digital performance come together to build strong, consistent, and distinctive brand communications.",
+                    "As Co-Founder of Level Up AI, she brings her digital expertise, creative perspective, and marketing vision to the project, driven by one core belief: using artificial intelligence as a powerful amplifier of creativity, strategy, and performance."
+                ]
+            },
+            {
+                "name": "Sarra Dhaouadi",
+                "role": "Co-Founder",
+                "initials": "SD",
+                "bio": [
+                    "Los Angeles-based Sarra Dhaouadi lives where AI happens. Not on the sidelines, but right in the middle of it.",
+                    "As a Technical Project Manager at a global high-tech company, she sees firsthand how AI is reshaping the way we work, build, and create, often before the rest of the world catches on.",
+                    "Her journey started with an engineering degree and a simple realization: the most powerful ideas happen when cutting-edge technology meets smart business thinking. That conviction took her to the United States for an MBA, and she never looked back. She stayed, dove deep into AI, and built a career at the intersection of innovation and strategy.",
+                    "As a co-founder of Level Up AI, she brings real-world expertise and a strong Silicon Valley network to the table.",
+                    "Sarra believes AI should be for everyone, not just tech insiders. On social media, she breaks down the latest AI news to her community in a way that is simple, fun, and refreshingly down-to-earth."
+                ]
+            }
+        ]
     },
     "faq": {
         "kicker": "Questions",
