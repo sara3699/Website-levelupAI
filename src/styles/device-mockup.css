@@ -21,7 +21,7 @@
   z-index: 1;
   min-height: 220px;
   border-radius: 24px;
-  background: linear-gradient(150deg, #8ae8ea 0%, #62cfe0 28%, #3fa8c6 62%, #2590b6 100%);
+  background: linear-gradient(150deg, #a8d3ff 0%, #9cc4f1 28%, #60a0e8 62%, #1687ff 100%);
   --screen-ink: #052029;
   --screen-body: rgba(var(--ground-rgb), 0.9);
   --screen-dim: rgba(var(--ground-rgb), 0.88);
@@ -133,7 +133,7 @@
   aspect-ratio: 16 / 10;
   border-radius: 6px;
   overflow: hidden;
-  background: linear-gradient(150deg, #8ae8ea 0%, #62cfe0 28%, #3fa8c6 62%, #2590b6 100%);
+  background: linear-gradient(150deg, #a8d3ff 0%, #9cc4f1 28%, #60a0e8 62%, #1687ff 100%);
   /* The screen is a bright surface inside a dark page, so it carries its
      own inverted text scale. White copy only reaches ~1.5:1 on the cyan
      end of this gradient; these dark tokens clear 4.5:1 across every stop. */
@@ -456,7 +456,17 @@
   color: var(--champagne);
   backdrop-filter: blur(8px);
 }
+/* Two-line label (e.g. "Immobilier" over "Hôtellerie / Maisons d'hôtes"):
+   same look, with corners a pill can keep on a taller box. */
+.video-carousel-label-stack {
+  white-space: pre-line;
+  line-height: 1.45;
+  padding: 8px 12px;
+  border-radius: 14px;
+}
 .video-carousel-video-slot { position: absolute; inset: 0; }
+/* Photo card (e.g. "Prêt-à-porter"): fills the card like the clips do. */
+.video-carousel-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; display: block; }
 .video-carousel-fallback {
   position: absolute;
   inset: 0;
@@ -582,7 +592,7 @@
   backdrop-filter: blur(6px);
   transition: transform .25s ease, background .25s ease;
 }
-.ai-commercials-trigger:hover .ai-commercials-play { transform: scale(1.1); background: var(--gold); color: var(--on-accent); }
+.ai-commercials-trigger:hover .ai-commercials-play { transform: scale(1.1); background: var(--digital-blue); color: var(--on-blue); }
 
 /* Lightbox */
 .ai-commercials-lightbox {
@@ -605,6 +615,9 @@
 .ai-commercials-lightbox-frame-landscape { width: min(1000px, 88vw); aspect-ratio: 16 / 9; }
 .ai-commercials-lightbox-frame-portrait { width: min(420px, 82vw); aspect-ratio: 9 / 16; max-height: 86vh; }
 .ai-commercials-lightbox-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* Photo cells open in a frame of the photo's own proportions (set inline). */
+.ai-commercials-lightbox-frame-photo { width: min(640px, 88vw); max-height: 86vh; }
+.ai-commercials-lightbox-photo { object-fit: contain; background: #000; }
 .ai-commercials-lightbox-caption {
   position: absolute;
   left: 22px;
@@ -633,7 +646,7 @@
   transition: transform .2s ease, background .2s ease;
 }
 .ai-commercials-close:hover,
-.ai-commercials-nav:hover { background: var(--gold); color: var(--on-accent); }
+.ai-commercials-nav:hover { background: var(--digital-blue); color: var(--on-blue); }
 .ai-commercials-close { top: 24px; right: 24px; width: 44px; height: 44px; }
 .ai-commercials-nav { top: 50%; width: 50px; height: 50px; transform: translateY(-50%); }
 .ai-commercials-nav:hover { transform: translateY(-50%) scale(1.08); }

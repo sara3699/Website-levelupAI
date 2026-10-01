@@ -1,29 +1,49 @@
 "use client";
 
-import { subscriptionCode, startCheckout } from "@/lib/checkout";
+import { useState } from "react";
+import { subscriptionCode } from "@/lib/checkout";
+import { addToCart, openCart } from "@/lib/cart";
+import { useCart } from "@/hooks/useCart";
+import CartButtonIcon from "./CartButtonIcon";
 
 /**
  * Bouton d'abonnement du tableau « Abonnements mensuels ».
- * Comme pour les packs, seul le code de l'offre part d'ici : la plateforme
- * relit le prix et signe la commande.
+ * Comme pour les packs, il ajoute l'offre au panier du site (le badge du menu
+ * la compte) ; la commande se finalise depuis le panneau du panier. Une fois
+ * l'offre dans le panier, le bouton ouvre ce panneau au lieu de la rajouter.
  */
-export default function SubscribeButton({ name, label }: { name: string; label: string }) {
+export default function SubscribeButton({
+  name,
+  label,
+  addedLabel,
+}: {
+  name: string;
+  label: string;
+  addedLabel: string;
+}) {
   const code = subscriptionCode(name);
+  const inCart = useCart().some((item) => item.code === code);
+  const [announce, setAnnounce] = useState("");
   if (!code) return null;
 
-  function go() {
-    if (startCheckout(code!)) return;
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  function onClick() {
+    if (inCart) {
+      openCart();
+      return;
+    }
+    addToCart(code!);
+    setAnnounce(`${name}: ${addedLabel}`);
   }
 
   return (
-    <button type="button" className="pricing-cart" onClick={go}>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.1} aria-hidden="true">
-        <path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.5a1 1 0 0 0 1-.78L20 8H6" />
-        <circle cx="10" cy="20" r="1.4" />
-        <circle cx="17" cy="20" r="1.4" />
-      </svg>
-      {label}
-    </button>
+    <>
+      <button type="button" className="pricing-cart" data-in-cart={inCart || undefined} onClick={onClick}>
+        <CartButtonIcon added={inCart} size={16} />
+        {inCart ? addedLabel : label}
+      </button>
+      <span className="sr-only" role="status">
+        {announce}
+      </span>
+    </>
   );
 }

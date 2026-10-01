@@ -4,11 +4,9 @@ import Hero from "@/components/sections/Hero";
 import Marquee from "@/components/sections/Marquee";
 import Services from "@/components/sections/Services";
 import Pricing from "@/components/sections/Pricing";
-import FitList from "@/components/sections/FitList";
 import WorkShowcase from "@/components/sections/WorkShowcase";
 import VideoCarousel from "@/components/sections/VideoCarousel";
 import AICommercials from "@/components/sections/AICommercials";
-import ProcessTimeline from "@/components/sections/ProcessTimeline";
 import QuoteBox from "@/components/sections/QuoteBox";
 import Faq from "@/components/sections/Faq";
 import Contact from "@/components/sections/Contact";
@@ -31,11 +29,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <Marquee lang={lang} />
         <Services lang={lang} />
         <Pricing lang={lang} />
-        <FitList />
         <WorkShowcase lang={lang} />
         <VideoCarousel />
         <AICommercials />
-        <ProcessTimeline />
+        {/* ProcessTimeline ("Notre méthode") removed from the page on
+            2026-09-25 at Sarra's request; the component and its texts are
+            kept, and the chat assistant still describes the four steps. */}
         <QuoteBox />
         <ClosingArea>
           <Faq />

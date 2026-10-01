@@ -2,21 +2,33 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import clsx from "clsx";
 import VideoSlot from "@/components/media/VideoSlot";
 import GlassCard from "@/components/ui/GlassCard";
-import Reveal from "@/components/ui/Reveal";
 import { useTranslations } from "@/i18n/LocaleProvider";
-import { interpolate } from "@/i18n/dictionaries";
+import { interpolate, type Dictionary } from "@/i18n/dictionaries";
 
 /** Labels live in the dictionaries, keyed by id. (These were previously
  *  hardcoded in French even on the English site — the EN dictionary now
  *  carries proper English for them.) */
-const CARDS = [
-  { id: "clip-7", src: "/videos/new/7.mp4", rotate: -3 },
+/** A card shows either a clip (`src`, opens with sound) or a photo (`image`,
+ *  opens full size). */
+type Card = { id: keyof Dictionary["carousel"]["labels"]; rotate: number } & (
+  | { src: string; image?: undefined }
+  | { image: string; src?: undefined }
+);
+
+const CARDS: readonly Card[] = [
+  { id: "clip-7", src: "/videos/new/7_2026-09-25_hq.mp4", rotate: -3 },
   { id: "clip-8", src: "/videos/new/13.mp4", rotate: 2 },
-  { id: "clip-9", src: "/videos/new/12.mp4", rotate: -1.5 },
-  { id: "clip-10", src: "/videos/new/10.mp4", rotate: 3 },
-] as const;
+  // Real estate and hotel swapped places on 2026-09-26 (Sarra's request);
+  // each slot keeps its tilt, so the layout is unchanged.
+  { id: "clip-10", src: "/videos/new/10.mp4", rotate: -1.5 },
+  // The hotel clip (clip-9, /videos/new/12_2026-09-25_hq.mp4) was then
+  // replaced by this photo, same day, Sarra's request. Instagram's "2/3"
+  // counter and mute icon were removed from it.
+  { id: "pret-a-porter", image: "/images/references/pret-a-porter_2026-09-26.jpg", rotate: 3 },
+];
 
 /**
  * Horizontal scroll-snap track of mood/style reference clips — native touch
@@ -31,7 +43,7 @@ export default function VideoCarousel() {
   const t = useTranslations();
   const trackRef = useRef<HTMLDivElement>(null);
   const lightboxVideoRef = useRef<HTMLVideoElement>(null);
-  const [activeCard, setActiveCard] = useState<(typeof CARDS)[number] | null>(null);
+  const [activeCard, setActiveCard] = useState<Card | null>(null);
   // Distance the pointer travelled during the last press. The track is
   // drag-to-scroll, so a release that moved more than a few pixels is a drag,
   // not a click, and must not open the lightbox.
@@ -138,7 +150,7 @@ export default function VideoCarousel() {
     };
   }, [activeCard]);
 
-  const openCard = useCallback((card: (typeof CARDS)[number]) => {
+  const openCard = useCallback((card: Card) => {
     // Suppress the click that ends a drag-scroll.
     if (dragDistance.current > DRAG_THRESHOLD) return;
     setActiveCard(card);
@@ -146,18 +158,6 @@ export default function VideoCarousel() {
 
   return (
     <section className="section section-vivid section-vivid-carousel video-carousel-section">
-      <div className="wrap">
-        <Reveal className="section-head">
-          <div>
-            <span className="section-kicker">{t.carousel.kicker}</span>
-            <h2>{t.carousel.title}</h2>
-          </div>
-          <p className="section-lead">
-            {t.carousel.lead}
-          </p>
-        </Reveal>
-      </div>
-
       <div className="video-carousel-track" ref={trackRef}>
         {/* Whole card is the click target — clicking the clip opens it.
             role/tabIndex keep it keyboard-reachable without a visible
@@ -169,7 +169,7 @@ export default function VideoCarousel() {
             style={{ "--card-rotate": `${card.rotate}deg` } as React.CSSProperties}
             role="button"
             tabIndex={0}
-            aria-label={interpolate(t.carousel.playWithSound, { label: t.carousel.labels[card.id] })}
+            aria-label={card.image ? t.carousel.labels[card.id] : interpolate(t.carousel.playWithSound, { label: t.carousel.labels[card.id] })}
             onPointerDown={resetDrag}
             onClick={() => openCard(card)}
             onKeyDown={(event) => {
@@ -180,12 +180,21 @@ export default function VideoCarousel() {
             }}
           >
             <GlassCard className="video-carousel-glass" tilt={false}>
-              <span className="video-carousel-label">{t.carousel.labels[card.id]}</span>
-              <VideoSlot
-                className="video-carousel-video-slot"
-                src={card.src}
-                fallback={<div className="video-carousel-fallback" />}
-              />
+              {/* A label with a line break stacks on two lines. The `?? ""`
+                  keeps a missing label from crashing the whole page. */}
+              <span className={clsx("video-carousel-label", (t.carousel.labels[card.id] ?? "").includes("\n") && "video-carousel-label-stack")}>
+                {t.carousel.labels[card.id]}
+              </span>
+              {card.image ? (
+                // eslint-disable-next-line @next/next/no-img-element -- a plain cover image inside the card, sized by CSS like the clips
+                <img className="video-carousel-image" src={card.image} alt="" loading="lazy" decoding="async" />
+              ) : (
+                <VideoSlot
+                  className="video-carousel-video-slot"
+                  src={card.src}
+                  fallback={<div className="video-carousel-fallback" />}
+                />
+              )}
             </GlassCard>
           </div>
         ))}
@@ -215,16 +224,21 @@ export default function VideoCarousel() {
               {/* Not muted and not autoPlay-gated: this element only exists
                   after a user click, which satisfies every browser's
                   gesture requirement for playing audio. */}
-              <video
-                key={activeCard.src}
-                ref={lightboxVideoRef}
-                className="video-lightbox-video"
-                src={activeCard.src}
-                controls
-                autoPlay
-                playsInline
-                loop
-              />
+              {activeCard.image ? (
+                // eslint-disable-next-line @next/next/no-img-element -- full-size view of the card's photo
+                <img className="video-lightbox-video video-lightbox-image" src={activeCard.image} alt={t.carousel.labels[activeCard.id]} />
+              ) : (
+                <video
+                  key={activeCard.src}
+                  ref={lightboxVideoRef}
+                  className="video-lightbox-video"
+                  src={activeCard.src}
+                  controls
+                  autoPlay
+                  playsInline
+                  loop
+                />
+              )}
             </motion.div>
             <button
               type="button"

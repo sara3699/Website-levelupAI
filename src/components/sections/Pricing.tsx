@@ -27,20 +27,18 @@ export default async function Pricing({ lang }: { lang: string }) {
   return (
     <section className="section section-vivid section-vivid-pricing" id="pricing">
       <div className="wrap">
-        <Reveal className="section-head">
+        <Reveal className="section-head" id="services">
           <div>
             <span className="section-kicker">{t.pricing.kicker}</span>
-            <h2>{t.pricing.title}</h2>
           </div>
-          <p className="section-lead">{t.pricing.lead}</p>
         </Reveal>
 
-        {/* The nav's "Services" link targets this block: it's the full list of
-            what we actually offer. The pack cards further up the page are
-            bundles/pricing, so they own #packs instead. */}
-        <Reveal className="pricing-block-head" id="services">
-          <p>{t.pricing.servicesIntro}</p>
-        </Reveal>
+        {/* The nav's "Services" link targets the "Services" label above
+            (#services), so it lands with the label in view over this full
+            list of what we offer. The pack cards further up the page are
+            bundles/pricing, so they own #packs instead. The headline and the
+            one-line intro were removed on 2026-09-25 (texts kept in the
+            dictionaries). */}
         <div className="pricing-services">
           {aiServices.map((service, index) => (
             <Reveal key={service.title} delay={index * 0.04}>

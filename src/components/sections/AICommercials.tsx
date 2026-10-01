@@ -8,21 +8,30 @@ import { useTranslations } from "@/i18n/LocaleProvider";
 import { interpolate } from "@/i18n/dictionaries";
 
 /** label/title live in the dictionaries, keyed by id. */
-type ClipId = "mascara" | "grape-beauty" | "eyeshadow" | "lumea" | "jewel";
+type ClipId = "mascara" | "grape-beauty" | "eyeshadow" | "lumea" | "jewel" | "argenterie" | "complements";
 
+/** A cell holds a clip (`src`, plays with sound when opened) or a photo
+ *  (`image` plus its width/height ratio, shown whole when opened). */
 type Clip = {
   id: ClipId;
-  src: string;
   orientation: "landscape" | "portrait";
-};
+} & (
+  | { src: string; image?: undefined; ratio?: undefined; position?: undefined }
+  // `position` is the photo's object-position in the (sometimes tall) cell.
+  | { image: string; ratio: string; position?: string; src?: undefined }
+);
 
 const CLIPS: Clip[] = [
- { id: "jewel", src: "/videos/new/5.mp4", orientation: "landscape" },
+  { id: "jewel", src: "/videos/new/5_2026-09-25_hq.mp4", orientation: "landscape" },
   { id: "grape-beauty", src: "/videos/new/15.mp4", orientation: "portrait" },
-  { id: "eyeshadow", src: "/videos/new/3.mp4", orientation: "portrait" },
-  { id: "lumea", src: "/videos/new/16.mp4", orientation: "portrait" },
-    { id: "mascara", src: "/videos/new/1.mp4", orientation: "portrait" },
- 
+  { id: "eyeshadow", src: "/videos/new/3_2026-09-25_hq.mp4", orientation: "portrait" },
+  // 2026-09-26, Sarra's request: the restaurant ad (lumea, /videos/new/16.mp4)
+  // and the mascara ad (mascara, /videos/new/1_2026-09-25_hq.mp4) were
+  // replaced by these two photos, cleaned of Instagram's counter and icon.
+  // Each keeps its cell's orientation, so the grid is unchanged.
+  { id: "argenterie", image: "/images/references/argenterie_2026-09-26.jpg", ratio: "1278 / 1593", orientation: "portrait" },
+  // Framed right of centre so the bottle stays in view in the tall phone cells.
+  { id: "complements", image: "/images/references/complements-alimentaires_2026-09-26.jpg", ratio: "1320 / 1317", position: "82% 50%", orientation: "portrait" },
 ];
 
 const EASE_OUT: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -99,16 +108,6 @@ export default function AICommercials() {
   return (
     <section className="section section-vivid section-vivid-reels ai-commercials" id="ai-commercials">
       <div className="wrap">
-        <Reveal className="section-head">
-          <div>
-            <span className="section-kicker">{t.commercials.kicker}</span>
-            <h2>{t.commercials.title}</h2>
-          </div>
-          <p className="section-lead">
-            {t.commercials.lead}
-          </p>
-        </Reveal>
-
         <div className="ai-commercials-grid">
           {CLIPS.map((clip, index) => (
             <Reveal key={clip.id} delay={index * 0.07} className={`ai-commercials-cell ai-commercials-cell-${clip.orientation}`}>
@@ -121,30 +120,38 @@ export default function AICommercials() {
                   type="button"
                   className="ai-commercials-trigger"
                   onClick={() => openClip(clip.id)}
-                  aria-label={interpolate(t.commercials.playWithSound, { title: t.commercials.clips[clip.id].title })}
+                  aria-label={clip.image ? t.commercials.clips[clip.id].title : interpolate(t.commercials.playWithSound, { title: t.commercials.clips[clip.id].title })}
                 >
-                  <video
-                    ref={(el) => {
-                      cardVideoRefs.current[clip.id] = el;
-                    }}
-                    className="ai-commercials-thumb"
-                    src={clip.src}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
-                  />
+                  {clip.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- cover image sized by CSS like the clips
+                    <img className="ai-commercials-thumb" src={clip.image} alt="" loading="lazy" decoding="async" style={clip.position ? { objectPosition: clip.position } : undefined} />
+                  ) : (
+                    <video
+                      ref={(el) => {
+                        cardVideoRefs.current[clip.id] = el;
+                      }}
+                      className="ai-commercials-thumb"
+                      src={clip.src}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    />
+                  )}
                   <span className="ai-commercials-scrim" aria-hidden="true" />
                   <span className="ai-commercials-meta">
                     <span className="ai-commercials-label">{t.commercials.clips[clip.id].label}</span>
                     <span className="ai-commercials-title">{t.commercials.clips[clip.id].title}</span>
                   </span>
-                  <span className="ai-commercials-play" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="20" height="20">
-                      <path d="M8 5v14l11-7Z" fill="currentColor" />
-                    </svg>
-                  </span>
+                  {/* Play badge on clips only: a photo has nothing to play. */}
+                  {!clip.image && (
+                    <span className="ai-commercials-play" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="20" height="20">
+                        <path d="M8 5v14l11-7Z" fill="currentColor" />
+                      </svg>
+                    </span>
+                  )}
                 </button>
               </GlassCard>
             </Reveal>
@@ -163,22 +170,32 @@ export default function AICommercials() {
             onClick={closeClip}
           >
             <motion.div
-              className={`ai-commercials-lightbox-frame ai-commercials-lightbox-frame-${activeClip.orientation}`}
+              className={
+                activeClip.image
+                  ? "ai-commercials-lightbox-frame ai-commercials-lightbox-frame-photo"
+                  : `ai-commercials-lightbox-frame ai-commercials-lightbox-frame-${activeClip.orientation}`
+              }
+              style={activeClip.image ? { aspectRatio: activeClip.ratio } : undefined}
               initial={{ opacity: 0, scale: 0.85, filter: "blur(18px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 0.88, filter: "blur(14px)" }}
               transition={{ duration: 0.5, ease: EASE_DRAMATIC }}
               onClick={(event) => event.stopPropagation()}
             >
-              <video
-                key={activeClip.id}
-                ref={modalVideoRef}
-                className="ai-commercials-lightbox-video"
-                src={activeClip.src}
-                playsInline
-                loop
-                controls={false}
-              />
+              {activeClip.image ? (
+                // eslint-disable-next-line @next/next/no-img-element -- the whole photo, in a frame of its own proportions
+                <img key={activeClip.id} className="ai-commercials-lightbox-video ai-commercials-lightbox-photo" src={activeClip.image} alt={t.commercials.clips[activeClip.id].title} />
+              ) : (
+                <video
+                  key={activeClip.id}
+                  ref={modalVideoRef}
+                  className="ai-commercials-lightbox-video"
+                  src={activeClip.src}
+                  playsInline
+                  loop
+                  controls={false}
+                />
+              )}
               <div className="ai-commercials-lightbox-caption">
                 <span className="ai-commercials-label">{t.commercials.clips[activeClip.id].label}</span>
                 <span className="ai-commercials-title">{t.commercials.clips[activeClip.id].title}</span>

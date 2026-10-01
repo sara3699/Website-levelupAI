@@ -9,11 +9,12 @@
         "openMenu": "Open navigation",
         "closeMenu": "Close navigation",
         "cta": "Start a project",
+        "cart": "Cart",
         "languageLabel": "Change language",
         "links": {
             "services": "Services",
             "pricing": "Pricing",
-            "work": "Our work",
+            "work": "Our references",
             "process": "Process",
             "faq": "FAQ"
         }
@@ -38,6 +39,18 @@
         "ctaSecondary": "Explore services",
         "showText": "Show text",
         "hideText": "Hide text"
+    },
+    "cart": {
+        "title": "Your cart",
+        "open": "Cart ({count})",
+        "empty": "Your cart is empty.",
+        "browse": "See the packs",
+        "checkout": "Complete order",
+        "redirecting": "Opening your account…",
+        "remove": "Remove",
+        "removeLabel": "Remove {title} from the cart",
+        "close": "Close the cart",
+        "note": "You pay in your LevelUp AI account, which confirms the final price."
     },
     "media": {
         "playWithSound": "Turn sound on",
@@ -109,7 +122,7 @@
     ],
     "services": {
         "kicker": "What we do",
-        "title": "Four packs to level up your business.",
+        "title": "Make your company perform better and watch your business take off.",
         "lead": "You do not need a giant agency budget. Pick the pack that matches where your business is today — website, visuals, and video, bundled at one clear price.",
         "packs": [
             {
@@ -123,7 +136,7 @@
                     "The ideal first step for a new brand"
                 ],
                 "cta": "",
-                "summary": "AI showcase website (5 to 6 pages) or AI e-commerce website (quote on request) or AI product shoot (10 visuals)"
+                "summary": "Website (5 to 6 pages)\nE-commerce website on quote\nor AI product shoot (10 visuals)"
             },
             {
                 "number": "PACK 02",
@@ -167,7 +180,8 @@
         ],
         "showDetails": "See details",
         "hideDetails": "Hide details",
-        "addToCart": "Add to cart"
+        "addToCart": "Add to cart",
+        "addedToCart": "In your cart"
     },
     "pricing": {
         "kicker": "Services",
@@ -263,10 +277,12 @@
     },
     "work": {
         "kicker": "What it can look like",
-        "title": "One studio. Many ways to grow.",
+        "title": "Our references",
+        "instagramLabel": "Follow LevelUp AI on Instagram (opens in a new tab)",
         "lead": "From the first impression to the follow-up behind the scenes, we help your business feel more professional and more capable.",
         "websiteTag": "Website experience",
         "commercialTag": "AI product commercial",
+        "sportTag": "Sport",
         "mockupEyebrow": "SMALL BUSINESS / BIG PRESENCE",
         "mockupTitle": "Turn your idea into a brand customers trust.",
         "productFallback": [
@@ -282,7 +298,8 @@
             "clip-7": "Fashion",
             "clip-8": "Pharmaceutical",
             "clip-9": "hotellerie / airbnb",
-            "clip-10": "Real estate"
+            "clip-10": "Real estate\nHospitality / guest houses",
+            "pret-a-porter": "Ready-to-wear"
         },
         "playWithSound": "Play {label} with sound",
         "close": "Close video"
@@ -311,6 +328,14 @@
             "jewel": {
                 "label": "Jewelry campaign",
                 "title": "The jewel is the look."
+            },
+            "argenterie": {
+                "label": "Product shoot",
+                "title": "Silverware"
+            },
+            "complements": {
+                "label": "Product shoot",
+                "title": "Food supplements"
             }
         },
         "playWithSound": "Play {title} with sound",
@@ -342,7 +367,7 @@
         ]
     },
     "quote": {
-        "text": "AI should make your business feel more capable - not more complicated.",
+        "text": "AI should make your business more efficient - not more complicated.",
         "attribution": "That is the LevelUp AI standard."
     },
     "faq": {
@@ -457,7 +482,7 @@
             "servicesIntro": "What we do:",
             "processIntro": "How a project runs:",
             "contactIntro": "You can reach us at hello@levelupai.studio.",
-            "orderHelp": "Pick a pack in the Pricing section and click “Add to cart”: you'll be taken to your LevelUp AI account (levelupia.app), where you can follow your project and pay. Prefer a quote first? Write to hello@levelupai.studio.",
+            "orderHelp": "Pick a pack in the Pricing section and click “Add to cart”, then open the cart at the top of the page and click “Complete order”: you'll be taken to your LevelUp AI account (levelupia.app), where you can follow your project and pay. Prefer a quote first? Write to hello@levelupai.studio.",
             "greeting": "Hello! I'm the LevelUp AI assistant. What would you like to know?",
             "thanks": "You're welcome! Anything else?",
             "bye": "See you soon! If you need us: hello@levelupai.studio.",

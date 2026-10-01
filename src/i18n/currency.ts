@@ -55,3 +55,12 @@ export function localizePrice(price: string, currency: Currency): string {
   if (currency === DEFAULT_CURRENCY) return price;
   return price.replace(/\bTND\b/g, currency);
 }
+
+/** The display currency the proxy stored for this visitor, read in the
+ *  browser (the cookie is not httpOnly). Falls back to the default. */
+export function currencyFromDocumentCookie(): Currency {
+  if (typeof document === "undefined") return DEFAULT_CURRENCY;
+  const match = document.cookie.match(new RegExp(`(?:^|; )${CURRENCY_COOKIE}=([^;]*)`));
+  const value = match ? decodeURIComponent(match[1]) : "";
+  return isCurrency(value) ? value : DEFAULT_CURRENCY;
+}

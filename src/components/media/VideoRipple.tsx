@@ -92,7 +92,9 @@ export default function VideoRipple({ video, className }: VideoRippleProps) {
     } catch {
       return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    // Capped at 2, not 1.5: at 1.5 a Retina screen upscales the shader's
+    // output and softens the footage the hero now ships at full resolution.
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     mount.appendChild(renderer.domElement);
 

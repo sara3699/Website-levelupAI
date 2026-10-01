@@ -9,7 +9,7 @@
   transform: translate(-50%, -50%);
 }
 
-.cursor-dot { width: 6px; height: 6px; background: var(--gold); }
+.cursor-dot { width: 6px; height: 6px; background: var(--digital-blue); }
 
 .cursor-ring {
   width: 36px;

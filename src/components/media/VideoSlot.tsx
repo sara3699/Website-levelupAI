@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useInView } from "framer-motion";
 import clsx from "clsx";
 
 // Matches the layout breakpoint the rest of the site treats as "desktop"
 // (e.g. the hero device grid, .hero-device-phone repositioning).
 const MOBILE_QUERY = "(max-width: 980px)";
+// Screens where a 4K file is actually visible: the desktop layout on a
+// high-density display (Retina laptops: 2,500-3,000 physical pixels wide),
+// or a very wide monitor. Everything else keeps `src`, a third of the weight.
+const HIRES_QUERY = "(min-width: 981px) and (min-resolution: 1.5dppx), (min-width: 2200px)";
 
 type VideoSlotProps = {
   src?: string;
@@ -14,6 +18,8 @@ type VideoSlotProps = {
    * the element swaps `src` on breakpoint crossings instead of always
    * playing `src`. */
   mobileSrc?: string;
+  /** Alternate clip for high-resolution desktop screens (see HIRES_QUERY). */
+  hiResSrc?: string;
   poster?: string;
   fallback: ReactNode;
   overlay?: ReactNode;
@@ -46,6 +52,7 @@ type VideoSlotProps = {
 export default function VideoSlot({
   src,
   mobileSrc,
+  hiResSrc,
   poster,
   fallback,
   overlay,
@@ -75,26 +82,44 @@ export default function VideoSlot({
   }, [src, priority, isInView]);
 
   useEffect(() => {
-    if (!mobileSrc) return;
-    const query = window.matchMedia(MOBILE_QUERY);
-    const sync = () => setActiveSrc(query.matches ? mobileSrc : src);
+    if (!mobileSrc && !hiResSrc) return;
+    const mobile = window.matchMedia(MOBILE_QUERY);
+    const hiRes = window.matchMedia(HIRES_QUERY);
+    const sync = () =>
+      setActiveSrc(mobileSrc && mobile.matches ? mobileSrc : hiResSrc && hiRes.matches ? hiResSrc : src);
     sync();
-    query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
-  }, [src, mobileSrc]);
+    mobile.addEventListener("change", sync);
+    hiRes.addEventListener("change", sync);
+    return () => {
+      mobile.removeEventListener("change", sync);
+      hiRes.removeEventListener("change", sync);
+    };
+  }, [src, mobileSrc, hiResSrc]);
 
-  function setVideoRef(video: HTMLVideoElement | null) {
-    if (typeof externalVideoRef === "function") externalVideoRef(video);
-    else if (externalVideoRef && "current" in externalVideoRef) {
-      (externalVideoRef as React.RefObject<HTMLVideoElement | null>).current = video;
-    }
-    onVideoElement?.(video);
-  }
+  // Stable on purpose: a ref callback that changes identity is called again
+  // (null, then the element) on every render, and the consumers treat that
+  // as a new video — the hero's sound ladder restarted the ad each time.
+  const setVideoRef = useCallback(
+    (video: HTMLVideoElement | null) => {
+      if (typeof externalVideoRef === "function") externalVideoRef(video);
+      else if (externalVideoRef && "current" in externalVideoRef) {
+        (externalVideoRef as React.RefObject<HTMLVideoElement | null>).current = video;
+      }
+      onVideoElement?.(video);
+    },
+    [externalVideoRef, onVideoElement]
+  );
 
   return (
     <div ref={containerRef} className={clsx("video-slot", className)}>
       <div className="video-slot-fallback" aria-hidden="true">
         {fallback}
+        {/* The poster doubles as the still frame for visitors who never get
+            the video (reduced motion) and fills the gap before it mounts. */}
+        {poster && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img className="video-slot-poster" src={poster} alt="" style={{ objectPosition }} />
+        )}
       </div>
       {shouldMount && (
         <video
@@ -105,7 +130,10 @@ export default function VideoSlot({
           autoPlay
           muted={!unmuted}
           playsInline
-          loop={loop}
+          // Never loops while audible: a clip with its voice on plays once and
+          // ends on its own end card, and useUnmutableVideo takes it back to
+          // a silent loop — looping here would restart the speech.
+          loop={loop && !unmuted}
           preload={priority ? "auto" : "metadata"}
           style={{ objectPosition }}
         />

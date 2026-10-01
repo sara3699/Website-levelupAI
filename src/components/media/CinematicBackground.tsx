@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 import VideoSlot from "./VideoSlot";
@@ -16,6 +16,8 @@ type CinematicBackgroundProps = {
   src?: string;
   /** Alternate clip for narrow/mobile viewports — see VideoSlot. */
   mobileSrc?: string;
+  /** Alternate clip for high-resolution desktop screens — see VideoSlot. */
+  hiResSrc?: string;
   poster?: string;
   className?: string;
   parallax?: boolean;
@@ -27,6 +29,8 @@ type CinematicBackgroundProps = {
    * when the browser refuses, and renders a persistent mute/unmute
    * control — see useUnmutableVideo for the full ladder. */
   sound?: boolean;
+  /** False plays the clip once and holds its last frame (default: loop). */
+  loop?: boolean;
 };
 
 const VARIANT_FALLBACK: Record<Variant, React.ReactNode> = {
@@ -75,6 +79,7 @@ function SoundButton({ unmuted, onClick }: { unmuted: boolean; onClick: () => vo
   return (
     <button
       type="button"
+      data-sound-toggle
       className="video-slot-sound"
       onClick={onClick}
       aria-pressed={unmuted}
@@ -118,15 +123,27 @@ function ParallaxLayer({
   variant,
   src,
   mobileSrc,
+  hiResSrc,
   poster,
   className,
   priority,
   ripple,
   sound,
+  loop = true,
 }: Omit<CinematicBackgroundProps, "parallax">) {
   const { ref, y } = useParallaxY(60);
   const [videoEl, setVideoEl] = useState<HTMLVideoElement | null>(null);
   const { attachVideo, unmuted, toggleSound } = useUnmutableVideo();
+  // Stable so React only calls it on mount and unmount (see VideoSlot).
+  // Only a background with a sound control runs the audible autoplay
+  // ladder; the rest stay plain muted loops.
+  const videoRef = useCallback(
+    (el: HTMLVideoElement | null) => {
+      if (sound) attachVideo(el);
+      if (ripple) setVideoEl(el);
+    },
+    [sound, ripple, attachVideo]
+  );
 
   return (
     <>
@@ -134,15 +151,14 @@ function ParallaxLayer({
         <VideoSlot
           src={src}
           mobileSrc={mobileSrc}
+          hiResSrc={hiResSrc}
           poster={poster}
           fallback={VARIANT_FALLBACK[variant]}
           className="cine-bg-video-slot"
           priority={priority}
+          loop={loop}
           unmuted={unmuted}
-          videoRef={(el) => {
-            attachVideo(el);
-            if (ripple) setVideoEl(el);
-          }}
+          videoRef={videoRef}
         />
         {ripple && <VideoRipple video={videoEl} />}
       </motion.div>
@@ -155,14 +171,26 @@ function StaticLayer({
   variant,
   src,
   mobileSrc,
+  hiResSrc,
   poster,
   className,
   priority,
   ripple,
   sound,
+  loop = true,
 }: Omit<CinematicBackgroundProps, "parallax">) {
   const [videoEl, setVideoEl] = useState<HTMLVideoElement | null>(null);
   const { attachVideo, unmuted, toggleSound } = useUnmutableVideo();
+  // Stable so React only calls it on mount and unmount (see VideoSlot).
+  // Only a background with a sound control runs the audible autoplay
+  // ladder; the rest stay plain muted loops.
+  const videoRef = useCallback(
+    (el: HTMLVideoElement | null) => {
+      if (sound) attachVideo(el);
+      if (ripple) setVideoEl(el);
+    },
+    [sound, ripple, attachVideo]
+  );
 
   return (
     <>
@@ -170,15 +198,14 @@ function StaticLayer({
         <VideoSlot
           src={src}
           mobileSrc={mobileSrc}
+          hiResSrc={hiResSrc}
           poster={poster}
           fallback={VARIANT_FALLBACK[variant]}
           className="cine-bg-video-slot"
           priority={priority}
+          loop={loop}
           unmuted={unmuted}
-          videoRef={(el) => {
-            attachVideo(el);
-            if (ripple) setVideoEl(el);
-          }}
+          videoRef={videoRef}
         />
         {ripple && <VideoRipple video={videoEl} />}
       </div>

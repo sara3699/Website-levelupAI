@@ -53,7 +53,8 @@ export function buildKnowledge(locale: Locale): Knowledge {
       price: p.price,
       copy: p.copy,
       includes: p.list,
-      summary: p.summary,
+      // The card shows the summary on separate lines; the chat reads it as one.
+      summary: p.summary.replace(/\s*\n\s*/g, " "),
     })),
     subscriptions: t.pricing.subscriptions.map((s, index) => ({
       kind: "subscription",

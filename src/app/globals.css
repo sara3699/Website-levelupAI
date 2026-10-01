@@ -18,11 +18,11 @@ body {
      to stay DARKER and more restrained than the buttons, which is what lets
      the teal CTA gradient read as the brightest thing on the page. */
   background:
-    radial-gradient(1300px 900px at 6% -5%, rgba(var(--accent-deep-rgb), 0.5), transparent 62%),
-    radial-gradient(1100px 800px at 100% 12%, rgba(var(--accent-rgb), 0.16), transparent 58%),
-    radial-gradient(1000px 1000px at 45% 105%, rgba(18, 86, 111, 0.75), transparent 62%),
-    radial-gradient(900px 800px at 82% 78%, rgba(var(--accent-rgb), 0.12), transparent 58%),
-    linear-gradient(160deg, #0e3f52, #0a2c3a 45%, #061f29 100%);
+    radial-gradient(1300px 900px at 6% -5%, rgba(var(--digital-blue-rgb), 0.38), transparent 62%),
+    radial-gradient(1100px 800px at 100% 12%, rgba(140, 196, 255, 0.14), transparent 58%),
+    radial-gradient(1000px 1000px at 45% 105%, rgba(var(--band-teal-rgb), 0.75), transparent 62%),
+    radial-gradient(900px 800px at 82% 78%, rgba(140, 196, 255, 0.10), transparent 58%),
+    linear-gradient(160deg, var(--panel), var(--paper) 45%, var(--ink) 100%);
   background-attachment: fixed;
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -89,19 +89,71 @@ button { color: inherit; }
   box-shadow: 0 6px 18px rgba(var(--accent-rgb), 0.4);
 }
 .brand-mark svg { width: 20px; }
-.nav-links { display: flex; align-items: center; gap: 30px; font-weight: 600; font-size: 14px; }
+.nav-links { display: flex; align-items: center; gap: 14px; font-weight: 600; font-size: 14px; }
 .nav-links a { position: relative; }
-.nav-links a:not(.nav-cta)::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 100%;
-  bottom: -6px;
-  height: 1px;
-  background: var(--gold);
-  transition: right .2s ease;
+/* Services / Tarifs / Réalisations / FAQ sit on the same blue fill as
+   "Démarrer un projet" (2026-09-26, Sarra's brief), as compact pills: shorter
+   and tighter than the CTA, which stays the largest and keeps its glow. The
+   solid fill carries the label's contrast over the video, so these links no
+   longer need the text-shadow the transparent nav used to give them. */
+.nav-links a:not(.nav-cta) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--button-edge);
+  border-radius: 999px;
+  background: var(--button-fill);
+  color: var(--on-blue);
+  box-shadow: 0 4px 14px rgba(var(--shade-rgb), 0.35);
+  transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
 }
-.nav-links a:hover::after { right: 0; }
+.nav-links-desktop .nav-cta { margin-left: 8px; box-shadow: 0 6px 20px rgba(var(--digital-blue-rgb), 0.4); }
+
+/* Selected item (2026-09-26): a click makes the pill pop forward like an
+   icon in the macOS Dock, then settle back to normal size (SiteNav, Web
+   Animations API); the selected one keeps a white rim and a blue glow.
+   Transform and box-shadow only, so nothing reflows. Hover only brightens;
+   a press dips the pill slightly before the pop. */
+.nav-links a {
+  transform-origin: center;
+  transition: transform .38s cubic-bezier(.2, .8, .2, 1), box-shadow .38s ease, background .25s ease, border-color .25s ease, filter .15s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  /* Hover brightens; the growth itself is the Dock magnification below. */
+  .nav-links a:not(.is-active):hover {
+    background: var(--button-fill-hover);
+    box-shadow: 0 8px 20px rgba(var(--digital-blue-rgb), 0.35);
+  }
+}
+.nav-links a.is-active {
+  z-index: 1;
+  /* Normal size once selected: the Dock-style pop on click (SiteNav, Web
+     Animations API) is the only growth. */
+  transform: none;
+  /* The change has to read at a glance next to four pills of the same
+     colour, so the active one gets a white rim and a strong glow on top of
+     the size; the fill stays in the range where the white label clears
+     4.5:1 (#2474E0 -> #1A6BD6). */
+  background: var(--button-fill-hover);
+  border-color: #ffffff;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.85),
+    0 16px 34px rgba(var(--shade-rgb), 0.5),
+    0 0 34px rgba(var(--digital-blue-rgb), 0.85);
+}
+.nav-links a:active { filter: brightness(1.15); }
+
+/* Dock magnification (useDockMagnify, 2026-09-26): the hovered or focused
+   pill grows to ~1.22x and lifts, its neighbours to ~1.08x, and the row
+   slides aside so nothing overlaps. The poses are inline transforms set by
+   the hook; this is their springy timing (a slight overshoot, like the
+   macOS Dock). Transform only: the page layout never moves. */
+.nav-links.nav-dock a {
+  transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease, background .25s ease, border-color .25s ease, filter .15s ease;
+  will-change: transform;
+}
+
 .nav-cta, .button {
   display: inline-flex;
   align-items: center;
@@ -109,18 +161,29 @@ button { color: inherit; }
   gap: 10px;
   min-height: 49px;
   padding: 0 22px;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--button-edge);
   border-radius: 999px;
-  background: linear-gradient(150deg, var(--gold-bright), var(--bronze));
-  color: var(--on-accent);
+  background: var(--button-fill);
+  color: var(--on-blue);
   font-weight: 700;
   cursor: pointer;
   transition: transform .2s ease, box-shadow .2s ease;
 }
 .nav-cta { min-height: 43px; padding: 0 18px; }
-.nav-cta:hover, .button:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.45); }
-.button.secondary { background: transparent; color: var(--text); border-color: var(--line-strong); }
-.button.secondary:hover { background: rgba(var(--text-rgb), 0.08); box-shadow: none; border-color: var(--gold); }
+.nav-cta:hover, .button:hover { transform: translateY(-3px); background: var(--button-fill-hover); box-shadow: 0 10px 30px rgba(var(--digital-blue-rgb), 0.45); }
+/* Secondary actions ("Découvrir les services", "Voir les services"): the
+   same blue, one step deeper and flat, so the primary still leads. Solid
+   rather than see-through so the label holds over the brightest video frame. */
+.button.secondary { background: var(--blue-deep); color: var(--on-blue); border-color: var(--button-edge); }
+.button.secondary:hover { background: var(--blue-fill-to); box-shadow: 0 10px 30px rgba(var(--digital-blue-rgb), 0.35); border-color: var(--blue-light); }
+/* Keyboard focus: a white ring with a blue halo reads on the dark bands and
+   on the brightest video frame alike. */
+.nav-links a:focus-visible, .button:focus-visible, .nav-cta:focus-visible, .nav-links-mobile a:focus-visible,
+.service-cart:focus-visible, .cart-checkout:focus-visible, .chat-launcher:focus-visible, .locale-option:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(var(--digital-blue-rgb), 0.6);
+}
 .menu-button { display: none; border: 0; background: transparent; padding: 8px; cursor: pointer; color: var(--text); position: relative; z-index: 2; }
 
 .nav-links-desktop { display: flex; }
@@ -129,17 +192,23 @@ button { color: inherit; }
 }
 
 /* ---------- Hero ---------- */
-.hero { position: relative; padding: 86px 0 60px; min-height: 760px; isolation: isolate; }
+.hero { position: relative; padding: 86px 0 28px; isolation: isolate; display: flex; flex-direction: column; }
 .hero-grid { display: grid; align-items: center; }
-/* The eyebrow + headline block is pushed down the hero rather than sitting
-   directly under the nav, so the background video reads on its own through
-   the upper two-thirds and the copy lands near the bottom edge. vh-based so
-   it tracks the viewport the video fills.
+/* Desktop: one screen over the video. The eyebrow sits at the top-left;
+   at the bottom-left, the services headline (its original spot) with the
+   CTAs under it. The lower middle
+   stays empty: that is where the video's "DM / Level up IA" end card sits,
+   and the video stops on it. .hero-main and .hero-intro are
+   `display: contents` here and `order` sets the sequence; up to 980px they
+   turn back into boxes (see there).
    It also breaks out of .wrap's centred 1180px column: margin-left pulls it
    toward the real left edge of the screen, which .wrap alone cannot do
    because it centres whatever width it is given. */
 .hero-grid-device {
-  padding-top: clamp(320px, 58vh, 640px);
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  padding-top: 18px;
   width: 100%;
   max-width: none;
   margin-left: 0;
@@ -147,8 +216,20 @@ button { color: inherit; }
      edge, while the 14px floor keeps a safe gutter on the narrowest
      phones. */
   padding-left: clamp(14px, 2vw, 28px);
+  padding-right: clamp(14px, 2vw, 28px);
 }
-.hero-grid-device .hero-content { max-width: 640px; }
+.hero-grid-device .hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+  min-height: calc(100svh - 132px);
+}
+.hero-main, .hero-intro { display: contents; }
+.hero-content .eyebrow { order: 0; }
+.hero-h1 { order: 1; }
+.hero-actions { order: 2; }
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -161,7 +242,7 @@ button { color: inherit; }
   letter-spacing: .1em;
   text-transform: uppercase;
   background: rgba(var(--accent-rgb), 0.12);
-  color: #bfe9ef;
+  color: #d1e4f8;
 }
 /* In the hero the eyebrow reads as the headline's cap rule rather than a
    loose tag, so it spans the H1's own measure (same 690px max) instead of
@@ -222,16 +303,7 @@ button { color: inherit; }
   background: #ffffff;
   box-shadow: 0 2px 10px rgba(var(--shade-rgb), 0.6);
 }
-/* Lifted independently of the headline: the two are siblings in
-   .hero-content, so a negative top margin raises only the pill while
-   RevealText below stays put. The bottom margin restores the gap the pull
-   would otherwise close — the two clamps stay mirrored, or the H1 moves
-   with the pill. Capped so the block always clears the 82px nav and the
-   sound controls that sit at top: 100px. */
-.hero-content .eyebrow {
-  margin-top: clamp(-480px, -54vh, -240px);
-  margin-bottom: clamp(240px, 54vh, 480px);
-}
+.hero-content .eyebrow { margin: 0 0 24px; }
 .hero-content .eyebrow .eyebrow-dot {
   width: 13px;
   height: 13px;
@@ -239,17 +311,17 @@ button { color: inherit; }
      is top-aligned rather than centred. */
   margin-top: .38em;
   flex: none;
-  background: var(--gold);
-  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.9);
+  background: var(--digital-blue);
+  box-shadow: 0 0 14px rgba(var(--digital-blue-rgb), 0.9);
 }
-.eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: pulse 1.8s ease-in-out infinite; }
+.eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--digital-blue); animation: pulse 1.8s ease-in-out infinite; }
 h1, h2, h3, p { margin-top: 0; }
 h1, h2, h3, blockquote { font-family: var(--font-display); }
-/* The hero heading and proof strip sit directly on the cinematic video
-   with no card behind them. Now that the site's base theme is dark,
-   --text is already light, so these simply inherit it. */
+/* The services headline, at its original size and spacing, on the video.
+   The auto top margin pushes it and the CTAs to the bottom.
+   The site's base theme is dark, so --text is already light. */
 .hero-h1 {
-  margin: 31px 0 25px;
+  margin: auto 0 18px;
   max-width: 690px;
   font-size: clamp(18px, 1.7vw, 25px);
   line-height: 1.08;
@@ -259,48 +331,8 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 }
 .reveal-line-mask { display: block; overflow: hidden; }
 .reveal-line-inner { display: block; }
-.hero-h1 .underline { position: relative; display: inline-block; font-style: italic; color: var(--gold-bright); }
-/* Copy + CTA block sitting under the device stage. Given its own top
-   margin here because it no longer inherits the text column's flow. */
-.hero-below {
-  position: relative;
-  z-index: 2;
-  margin-top: 46px;
-}
-.hero-below .hero-copy-panel { margin-top: 0; }
-.hero-copy-panel {
-  margin: 28px 0 0;
-  padding: 22px 26px;
-  border-radius: var(--radius-sm);
-  max-width: 560px;
-  background: linear-gradient(155deg, rgba(var(--ground-rgb), 0.9), rgba(var(--band-teal-rgb), 0.86));
-  border-color: rgba(var(--accent-rgb), 0.32);
-}
-.hero-copy { font-size: 18px; line-height: 1.62; color: var(--text); }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 28px; }
-.hero-proof { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(var(--text-rgb), 0.18); color: var(--text); font-size: 13px; font-weight: 600; }
-.proof-item { display: flex; align-items: center; gap: 7px; }
-.proof-item svg { width: 17px; color: var(--amber-deep); }
-.hero-actions .button.secondary { color: var(--text); border-color: rgba(var(--text-rgb), 0.35); }
-.hero-actions .button.secondary:hover { background: rgba(var(--text-rgb), 0.08); border-color: var(--gold); }
-
-/* ---------- Hero device stage ---------- */
-/* Empty scroll runway between the headline and the laptop. The hero's
-   background video is `position: sticky` and holds the viewport for the
-   whole section, so this gap is time spent looking at nothing but the
-   video — the laptop only rides up into frame after it, then pins. */
-.hero-video-runway { height: 78vh; pointer-events: none; }
-.hero-device-wrap {
-  position: relative;
-  margin-top: 40px;
-  padding-bottom: 40px;
-}
-.hero-device-phone {
-  position: absolute;
-  right: 2%;
-  bottom: -30px;
-  z-index: 2;
-}
+.hero-h1 .underline { position: relative; display: inline-block; font-style: italic; color: #6fb4ff; } /* the action blue, lifted to read over the video */
+.hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 18px; }
 
 /* ---------- Cinematic backgrounds ---------- */
 .cine-bg {
@@ -313,6 +345,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .video-slot { position: absolute; inset: 0; overflow: hidden; }
 .video-slot-fallback { position: absolute; inset: 0; }
 .video-slot-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.video-slot-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .video-slot-overlay { position: absolute; inset: 0; }
 /* Anchored to the top, not the bottom: on the hero variant the sticky
    .hero-cine-bg box (see the comment above it) is offset below the
@@ -376,7 +409,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .hero-cinematic-toggle:hover { transform: translateY(-2px); border-color: var(--gold-bright); background: rgba(7, 7, 10, 0.65); }
 .hero-cinematic-toggle[aria-pressed="true"] { border-color: var(--gold-bright); background: rgba(var(--accent-rgb), 0.35); }
 .cine-glow { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .5; }
-.cine-glow-gold { width: 46%; aspect-ratio: 1; background: var(--gold); top: -10%; left: -8%; }
+.cine-glow-gold { width: 46%; aspect-ratio: 1; background: var(--digital-blue); top: -10%; left: -8%; }
 .cine-glow-bronze { width: 40%; aspect-ratio: 1; background: var(--bronze); bottom: -14%; right: -6%; opacity: .35; }
 .cine-glow-champagne { width: 38%; aspect-ratio: 1; background: var(--champagne); top: 30%; right: 10%; opacity: .12; }
 .cine-glow-soft { opacity: .22; }
@@ -386,27 +419,14 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   opacity: .04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
 }
-/* The hero's GSAP scroll-pin (its laptop mockup panning through 3
-   screens while pinned) inserts a pin-spacer to reserve the scroll
-   runway, which grows `.hero` to several viewport-heights tall.
-   `.cine-bg`'s default `position: absolute; inset: 0` then stretches
-   the video/canvas to that full unpinned document height instead of
-   the single viewport-height slice that's ever visible, feeding
-   VideoRipple's shader a canvas thousands of pixels tall and wrecking
-   its cover-fit + chromatic-aberration math (the corrupted, scattered
-   RGB-split look seen when scrolling). `position: sticky` clamps it to
-   one viewport-height and keeps it pinned to the top of the viewport
-   for exactly as long as `.hero` (its containing block) is scrolling
-   past — unlike `fixed`, it stops being sticky and scrolls away with
-   the rest of `.hero` once the section ends, so it never bleeds behind
-   later sections. The negative margin cancels the height sticky
-   still reserves in flow, so it doesn't push `.hero`'s siblings down. */
+/* Pinned for as long as the hero scrolls past (as it always was), so
+   anything below the first screen still reads over the footage. The
+   negative margins cancel the height sticky reserves in flow and the
+   hero's top padding, so the video's top edge lands at the top of the page. */
 .hero-cine-bg {
   position: sticky;
   top: 0;
   height: 100vh;
-  /* -86px cancels .hero's own top padding so the video's top edge lands at
-     the true top of the page, directly beneath the fixed nav. */
   margin-top: -86px;
   margin-bottom: calc(-100vh + 86px);
   z-index: -1;
@@ -419,7 +439,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    bridge the handoff (see CinematicBackground fallback and
    .section-dark-bridge below), then deepens toward purple at its bottom
    edge to hand off into Pricing. */
-.marquee { background: linear-gradient(100deg, var(--brand-blue), var(--brand-purple) 55%, var(--brand-magenta)); overflow: hidden; }
+.marquee { background: linear-gradient(100deg, var(--band-cyan), var(--band-teal) 55%, var(--blue-deep)); overflow: hidden; }
 .marquee-track { display: flex; width: max-content; padding: 17px 0; animation: ticker 27s linear infinite; }
 .marquee-item { display: flex; align-items: center; }
 .marquee-pair { display: flex; align-items: center; gap: 26px; padding-right: 26px; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--text); }
@@ -433,12 +453,12 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    palette regardless of the global --ink/--text flip, and a scrim sits
    between the video and content so text stays legible over any footage. */
 .section-dark {
-  --ink: #05161d;
-  --panel: #0a2f3e;
-  --panel-raised: #104154;
-  --text: #eef6f8;
-  --muted: #c3dbe4;
-  --muted-dim: #bfd8e0;
+  --ink: #071527;
+  --panel: #0d2c53;
+  --panel-raised: #12345f;
+  --text: #f2f5f9;
+  --muted: #ccd9e8;
+  --muted-dim: #c9d5e5;
   --line: rgba(var(--text-rgb), 0.12);
   --line-strong: rgba(var(--text-rgb), 0.22);
   background: var(--panel);
@@ -476,7 +496,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(var(--accent-rgb), 0.4) 0%, transparent 18%),
+    linear-gradient(180deg, rgba(var(--digital-blue-rgb), 0.35) 0%, transparent 18%),
     linear-gradient(0deg, var(--band-blue) 0%, rgba(var(--band-blue-rgb), 0.72) 12%, rgba(var(--band-blue-rgb), 0.32) 24%, transparent 34%);
 }
 .section-head { display: grid; grid-template-columns: 1fr .72fr; gap: 50px; align-items: end; margin-bottom: 54px; }
@@ -496,12 +516,12 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    bands carrying LIGHT text — the band gradients below were rebuilt from
    the brand colours, so text/lines/glass all invert to match. */
 .section-vivid {
-  --text: #eef6f8;
-  --muted: #c3dbe4;
-  --muted-dim: #bfd8e0;
+  --text: #f2f5f9;
+  --muted: #ccd9e8;
+  --muted-dim: #c9d5e5;
   --line: rgba(var(--text-rgb), 0.16);
   --line-strong: rgba(var(--text-rgb), 0.28);
-  --on-accent: #eef6f8;
+  --on-accent: #f2f5f9;
   color: var(--text);
   isolation: isolate;
 }
@@ -517,7 +537,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    through and washed the panel back toward the band's own colour. Killing
    the filter and the translucency puts the copy on one known surface. */
 .section-vivid .glass {
-  background: #0a2c3a;
+  background: #0d294c;
   border-color: rgba(var(--text-rgb), 0.3);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -526,7 +546,9 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .section-vivid .fit-index-fill { background: rgba(var(--text-rgb), 0.75); }
 .section-vivid .fit-index-label { color: var(--on-accent); mix-blend-mode: normal; }
 
-.section-vivid-pricing { background: linear-gradient(180deg, var(--band-blue) 0%, var(--band-indigo) 45%, var(--band-purple) 100%); }
+/* Ends on --band-magenta, where WorkShowcase starts, now that FitList (the
+   band that used to bridge purple -> magenta) is off the page (2026-09-25). */
+.section-vivid-pricing { background: linear-gradient(180deg, var(--band-blue) 0%, var(--band-indigo) 40%, var(--band-purple) 75%, var(--band-magenta) 100%); }
 /* Pricing's head is rebalanced against the site default: the "Services"
    kicker carries more weight (it's the nav's landing label) while the long
    headline drops a step so it stops dwarfing it. Scoped to #pricing so the
@@ -563,7 +585,9 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
      ProcessTimeline lavender -> pink -> peach -> coral */
 .section-vivid-work { background: linear-gradient(180deg, var(--band-magenta) 0%, var(--band-purple) 100%); }
 .section-vivid-carousel { background: linear-gradient(180deg, var(--band-purple) 0%, var(--band-teal) 100%); }
-.section-vivid-reels { background: linear-gradient(180deg, var(--band-teal) 0%, var(--band-cyan) 50%, var(--band-indigo) 100%); }
+/* Ends on --band-magenta, where the quote band starts, since the process
+   section that used to sit between them left the page (2026-09-25). */
+.section-vivid-reels { background: linear-gradient(180deg, var(--band-teal) 0%, var(--band-cyan) 50%, var(--band-magenta) 100%); }
 .section-vivid-process { background: linear-gradient(180deg, var(--band-indigo) 0%, var(--band-purple) 40%, var(--band-magenta) 75%, var(--band-magenta) 100%); }
 /* ProcessTimeline's GSAP ScrollTrigger pin (see its own comment) wraps the
    section in a `.pin-spacer` sized to the full scroll runway (several
@@ -709,6 +733,158 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 .service-cart svg { width: 18px; height: 18px; flex: none; }
+/* ---------- Pack cards: neon cyan (2026-09-25, Sarra's pick "A") ----------
+   Near-black glass inside an electric-cyan edge that turns slowly: ::before
+   is an oversized conic gradient spinning behind the card, ::after the dark
+   glass laid over it 1.5px in, so only a thin ring of the gradient shows.
+   Each card turns on its own offset (--spark-shift, set per card below).
+   Pack names glitter (see .service h3). Cart buttons keep the site's
+   turquoise "Démarrer un projet" gradient. These rules come after the
+   per-pack colour rules above and win on specificity. */
+.section-dark .service {
+  --accent: var(--gold-bright);
+  isolation: isolate;
+  background: transparent;
+  border: 0;
+  box-shadow: 0 0 30px rgba(22, 135, 255, 0.24), 0 18px 50px rgba(0, 0, 0, 0.5);
+}
+.section-dark .service::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: -2;
+  background: conic-gradient(from 0deg, #1687ff, #8cc4ff, #2f8cff, #0e3567 40%, #1687ff 60%, #8cc4ff, #1687ff);
+  animation: neon-edge 6s linear infinite;
+  animation-delay: calc(var(--spark-shift, 0s) * 3);
+}
+.section-dark .service::after {
+  content: "";
+  position: absolute;
+  inset: 1.5px;
+  z-index: -1;
+  border-radius: calc(var(--radius) - 1.5px);
+  background:
+    radial-gradient(120% 60% at 85% 0%, rgba(22, 135, 255, 0.16), transparent 55%),
+    linear-gradient(160deg, #0d2749, #051222);
+}
+@keyframes neon-edge { to { transform: rotate(360deg); } }
+.section-dark .service:hover { box-shadow: 0 0 44px rgba(22, 135, 255, 0.42), 0 24px 60px rgba(0, 0, 0, 0.55); }
+.section-dark .service .service-number {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
+  color: #6fb4ff;
+  text-shadow: 0 0 14px rgba(22, 135, 255, 0.7);
+}
+/* Glittering pack name: aqua letters with white glitter specks drifting
+   inside them and a bright highlight sweeping across, plus a star that
+   twinkles at the end of the name. The glow is a drop-shadow filter: a
+   text-shadow would paint over the text-clipped background. */
+.section-dark .service h3 {
+  position: relative;
+  width: fit-content;
+  /* Logo gradient (2026-09-26, Sarra's pick "D"): DIGITAL BLUE #1687FF to
+     AI PURPLE #8527FF from the charter, lifted 25% so it reads on the dark
+     glass. Titles are 22-27px, where 3:1 is the bar; the violet end clears
+     it. The star after the name still twinkles. */
+  background: linear-gradient(95deg, #1687ff 0%, #5b6dff 55%, #8527ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 10px rgba(22, 135, 255, 0.35)) brightness(1.25);
+}
+.section-dark .service h3::after {
+  content: "✦";
+  position: absolute;
+  top: -8px;
+  right: -16px;
+  font-size: 13px;
+  -webkit-text-fill-color: #ffffff;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(22, 135, 255, 0.95);
+  animation: sparkle-twinkle 2.2s ease-in-out infinite;
+  animation-delay: var(--spark-shift, 0s);
+}
+@keyframes name-glitter {
+  0% { background-position: 0 0, 5px 4px, 0% 0; }
+  100% { background-position: 13px 20px, -12px 26px, 250% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-dark .service::before, .section-dark .service h3, .section-dark .service h3::after { animation: none; }
+}
+.section-dark .service .service-price,
+.section-dark .service .service-summary,
+.section-dark .service .service-toggle { color: #ffffff; }
+.section-dark .service .service-summary,
+.section-dark .service .service-toggle { border-top-color: rgba(209, 228, 248, 0.22); }
+.section-dark .service .service-copy,
+.section-dark .service .service-list { color: rgba(242, 245, 249, 0.85); }
+.section-dark .service .service-list li { border-top-color: rgba(209, 228, 248, 0.18); }
+.section-dark .service .service-contact { color: var(--gold-bright); }
+/* One button style site-wide: the "Démarrer un projet" fill (action blue
+   since 2026-09-26, see tokens.css). */
+.section-dark .service .service-cart {
+  background: var(--button-fill);
+  color: var(--on-blue);
+  border: 1px solid var(--button-edge);
+  box-shadow: 0 8px 22px rgba(var(--digital-blue-rgb), 0.3);
+}
+.section-dark .service .service-cart:hover { background: var(--button-fill-hover); box-shadow: 0 12px 30px rgba(var(--digital-blue-rgb), 0.45); }
+.section-dark .service .service-cart[data-in-cart] {
+  background: rgba(var(--ground-rgb), 0.45);
+  color: var(--text);
+  border-color: var(--gold-bright);
+  box-shadow: none;
+}
+/* Glitter: eight ✦ spread over the card. The first four are stars that
+   twinkle (glow, grow and turn); the rest are small glints drifting up and
+   back. Each card shifts the timing (nth-child of .services) so the four
+   never blink in sync. Transform and opacity only, so it stays cheap. */
+.service-sparkles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+  color: rgba(220, 236, 255, 0.95);
+  text-shadow: 0 0 10px rgba(140, 196, 255, 0.95), 0 0 2px #ffffff;
+}
+.service-sparkles span {
+  position: absolute;
+  line-height: 1;
+  opacity: 0.6;
+  animation: sparkle-twinkle 3.2s ease-in-out infinite;
+}
+.service-sparkles span:nth-child(1) { top: 30px; right: 26px; font-size: 20px; animation-delay: var(--spark-shift, 0s); }
+.service-sparkles span:nth-child(2) { top: 26px; right: 58px; font-size: 11px; animation-delay: calc(var(--spark-shift, 0s) - 1.1s); animation-duration: 2.6s; }
+.service-sparkles span:nth-child(3) { top: 44%; right: 12%; font-size: 13px; animation-delay: calc(var(--spark-shift, 0s) - 2s); animation-duration: 3.8s; }
+.service-sparkles span:nth-child(4) { top: 20%; left: 48%; font-size: 9px; animation-delay: calc(var(--spark-shift, 0s) - 0.6s); animation-duration: 2.9s; }
+.service-sparkles span:nth-child(n+5) {
+  font-size: 6px;
+  opacity: 0.8;
+  animation: sparkle-twinkle 2.4s ease-in-out infinite, sparkle-drift 6s ease-in-out infinite;
+}
+.service-sparkles span:nth-child(5) { top: 62%; left: 10%; animation-delay: calc(var(--spark-shift, 0s) - 0.4s), calc(var(--spark-shift, 0s) * 2 - 1s); }
+.service-sparkles span:nth-child(6) { top: 76%; right: 18%; animation-delay: calc(var(--spark-shift, 0s) - 1.6s), calc(var(--spark-shift, 0s) * 2 - 3s); }
+.service-sparkles span:nth-child(7) { top: 34%; left: 82%; animation-delay: calc(var(--spark-shift, 0s) - 0.9s), calc(var(--spark-shift, 0s) * 2 - 4.5s); }
+.service-sparkles span:nth-child(8) { top: 52%; left: 36%; animation-delay: calc(var(--spark-shift, 0s) - 2.1s), calc(var(--spark-shift, 0s) * 2 - 2s); }
+/* Per-card time offset, added to every glint's own delay. */
+.services > :nth-child(2) { --spark-shift: -1.3s; }
+.services > :nth-child(3) { --spark-shift: -0.7s; }
+.services > :nth-child(4) { --spark-shift: -2.2s; }
+@keyframes sparkle-twinkle {
+  0%, 100% { opacity: 0.2; scale: 0.55; rotate: 0deg; }
+  50% { opacity: 1; scale: 1.15; rotate: 45deg; }
+}
+@keyframes sparkle-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 4px -12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-sparkles span { animation: none; opacity: 0.7; }
+}
+/* Pack 01 lists its options on separate lines (\n in the dictionary). */
+.service-summary { white-space: pre-line; }
+
 .service-cart:hover { transform: translateY(-2px); filter: brightness(1.07); box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 40%, transparent); }
 .service-cart:active { transform: translateY(0); filter: brightness(.95); }
 .service-cart:focus-visible { outline: 3px solid var(--text); outline-offset: 3px; }
@@ -765,7 +941,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
   background:
     linear-gradient(150deg, rgba(var(--text-rgb), 0.07), rgba(var(--text-rgb), 0) 58%),
     var(--tint, rgba(var(--text-rgb), 0.05)),
-    #0a2c3a;
+    #0d294c;
   border: 1px solid color-mix(in srgb, var(--deep, #fff) 50%, transparent);
   /* MUST be explicit, not merely omitted. These cards are rendered by
      GlassCard, which always applies the `.glass` class, and `.glass` sets
@@ -789,9 +965,86 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .pricing-service .glass-card-glow { display: none; }
 .pricing-service h3 { font-size: 22px; letter-spacing: -.01em; margin-bottom: 12px; line-height: 1.2; color: var(--deep, var(--text)); }
 .pricing-service p { margin: 0; color: var(--tint-body); font-size: 16px; line-height: 1.65; }
+/* Service cards in the packs' neon-cyan look (2026-09-25): near-black glass
+   inside a turning cyan edge, glittering titles. Same construction as
+   `.section-dark .service` (see "Pack cards: neon cyan"): ::before is the
+   spinning conic gradient, ::after the dark glass laid 1.5px inside it.
+   Neighbouring cards start their turn at different points. */
+.section-vivid .pricing-service {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  box-shadow: 0 0 26px rgba(22, 135, 255, 0.2), 0 16px 44px rgba(0, 0, 0, 0.45);
+}
+.section-vivid .pricing-service::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: -2;
+  background: conic-gradient(from 0deg, #1687ff, #8cc4ff, #2f8cff, #0e3567 40%, #1687ff 60%, #8cc4ff, #1687ff);
+  animation: neon-edge 8s linear infinite;
+}
+.section-vivid .pricing-service::after {
+  content: "";
+  position: absolute;
+  inset: 1.5px;
+  z-index: -1;
+  border-radius: calc(var(--radius-sm) - 1.5px);
+  background:
+    radial-gradient(120% 70% at 88% 0%, rgba(22, 135, 255, 0.13), transparent 55%),
+    linear-gradient(160deg, #0d2749, #051222);
+}
+.pricing-services > :nth-child(3n+2) .pricing-service::before { animation-delay: -2.7s; }
+.pricing-services > :nth-child(3n) .pricing-service::before { animation-delay: -5.3s; }
+.section-vivid .pricing-service:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 40px rgba(22, 135, 255, 0.4), 0 22px 54px rgba(0, 0, 0, 0.5);
+}
+.section-vivid .pricing-service p { color: rgba(242, 245, 249, 0.86); }
+/* Glittering title, same recipe as the pack names. */
+.section-vivid .pricing-service h3 {
+  position: relative;
+  width: fit-content;
+  /* Logo gradient (2026-09-26, Sarra's pick "D"): DIGITAL BLUE #1687FF to
+     AI PURPLE #8527FF from the charter, lifted 25% so it reads on the dark
+     glass. Titles are 22-27px, where 3:1 is the bar; the violet end clears
+     it. The star after the name still twinkles. */
+  background: linear-gradient(95deg, #1687ff 0%, #5b6dff 55%, #8527ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 10px rgba(22, 135, 255, 0.35)) brightness(1.25);
+}
+.section-vivid .pricing-service h3::after {
+  content: "✦";
+  position: absolute;
+  top: -8px;
+  right: -16px;
+  font-size: 12px;
+  -webkit-text-fill-color: #ffffff;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(22, 135, 255, 0.95);
+  animation: sparkle-twinkle 2.4s ease-in-out infinite;
+}
+.pricing-services > :nth-child(3n+2) .pricing-service h3 { animation-delay: -1.6s; }
+.pricing-services > :nth-child(3n) .pricing-service h3 { animation-delay: -3.3s; }
+.pricing-services > :nth-child(3n+2) .pricing-service h3::after { animation-delay: -0.8s; }
+.pricing-services > :nth-child(3n) .pricing-service h3::after { animation-delay: -1.6s; }
+@media (prefers-reduced-motion: reduce) {
+  .section-vivid .pricing-service::before,
+  .section-vivid .pricing-service h3,
+  .section-vivid .pricing-service h3::after { animation: none; }
+}
 /* Clears the 82px sticky nav (68px under 740px) so an anchored heading like
    #services isn't hidden behind it when jumped to from the nav. */
 .pricing-block-head { margin: 0 0 18px; scroll-margin-top: 104px; }
+#services { scroll-margin-top: 104px; }
+/* The nav's "Nos références" link: #work has almost no top padding, so
+   without this its heading lands under the fixed nav. */
+#work { scroll-margin-top: 72px; }
 .pricing-block-head h3 { font-size: 26px; letter-spacing: -.01em; margin: 0 0 6px; font-family: var(--font-display); font-weight: 600; }
 .pricing-block-head p { margin: 0; color: var(--muted); font-size: 17px; }
 .pricing-table-card { padding: 8px; border-radius: var(--radius); margin-bottom: 50px; overflow-x: auto; }
@@ -801,7 +1054,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    pricing cards: .glass's saturate() would pull the video behind it
    through the panel and wash the copy out. */
 .section-dark .pricing-table-card {
-  background: #0a2c3a;
+  background: #0d294c;
   border-color: rgba(var(--text-rgb), 0.25);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -815,6 +1068,78 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .pricing-price { font-weight: 700; white-space: nowrap; color: var(--on-accent); }
 .section-dark .pricing-price { color: var(--gold-bright); }
 .pricing-cta { display: flex; justify-content: center; }
+/* Subscriptions table in the packs' neon-cyan look (2026-09-25): dark glass
+   inside a turning cyan edge, cyan monospace headers, glittering plan names,
+   glowing prices. The card clips the spinning edge; sideways scrolling on
+   narrow screens moves to the inner content box so the edge stays put.
+   The table is wide and short, so the spinning layer is a square wider than
+   the card's diagonal (150% of its width) rather than the packs' inset. */
+.section-dark .pricing-table-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  box-shadow: 0 0 30px rgba(22, 135, 255, 0.2), 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+.section-dark .pricing-table-card .glass-card-content { overflow-x: auto; }
+.section-dark .pricing-table-card::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  aspect-ratio: 1;
+  z-index: -2;
+  background: conic-gradient(from 0deg, #1687ff, #8cc4ff, #2f8cff, #0e3567 40%, #1687ff 60%, #8cc4ff, #1687ff);
+  animation: neon-edge-centered 9s linear infinite;
+}
+.section-dark .pricing-table-card::after {
+  content: "";
+  position: absolute;
+  inset: 1.5px;
+  z-index: -1;
+  border-radius: calc(var(--radius) - 1.5px);
+  background:
+    radial-gradient(80% 90% at 90% 0%, rgba(22, 135, 255, 0.12), transparent 55%),
+    linear-gradient(160deg, #0d2749, #051222);
+}
+@keyframes neon-edge-centered {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.section-dark .pricing-table thead th {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
+  color: #6fb4ff;
+  text-shadow: 0 0 12px rgba(22, 135, 255, 0.6);
+  border-bottom-color: rgba(22, 135, 255, 0.3);
+}
+.section-dark .pricing-table tbody tr:not(:last-child) td { border-bottom-color: rgba(22, 135, 255, 0.14); }
+.section-dark .pricing-price { color: var(--gold-bright); text-shadow: 0 0 12px rgba(22, 135, 255, 0.5); }
+/* Plan names glitter like the pack names (same recipe as .service h3). */
+.section-dark .plan-name {
+  position: relative;
+  display: inline-block;
+  /* Same logo gradient as the pack titles, on lighter stops: plan names are
+     small text, and #8527FF itself would fall under 4.5:1 here. */
+  background: linear-gradient(95deg, #5aa9ff 0%, #8f8bff 55%, #b085ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 8px rgba(22, 135, 255, 0.35));
+}
+.section-dark .pricing-table tbody tr:nth-child(2) .plan-name { animation-delay: -1.7s; }
+.section-dark .pricing-table tbody tr:nth-child(3) .plan-name { animation-delay: -3.4s; }
+@media (max-width: 740px) {
+  /* Stacked rows make the card tall and narrow: widen the spinning square
+     so it still covers the diagonal. */
+  .section-dark .pricing-table-card::before { width: 260%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-dark .pricing-table-card::before { animation: none; transform: translate(-50%, -50%); }
+  .section-dark .plan-name { animation: none; }
+}
+
 
 /* ---------- Fit list ---------- */
 .fit-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; align-items: start; }
@@ -841,12 +1166,47 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .fit-item p { margin: 0; color: var(--muted); line-height: 1.6; font-size: 14px; }
 
 /* ---------- Work showcase ---------- */
-.work-grid { display: grid; grid-template-columns: 1.15fr .85fr; grid-template-rows: 330px 330px; gap: 18px; }
-.work-grid > div:first-child { grid-row: span 2; }
+/* "Nos références" + the Instagram link beside it. The link is a small
+   glass pill, a fraction of the title's size, wrapping under it when the
+   column is too narrow. The head's left column is widened a little here so
+   title and pill share one line on desktop. */
+#work .section-head { grid-template-columns: 1fr; }
+.work-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 12px; }
+.work-title-row h2 { margin: 0; }
+.work-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 16px 7px 9px;
+  border: 1px solid rgba(140, 196, 255, 0.45);
+  border-radius: 999px;
+  background: rgba(5, 18, 34, 0.55);
+  color: var(--gold-bright);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  white-space: nowrap;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.work-instagram:hover { transform: translateY(-2px); border-color: #6fb4ff; box-shadow: 0 0 22px rgba(22, 135, 255, 0.35); }
+.work-instagram:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .work-instagram:hover { transform: none; } }
+.work-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 420px; gap: 18px; }
+/* "Nos références" is one section spread over three components (this grid,
+   VideoCarousel, AICommercials). The carousel and the ads lost their own
+   headings, so the vertical gaps between the three shrink to read as one
+   run of videos under the single title. */
+.section#work { padding-bottom: 36px; }
+.section.video-carousel-section { padding-top: 0; padding-bottom: 36px; }
+.section.ai-commercials { padding-top: 0; }
+/* flow-root: with no heading and no top padding, the first child's top
+   margin would otherwise collapse out of the section and leave a strip of
+   page background between the bands. */
+.section.video-carousel-section, .section.ai-commercials { display: flow-root; }
 .work-card { position: relative; border-radius: 25px; height: 100%; }
 .work-tag { position: absolute; top: 18px; left: 18px; z-index: 2; padding: 8px 11px; border-radius: 999px; background: rgba(7,7,10,0.55); border: 1px solid var(--line-strong); font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--champagne); backdrop-filter: blur(8px); }
 .website-showcase { position: absolute; inset: 0; padding: 83px 38px 35px; }
-.website-window { height: 100%; border: 1px solid var(--line-strong); border-radius: 14px; background: linear-gradient(165deg, #2590b6, #3fa8c6 55%, #8ae8ea 100%); overflow: hidden; transform: rotate(-2deg); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+.website-window { height: 100%; border: 1px solid var(--line-strong); border-radius: 14px; background: linear-gradient(165deg, #1687ff, #60a0e8 55%, #a8d3ff 100%); overflow: hidden; transform: rotate(-2deg); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
 .website-window-top { height: 36px; background: var(--panel-raised); border-bottom: 1px solid var(--line); }
 .website-window-body { padding: 18px 22px 16px; color: var(--text); }
 .website-window-body strong { color: var(--gold); font-size: 12px; }
@@ -854,8 +1214,8 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .website-lines { width: 65%; display: grid; gap: 8px; }
 .website-lines span { height: 7px; border-radius: 99px; background: var(--line-strong); }
 .website-lines span:last-child { width: 67%; }
-.video-showcase { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(160deg, #0e3f52, var(--bronze)); }
-.video-product { width: 108px; height: 176px; border-radius: 31px 31px 22px 22px; background: linear-gradient(165deg, #8ae8ea, #3fa8c6 55%, #2590b6 100%); transform: rotate(9deg); box-shadow: 0 20px 50px rgba(0,0,0,.5); display: grid; place-items: center; color: var(--on-accent); font-weight: 700; font-size: 18px; text-align: center; line-height: .95; }
+.video-showcase { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(160deg, #10325e, var(--bronze)); }
+.video-product { width: 108px; height: 176px; border-radius: 31px 31px 22px 22px; background: linear-gradient(165deg, #a8d3ff, #60a0e8 55%, #1687ff 100%); transform: rotate(9deg); box-shadow: 0 20px 50px rgba(0,0,0,.5); display: grid; place-items: center; color: var(--on-accent); font-weight: 700; font-size: 18px; text-align: center; line-height: .95; }
 /* Fills the work card edge to edge (VideoSlot's own .video-slot-video does the
    `cover` cropping). Distinct from .video-showcase, whose bronze gradient is
    tuned to the product-commercial card's fallback. */
@@ -872,32 +1232,90 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .process-step h3 { position: relative; z-index: 1; margin-bottom: 12px; font-size: 20px; font-family: var(--font-display); font-weight: 600; }
 .process-step p { position: relative; z-index: 1; color: var(--muted); font-size: 13px; line-height: 1.6; }
 
-/* Mobile-only per-card video background — the desktop cursor-puck (see
-   ProcessCursorVideo) has no touch equivalent, so below the pin's 980px
-   breakpoint each stacked card plays its own step video directly instead,
-   same "dark video + scrim + light text" treatment used on the
-   hero/services/contact cinematic backgrounds. Hidden entirely on desktop:
-   .process-step-inner already has its own vivid-glass card look there. */
-.process-step-mobile-video { display: none; }
-
-@media (max-width: 979px) {
-  .process-step-mobile-video {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-  }
-  .process-step-mobile-video-slot { position: absolute; inset: 0; }
-  .process-step-mobile-video-slot .video-slot-video { width: 100%; height: 100%; object-fit: cover; }
-  .process-step-mobile-video-scrim { position: absolute; inset: 0; background: rgba(7, 7, 10, 0.55); }
-  .process-step-inner:has(.process-step-mobile-video) .process-step-number,
-  .process-step-inner:has(.process-step-mobile-video) h3,
-  .process-step-inner:has(.process-step-mobile-video) p { color: var(--text); }
-  .process-step-inner:has(.process-step-mobile-video) .process-step-track { background: rgba(var(--text-rgb), 0.25); }
+/* Process steps in the packs' neon-cyan look (2026-09-25): same build as
+   `.section-vivid .pricing-service`. ::before is the spinning conic
+   gradient, ::after the dark glass laid 1.5px inside it, so only a thin
+   turning cyan ring shows. The scroll-scrubbed dimming (ProcessTimeline)
+   fades .process-step-inner, not the card, so the edge stays lit on every
+   step and only the words dim. (The per-card step videos phones used to
+   play here were removed the same day, with the desktop video cursor.) */
+.section-vivid .process-step.glass {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  box-shadow: 0 0 26px rgba(22, 135, 255, 0.2), 0 16px 44px rgba(0, 0, 0, 0.45);
+}
+.section-vivid .process-step.glass::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: -2;
+  background: conic-gradient(from 0deg, #1687ff, #8cc4ff, #2f8cff, #0e3567 40%, #1687ff 60%, #8cc4ff, #1687ff);
+  animation: neon-edge 8s linear infinite;
+}
+.section-vivid .process-step.glass::after {
+  content: "";
+  position: absolute;
+  inset: 1.5px;
+  z-index: -1;
+  border-radius: calc(var(--radius-sm) - 1.5px);
+  background:
+    radial-gradient(120% 70% at 88% 0%, rgba(22, 135, 255, 0.13), transparent 55%),
+    linear-gradient(160deg, #0d2749, #051222);
+}
+.process > .process-step:nth-child(2)::before { animation-delay: -2s; }
+.process > .process-step:nth-child(3)::before { animation-delay: -4s; }
+.process > .process-step:nth-child(4)::before { animation-delay: -6s; }
+.section-vivid .process-step-number {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, monospace;
+  font-size: 15px;
+  color: #6fb4ff;
+  text-shadow: 0 0 14px rgba(22, 135, 255, 0.7);
+}
+.section-vivid .process-step-track { background: rgba(22, 135, 255, 0.16); }
+.section-vivid .process-step-fill {
+  background: linear-gradient(90deg, #1687ff, #8cc4ff);
+  box-shadow: 0 0 10px rgba(22, 135, 255, 0.8);
+}
+.section-vivid .process-step p { color: rgba(242, 245, 249, 0.86); }
+/* Glittering step name, same recipe as the pack names. */
+.section-vivid .process-step h3 {
+  width: fit-content;
+  background:
+    radial-gradient(circle, #ffffff 0 0.8px, transparent 1.5px) 0 0 / 13px 10px,
+    radial-gradient(circle, #ffffff 0 0.6px, transparent 1.3px) 5px 4px / 17px 13px,
+    linear-gradient(100deg, #6fb4ff 0%, #b7d9ff 22%, #ffffff 30%, #b7d9ff 38%, #6fb4ff 55%, #9ccbff 100%) 0 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 7px rgba(111, 180, 255, 0.5));
+  animation: name-glitter 5s linear infinite;
+}
+.section-vivid .process-step h3::after {
+  content: "\2726";
+  position: absolute;
+  top: -8px;
+  right: -16px;
+  font-size: 12px;
+  -webkit-text-fill-color: #ffffff;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(22, 135, 255, 0.95);
+  animation: sparkle-twinkle 2.4s ease-in-out infinite;
+}
+.process > .process-step:nth-child(2) h3 { animation-delay: -1.2s; }
+.process > .process-step:nth-child(3) h3 { animation-delay: -2.5s; }
+.process > .process-step:nth-child(4) h3 { animation-delay: -3.7s; }
+@media (prefers-reduced-motion: reduce) {
+  .section-vivid .process-step.glass::before,
+  .section-vivid .process-step h3,
+  .section-vivid .process-step h3::after { animation: none; }
 }
 
-/* The video-as-cursor: while hovering the pinned process section, the
+/* Unused since 2026-09-25 (ProcessTimeline no longer mounts
+   ProcessCursorVideo); kept with the component so it can come back.
+   The video-as-cursor: while hovering the pinned process section, the
    system pointer is hidden and this small looping clip of the active step
    tracks the mouse instead — the video literally replaces the cursor
    rather than sitting behind a card. */
@@ -983,7 +1401,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .faq-item:last-child { border-bottom: 0; }
 .faq-question { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 24px 0; border: 0; background: transparent; text-align: left; font-weight: 600; cursor: pointer; color: var(--text); }
 .faq-plus { width: 29px; height: 29px; flex: 0 0 29px; display: grid; place-items: center; border: 1px solid var(--line-strong); border-radius: 50%; transition: transform .25s ease, background .25s ease, color .25s ease; }
-.faq-item.open .faq-plus { background: var(--gold); color: var(--on-accent); border-color: var(--gold); }
+.faq-item.open .faq-plus { background: var(--button-fill); color: var(--on-blue); border-color: var(--button-edge); }
 .faq-answer { overflow: hidden; color: var(--muted); }
 .faq-answer p { padding: 0 48px 23px 0; line-height: 1.65; font-size: 14px; margin: 0; }
 
@@ -996,12 +1414,12 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
    down, so FAQ and Contact read their colours from the same place. */
 .closing-area {
   position: relative;
-  --ink: #04141a;
-  --panel: #082633;
-  --panel-raised: #0d3648;
-  --text: #eef6f8;
-  --muted: #c3dbe4;
-  --muted-dim: #bfd8e0;
+  --ink: #051324;
+  --panel: #0b2343;
+  --panel-raised: #11325e;
+  --text: #f2f5f9;
+  --muted: #ccd9e8;
+  --muted-dim: #c9d5e5;
   --line: rgba(var(--text-rgb), 0.12);
   --line-strong: rgba(var(--text-rgb), 0.22);
   background: var(--panel);
@@ -1062,7 +1480,7 @@ h1, h2, h3, blockquote { font-family: var(--font-display); }
 .contact-card h3 { font-size: 22px; letter-spacing: -.01em; font-family: var(--font-display); font-weight: 600; }
 .contact-points { display: grid; gap: 16px; margin-top: 25px; }
 .contact-point { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 13px 0; border-top: 1px solid var(--line); }
-.contact-point span:first-child { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--gold); color: var(--on-accent); font-weight: 700; }
+.contact-point span:first-child { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--button-fill); color: var(--on-blue); font-weight: 700; }
 .contact-point strong { display: block; font-size: 13px; }
 .contact-point small { color: var(--muted); }
 
@@ -1084,42 +1502,85 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
 
 @media (max-width: 980px) {
   .section-head, .fit-grid, .faq-layout, .contact-grid { grid-template-columns: 1fr; }
+  /* Up to 980px the hero plays the portrait cut: the face fills the upper
+     half and the captions and "DM / Level up IA" end card run through the
+     middle. The first screen keeps the eyebrow and CTAs at its bottom
+     (.hero-main); the headline follows, still over the pinned video. */
   .hero { padding-top: 60px; }
   .hero-cine-bg { margin-top: -60px; margin-bottom: calc(-100vh + 60px); }
-  .hero-device-phone { position: static; margin: 24px auto 0; display: flex; justify-content: center; }
+  .hero-grid-device { padding-top: 0; }
+  .hero-grid-device .hero-content { display: flex; flex-direction: column; align-items: stretch; min-height: 0; }
+  .hero-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-height: calc(100svh - 60px);
+    padding-bottom: 28px;
+  }
+  .hero-intro { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-top: 36px; }
+  /* Source order from here: eyebrow + CTAs in the first screen, then the
+     headline. */
+  .hero-content .eyebrow, .hero-h1, .hero-actions { order: 0; }
+  .hero-content .eyebrow { margin-bottom: 14px; }
+  .hero-h1 { margin: 0; }
+  .hero-actions { margin-top: 0; }
   .services { grid-template-columns: 1fr 1fr; }
   .pricing-services { grid-template-columns: 1fr 1fr; }
   .sticky-copy { position: static; }
-  .work-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 500px 300px; }
-  .work-grid > div:first-child { grid-column: span 2; grid-row: auto; }
+  .work-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 340px; }
   .process { grid-template-columns: 1fr 1fr; }
   .quote-box { padding: 45px; }
 }
 
-@media (max-width: 740px) {
-  .wrap { width: min(100% - 28px, 1180px); }
-  .nav-inner { height: 68px; }
+/* ---------- Nav on narrower screens (2026-09-26) ----------
+   With the links on blue pills, the full French row (logo, four links,
+   "Démarrer un projet", cart, EN/FR) needs about 870px. So the pills get a
+   little more compact up to 1100px, and from 900px down the links move into
+   the hamburger panel phones already used (it was 740px before). */
+.nav-links a { white-space: nowrap; }
+@media (max-width: 1100px) {
+  .nav-links { gap: 12px; }
+  .nav-links a:not(.nav-cta) { padding: 0 11px; font-size: 13px; }
+  .nav-links-desktop .nav-cta { padding: 0 14px; font-size: 13px; margin-left: 4px; }
+}
+@media (max-width: 900px) {
   .menu-button { display: block; }
   .nav-links-desktop { display: none; }
   .nav-links-mobile {
     position: absolute;
     left: 14px;
     right: 14px;
-    top: 76px;
+    top: 90px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
     padding: 22px;
     border-radius: 18px;
-    gap: 4px;
+    gap: 8px;
     background: var(--panel-raised);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     box-shadow: var(--shadow);
   }
-  .nav-links-mobile a { padding: 10px 4px; font-weight: 600; }
-  .hero { padding: 48px 0 68px; min-height: 100svh; }
+  /* Same blue pills as the desktop links, stacked. The active one grows a
+     little less than on desktop (the pills are full width) and glows. */
+  /* Growth and tap press come from framer-motion in SiteNav (its inline
+     transform would override a CSS one); the glow and brighter fill are here. */
+  .nav-links-mobile a { padding: 11px 16px; font-weight: 600; border: 1px solid var(--button-edge); border-radius: 999px; background: var(--button-fill); color: var(--on-blue); transition: box-shadow .3s ease, background .2s ease, filter .15s ease; }
+  .nav-links-mobile a.is-active { background: var(--button-fill-hover); border-color: #ffffff; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 0 26px rgba(var(--digital-blue-rgb), 0.75); }
+  .nav-links-mobile a:active { filter: brightness(1.12); transition-duration: .08s; }
+  .nav-links-mobile .nav-cta { justify-content: flex-start; min-height: 0; }
+}
+
+@media (max-width: 740px) {
+  .wrap { width: min(100% - 28px, 1180px); }
+  .nav-inner { height: 68px; }
+  .nav-links-mobile { top: 76px; }
+  .hero { padding: 48px 0 44px; }
   .hero-cine-bg { margin-top: -48px; margin-bottom: calc(-100vh + 48px); }
+  .hero-main { min-height: calc(100svh - 48px); padding-bottom: 22px; }
+  .hero-intro { margin-top: 30px; }
   .hero-h1 { font-size: 18px; }
   /* Phones keep the authored two-line structure — the font drops instead
      of the lines rewrapping, because .eyebrow-line is nowrap. 19px keeps
@@ -1127,26 +1588,12 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
   .hero-content .eyebrow { padding: 12px 16px 15px; font-size: 19px; gap: 10px; }
   .hero-content .eyebrow .eyebrow-dot { width: 10px; height: 10px; }
   .hero-content .eyebrow .eyebrow-rule { width: 76px; height: 2px; margin-top: 11px; }
-  /* A smaller lift than desktop's: the phone hero's own padding-top is
-     shorter, so the desktop pull would drive this block up into the
-     sound/cinematic controls parked at top: 100px. */
-  .hero-content .eyebrow {
-    margin-top: clamp(-400px, -46vh, -200px);
-    margin-bottom: clamp(200px, 46vh, 400px);
-  }
-  .hero-copy { font-size: 17px; }
+  .hero-content .eyebrow { margin-bottom: 12px; }
   .video-slot-sound { padding: 8px 12px; font-size: 11px; }
   .video-slot-sound span { display: none; }
   .hero-cinematic-toggle { right: 62px; padding: 8px 12px; font-size: 11px; }
   .hero-cinematic-toggle span { display: none; }
-  .hero-device-wrap { margin-top: 24px; padding-bottom: 0; }
-  .hero-grid-device { padding-top: clamp(300px, 55vh, 560px); }
-  /* Shorter runway on phones — the pin never engages here (it's gated to
-     min-width: 980px), so this is plain dead space rather than scrub
-     runway, and a full 78vh of it reads as a broken gap. */
-  /* Must exceed a screen height so the laptop is never visible at scroll
-     position 0 — at 42vh the mockup showed on load on tall phones. */
-  .hero-video-runway { height: 85vh; }
+  .hero-actions { gap: 10px; }
   /* Phone width for this breakpoint lives in device-mockup.css, next to the
      rest of the toast sizing it has to stay in step with. The duplicate that
      was here loaded later and silently overrode it. */
@@ -1162,8 +1609,7 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
   .pricing-table tbody tr:last-child { border-bottom: 0; }
   .pricing-table td { padding: 4px 0; border-bottom: 0 !important; }
   .pricing-table td::before { content: attr(data-label); display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 2px; }
-  .work-grid { display: grid; grid-template-columns: 1fr; grid-template-rows: 430px 280px 280px; }
-  .work-grid > div:first-child { grid-column: auto; }
+  .work-grid { display: grid; grid-template-columns: 1fr; grid-template-rows: 300px 300px; }
   .process { grid-template-columns: 1fr; }
   .process-step-inner { min-height: 200px; }
   .quote-box { padding: 34px 24px; border-radius: 22px; }
@@ -1175,6 +1621,10 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  /* Reduced motion: no growth or bounce (the hook is off too); hover and
+     keyboard focus get a white rim and a glow instead. */
+  .nav-links a.is-active, .nav-links a:hover, .nav-links a:active, .nav-links a:focus-visible { transform: none !important; }
+  .nav-links a:hover, .nav-links a:focus-visible { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85), 0 0 22px rgba(var(--digital-blue-rgb), 0.6); }
 }
 
 @media (pointer: coarse) {
@@ -1186,6 +1636,106 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
    so it stays reachable at mobile widths where the desktop link row is
    display:none. */
 .nav-tools { display: flex; align-items: center; gap: 12px; }
+/* Cart shortcut, drawn as a round version of the language switch's glass
+   pill so the two read as one group. The panel (CartMenu) hangs under it. */
+.nav-cart-wrap { position: relative; display: inline-flex; }
+.nav-cart {
+  position: relative;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(var(--ground-rgb), 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text);
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.nav-cart:hover { transform: translateY(-2px); border-color: var(--gold); background: rgba(var(--accent-rgb), 0.25); }
+.nav-cart:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+/* Item count. Remounted on every change (keyed in CartMenu), so the pop
+   plays each time something is added: the "notification". */
+.nav-cart-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--button-fill);
+  color: var(--on-blue);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 0 0 2px rgba(var(--ground-rgb), 0.9), 0 4px 12px rgba(var(--digital-blue-rgb), 0.5);
+  animation: cart-pop .5s cubic-bezier(.2, 1.6, .4, 1);
+}
+@keyframes cart-pop { 0% { transform: scale(.3); } 60% { transform: scale(1.25); } 100% { transform: scale(1); } }
+.cart-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 50;
+  width: min(360px, calc(100vw - 24px));
+  padding: 18px 18px 16px;
+  border: 1px solid rgba(var(--accent-rgb), 0.32);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(155deg, rgba(var(--ground-rgb), 0.97), rgba(var(--band-teal-rgb), 0.95));
+  box-shadow: var(--shadow);
+  color: var(--text);
+  text-align: left;
+  outline: none;
+}
+.cart-panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.cart-panel-title { margin: 0; font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+.cart-close { display: grid; place-items: center; padding: 6px; border: 0; border-radius: 999px; background: transparent; color: var(--text); cursor: pointer; }
+.cart-close:hover { background: rgba(var(--text-rgb), 0.1); }
+.cart-list { display: grid; margin: 0; padding: 0; list-style: none; }
+.cart-row { padding: 14px 0; border-top: 1px solid rgba(var(--text-rgb), 0.14); }
+.cart-row:first-child { border-top: 0; }
+.cart-row-text { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.cart-row-title { font-weight: 700; }
+.cart-row-price { flex: none; font-weight: 700; color: var(--gold-bright); }
+.cart-row-actions { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
+.cart-checkout {
+  flex: 1;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--button-edge);
+  border-radius: 999px;
+  background: var(--button-fill);
+  color: var(--on-blue);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.cart-checkout[aria-busy="true"] { cursor: progress; filter: saturate(.85); }
+.cart-remove { padding: 4px; border: 0; background: transparent; color: var(--muted); font: inherit; font-size: 13px; font-weight: 600; text-decoration: underline; cursor: pointer; }
+.cart-remove:hover { color: var(--text); }
+.cart-note { margin: 12px 0 0; color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+.cart-empty p { margin: 8px 0 10px; color: var(--muted); }
+.cart-empty a { font-weight: 700; color: var(--gold-bright); }
+@media (max-width: 740px) {
+  /* Pinned under the phone nav bar instead of hanging off a small icon. */
+  .cart-panel { position: fixed; top: 64px; left: 12px; right: 12px; width: auto; }
+}
+@media (max-width: 400px) {
+  /* Logo, cart, language switch and menu must share a 360px bar. */
+  .nav-inner { gap: 10px; }
+  .nav-tools { gap: 6px; }
+  .nav-cart { width: 36px; height: 36px; }
+}
+@media (prefers-reduced-motion: reduce) { .nav-cart:hover { transform: none; } .nav-cart-count { animation: none; } }
 .locale-switcher {
   display: inline-flex;
   align-items: center;
@@ -1211,8 +1761,8 @@ footer .footer-brand { width: fit-content; padding: 7px 14px; border-radius: 12p
 }
 .locale-option:hover { color: var(--text); }
 .locale-option-active {
-  background: linear-gradient(150deg, var(--gold-bright), var(--bronze));
-  color: var(--on-accent);
+  background: var(--button-fill);
+  color: var(--on-blue);
 }
 .nav-mobile-locale { display: flex; justify-content: center; padding-top: 14px; }
 
@@ -1296,7 +1846,6 @@ footer .brand-logo { height: 50px; }
    (0,1,0), so a follow-up reset silently lost and left the button's label
    looking blurred. Elements with their own solid fill (the CTA, the active
    locale chip) need no shadow and only look muddy with one. */
-.nav-links a:not(.nav-cta),
 .locale-option:not(.locale-option-active) {
   text-shadow: 0 1px 4px rgba(var(--shade-rgb), 0.9), 0 0 12px rgba(var(--shade-rgb), 0.6);
 }
@@ -1313,15 +1862,15 @@ footer .brand-logo { height: 50px; }
   height: 58px;
   display: grid;
   place-items: center;
-  border: 1px solid var(--gold);
+  border: 1px solid var(--button-edge);
   border-radius: 50%;
-  background: linear-gradient(150deg, var(--gold-bright), var(--bronze));
-  color: var(--on-accent);
+  background: var(--button-fill);
+  color: var(--on-blue);
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.45);
+  box-shadow: 0 10px 30px rgba(var(--digital-blue-rgb), 0.45);
   transition: transform .2s ease, box-shadow .2s ease;
 }
-.chat-launcher:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(var(--accent-rgb), 0.55); }
+.chat-launcher:hover { transform: translateY(-3px); background: var(--button-fill-hover); box-shadow: 0 16px 40px rgba(var(--digital-blue-rgb), 0.55); }
 .chat-launcher svg { width: 26px; height: 26px; }
 
 .chat-panel {
@@ -1338,7 +1887,7 @@ footer .brand-logo { height: 50px; }
   border-radius: 20px;
   /* Opaque, like the pricing cards: a translucent panel over the page's
      bright bands makes the transcript hard to read. */
-  background: #0a2c3a;
+  background: #0d294c;
   box-shadow: 0 24px 70px rgba(var(--shade-rgb), 0.65);
 }
 .chat-head {
@@ -1375,8 +1924,8 @@ footer .brand-logo { height: 50px; }
 }
 .chat-msg-user {
   align-self: flex-end;
-  background: linear-gradient(150deg, var(--gold-bright), var(--bronze));
-  color: var(--on-accent);
+  background: var(--button-fill);
+  color: var(--on-blue);
   font-weight: 600;
 }
 .chat-msg-pending { opacity: .7; font-style: italic; }
@@ -1408,8 +1957,8 @@ footer .brand-logo { height: 50px; }
   place-items: center;
   border: 0;
   border-radius: 50%;
-  background: linear-gradient(150deg, var(--gold-bright), var(--bronze));
-  color: var(--on-accent);
+  background: var(--button-fill);
+  color: var(--on-blue);
   cursor: pointer;
   transition: opacity .2s ease;
 }
@@ -1433,22 +1982,34 @@ footer .brand-logo { height: 50px; }
   gap: 8px;
   min-height: 42px;
   padding: 0 18px;
-  border: 1px solid rgba(255, 255, 255, .22);
+  border: 1px solid var(--button-edge);
   border-radius: 999px;
-  background: linear-gradient(120deg, #29a3ff, #0a5ff0);
-  color: #fff;
+  /* Same fill as "Démarrer un projet" and the pack cart buttons. */
+  background: var(--button-fill);
+  color: var(--on-blue);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: -.01em;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(17, 131, 255, .38);
+  box-shadow: 0 8px 22px rgba(var(--digital-blue-rgb), 0.3);
   transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
 }
 .pricing-cart svg { width: 16px; height: 16px; flex: none; }
-.pricing-cart:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 12px 26px rgba(17, 131, 255, .5); }
+.pricing-cart:hover { transform: translateY(-2px); background: var(--button-fill-hover); box-shadow: 0 12px 30px rgba(var(--digital-blue-rgb), 0.45); }
 .pricing-cart:active { transform: translateY(0); filter: brightness(.95); }
 .pricing-cart:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+/* Already in the cart: an outlined button that opens the cart panel. */
+.service-cart[data-in-cart], .pricing-cart[data-in-cart] {
+  background: rgba(var(--ground-rgb), 0.35);
+  color: var(--text);
+  border: 1px solid rgba(var(--text-rgb), 0.55);
+  box-shadow: none;
+}
+.cart-spinner { animation: spin .8s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .cart-spinner { animation: none; } }
+/* Visually hidden, still read by screen readers (cart status messages). */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* Sur mobile le tableau passe en cartes empilées : le bouton prend la largeur. */
 @media (max-width: 760px) {

@@ -3,7 +3,10 @@
 import { useState, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import GlassCard from "@/components/ui/GlassCard";
-import { PACK_CODES, startCheckout } from "@/lib/checkout";
+import { PACK_CODES } from "@/lib/checkout";
+import { addToCart, openCart } from "@/lib/cart";
+import { useCart } from "@/hooks/useCart";
+import CartButtonIcon from "./CartButtonIcon";
 
 type Pack = {
   number: string;
@@ -25,36 +28,10 @@ type Props = {
   showDetails: string;
   hideDetails: string;
   addToCart: string;
+  addedToCart: string;
 };
 
-/**
- * The project has no cart or checkout, so this control does not pretend to
- * have one. It dispatches a documented `levelup:add-to-cart` CustomEvent
- * carrying the pack's identity and price, which is the seam a real cart
- * would listen on later. Until something listens, the handler falls through
- * to the contact section, so the button is never a dead control — it always
- * takes the visitor somewhere they can actually buy.
- *
- * Wiring a real cart is then one listener, with no markup change:
- *   document.addEventListener("levelup:add-to-cart", (e) => {
- *     e.preventDefault();          // suppresses the contact fallback
- *     cart.add(e.detail);
- *   });
- */
-function addPackToCart(pack: Pack) {
-  const event = new CustomEvent("levelup:add-to-cart", {
-    detail: { id: pack.number, title: pack.title, price: pack.price },
-    cancelable: true,
-    bubbles: true,
-  });
-  const handled = !document.dispatchEvent(event);
-  if (handled) return;
-
-  // Redirection immédiate vers la connexion de la plateforme, avec l'offre.
-  const code = PACK_CODES[pack.number];
-  if (code && startCheckout(code)) return;
-
-  // Repli inchangé si la plateforme est injoignable ou le pack inconnu.
+function scrollToContact() {
   document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
@@ -78,15 +55,42 @@ export default function ServicePackCard({
   featured,
   showDetails,
   hideDetails,
-  addToCart,
+  addToCart: addToCartLabel,
+  addedToCart,
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [announce, setAnnounce] = useState("");
+  const code = PACK_CODES[pack.number];
+  const inCart = useCart().some((item) => item.code === code);
+
+  // Adds the pack to the site's cart (the nav badge counts it) and stays on
+  // the page; the order is finished from the cart panel. Once it is in the
+  // cart the button opens the panel instead, so it can never be added twice.
+  function addToCartClick() {
+    if (!code) {
+      scrollToContact();
+      return;
+    }
+    if (inCart) {
+      openCart();
+      return;
+    }
+    addToCart(code);
+    setAnnounce(`${pack.title}: ${addedToCart}`);
+  }
 
   return (
     <GlassCard
       className={featured ? "service service-featured" : "service"}
       style={{ "--accent": accent, "--pack-from": gradientFrom, "--pack-to": gradientTo } as CSSProperties}
     >
+      {/* Decorative glitter: twinkling stars and drifting glints, all CSS
+          (see .service-sparkles). Hidden from screen readers. */}
+      <span className="service-sparkles" aria-hidden="true">
+        {Array.from({ length: 8 }, (_, i) => (
+          <span key={i}>✦</span>
+        ))}
+      </span>
       <div className="service-number">{pack.number}</div>
       <h3>{pack.title}</h3>
       <div className="service-price">{pack.price}</div>
@@ -156,15 +160,15 @@ export default function ServicePackCard({
           type="button"
           className="service-cart"
           data-pack={pack.number}
-          onClick={() => addPackToCart(pack)}
+          data-in-cart={inCart || undefined}
+          onClick={addToCartClick}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.1} aria-hidden="true">
-            <path d="M3 4h2l2.4 11.2a1 1 0 0 0 1 .8h8.5a1 1 0 0 0 1-.78L20 8H6" />
-            <circle cx="10" cy="20" r="1.4" />
-            <circle cx="17" cy="20" r="1.4" />
-          </svg>
-          {addToCart}
+          <CartButtonIcon added={inCart} />
+          {inCart ? addedToCart : addToCartLabel}
         </button>
+        <span className="sr-only" role="status">
+          {announce}
+        </span>
       </div>
     </GlassCard>
   );

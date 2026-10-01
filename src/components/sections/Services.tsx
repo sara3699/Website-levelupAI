@@ -49,7 +49,6 @@ export default async function Services({ lang }: { lang: string }) {
             <span className="section-kicker">{t.services.kicker}</span>
             <h2>{t.services.title}</h2>
           </div>
-          <p className="section-lead">{t.services.lead}</p>
         </Reveal>
 
         <div className="services">
@@ -64,6 +63,7 @@ export default async function Services({ lang }: { lang: string }) {
                 showDetails={t.services.showDetails}
                 hideDetails={t.services.hideDetails}
                 addToCart={t.services.addToCart}
+                addedToCart={t.services.addedToCart}
               />
             </Reveal>
           ))}
@@ -89,11 +89,13 @@ export default async function Services({ lang }: { lang: string }) {
               <tbody>
                 {t.pricing.subscriptions.map((sub) => (
                   <tr key={sub.name}>
-                    <td data-label={t.pricing.tableHeaders.plan}>{sub.name}</td>
+                    <td data-label={t.pricing.tableHeaders.plan}>
+                      <span className="plan-name">{sub.name}</span>
+                    </td>
                     <td data-label={t.pricing.tableHeaders.content}>{sub.content}</td>
                     <td data-label={t.pricing.tableHeaders.price} className="pricing-price">{localizePrice(sub.price, currency)}</td>
                     <td className="pricing-action">
-                      <SubscribeButton name={sub.name} label={t.services.addToCart} />
+                      <SubscribeButton name={sub.name} label={t.services.addToCart} addedLabel={t.services.addedToCart} />
                     </td>
                   </tr>
                 ))}

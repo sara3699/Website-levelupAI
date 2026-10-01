@@ -51,3 +51,18 @@ export function startCheckout(packCode: string): boolean {
   window.location.href = `${PLATFORM_URL}/login?pack=${encodeURIComponent(packCode)}`;
   return true;
 }
+
+/** Name and displayed price of an offer code, in the dictionary's language. */
+export function offerForCode(
+  code: string,
+  dict: {
+    services: { packs: Array<{ number: string; title: string; price: string }> };
+    pricing: { subscriptions: Array<{ name: string; price: string }> };
+  }
+): { title: string; price: string } | null {
+  const pack = dict.services.packs.find((p) => PACK_CODES[p.number] === code);
+  if (pack) return { title: pack.title, price: pack.price };
+  const sub = dict.pricing.subscriptions.find((s) => subscriptionCode(s.name) === code);
+  if (sub) return { title: sub.name, price: sub.price };
+  return null;
+}

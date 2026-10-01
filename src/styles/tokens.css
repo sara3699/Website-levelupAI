@@ -14,25 +14,25 @@
        cyan-teal -> blue-teal   (primary, buttons and interactive fills)
        teal -> blue-green       (secondary, large section grounds) */
   --brand-blue: #0e5570;
-  --brand-magenta: #2590b6;
-  --brand-cyan: #8ae8ea;
+  --brand-magenta: #1687ff;
+  --brand-cyan: #a8d3ff;
   --brand-purple: #12566f;
 
   /* Lifted variants. The two ends of the primary button gradient. Both are
      held in the window where --on-accent (near-black teal) clears 4.5:1 on
      them: 11.9:1 on the light end, 4.6:1 on the deep end, so the label holds
      everywhere across the fill, not just at the bright stop. */
-  --brand-blue-lit: #3fb3c9;
-  --brand-purple-lit: #8ae8ea;
+  --brand-blue-lit: #4f9dff;
+  --brand-purple-lit: #a8d3ff;
 
   /* Ground. Deep teal, not near-black: the palette lives on colour, so even
      the base surfaces carry the blue-green hue. --ink is the deepest (used
      under bright fills); --panel/--panel-raised step up for cards and read
      as lit teal rather than grey boxes. */
-  --ink: #061f29;
-  --paper: #0a2c3a;
-  --panel: #0e3f52;
-  --panel-raised: #14556d;
+  --ink: #081d37;
+  --paper: #0d294c;
+  --panel: #10325e;
+  --panel-raised: #17447e;
 
   /* ---- Accent aliases ----
      Kept under their original names so the ~200 existing usages across the
@@ -43,14 +43,14 @@
      held light enough to clear 4.5:1 on the lightest band ground (#115F6D)
      AND dark enough that --on-accent clears 4.5:1 when they are used as a
      fill. That two-sided constraint is why they sit where they do. */
-  --gold: #72dfe2;
-  --gold-bright: #8ae8ea;
-  --champagne: #7ee0e4;
-  --bronze: #2590b6;
-  --gold-vivid: #72dfe2;
-  --amber-deep: #8ae8ea;
-  --red-vivid: #72dfe2;
-  --red-deep: #2590b6;
+  --gold: #8cc4ff;
+  --gold-bright: #a8d3ff;
+  --champagne: #9ccbff;
+  --bronze: #1687ff;
+  --gold-vivid: #8cc4ff;
+  --amber-deep: #a8d3ff;
+  --red-vivid: #8cc4ff;
+  --red-deep: #1687ff;
 
   /* ---- Channel tokens ----
      The rgb triplets behind the alias colours, so translucent glows,
@@ -58,28 +58,33 @@
      repeating a literal. Changing the palette above now moves the glows
      with it; before this, ~45 hard-coded rgba() literals had to be found
      and edited by hand. */
-  --accent-rgb: 114, 223, 226;
-  --accent-deep-rgb: 37, 144, 182;
-  --ground-rgb: 6, 31, 41;
-  --shade-rgb: 3, 17, 23;
-  --band-blue-rgb: 7, 46, 62;
-  --text-rgb: 238, 246, 248;
+  --accent-rgb: 140, 196, 255;
+  --accent-deep-rgb: 22, 135, 255;
+  --ground-rgb: 8, 29, 55;
+  --shade-rgb: 4, 16, 31;
+  --band-blue-rgb: 9, 42, 84;
+  --text-rgb: 242, 245, 249;
   /* The reels-section teal as a channel, for panels that must stay dark
      enough to carry body copy (see .hero-copy-panel). */
-  --band-teal-rgb: 18, 86, 111;
+  --band-teal-rgb: 21, 69, 130;
 
   /* Palette swatches. On a dark ground these are used as *luminous* marks:
      borders, glows, small fills, gradient stops, never as large backgrounds
      carrying text. */
-  --pastel-lavender: #7fd4e0;
-  --pastel-sky: #58c4dd;
-  --pastel-sand: #7fd4e0;
-  --pastel-mint: #8ae8ea;
-  --pastel-pink: #2590b6;
-  --pastel-butter: #9adfe6;
-  --pastel-peach: #8ae8ea;
-  --pastel-coral: #2590b6;
+  --pastel-lavender: #a8cbf3;
+  --pastel-sky: #8bbaee;
+  --pastel-sand: #a8cbf3;
+  --pastel-mint: #a8d3ff;
+  --pastel-pink: #1687ff;
+  --pastel-butter: #bcd7f5;
+  --pastel-peach: #a8d3ff;
+  --pastel-coral: #1687ff;
 
+  /* 2026-09-26: every ground below (ink, paper, panels, bands and their rgb
+     channels) was moved from teal to the action blue's hue (214 deg), at
+     the same relative luminance as the teal it replaced, and 25% deeper
+     for the lighter bands so the blue buttons still stand clear of them.
+     Every text contrast noted in this file still holds. */
   /* Band grounds: full-viewport section backgrounds. Deliberately DARKER
      and less saturated than the buttons, per the palette's rule that large
      areas recede and interactive elements advance. Separation between
@@ -88,12 +93,12 @@
      the whole palette is now one family.
      --band-teal and --band-cyan are the ORIGINAL reels-section values,
      untouched: they are the reference this palette was built from. */
-  --band-blue: #072e3e;
-  --band-indigo: #0a3f53;
-  --band-purple: #0d5468;
-  --band-magenta: #115f6d;
-  --band-teal: #12566f;
-  --band-cyan: #0e5570;
+  --band-blue: #092a54;
+  --band-indigo: #0c3263;
+  --band-purple: #104282;
+  --band-magenta: #164b8f;
+  --band-teal: #154582;
+  --band-cyan: #114385;
 
   /* ---- Pack card palettes ----
      Four distinct treatments for the pricing packs, all drawn from the same
@@ -109,56 +114,79 @@
      lighter and the muted body copy fell to 4.25:1. */
   --pack-1-from: #08323f;   /* vivid turquoise / cyan */
   --pack-1-to: #0d6073;
-  --pack-1-accent: #7ef0e8;
+  --pack-1-accent: #cae0f9;
   --pack-2-from: #07263f;   /* bright electric blue */
   --pack-2-to: #10507f;
-  --pack-2-accent: #7cc9ff;
+  --pack-2-accent: #93c5ff;
   --pack-3-from: #073034;   /* teal to emerald */
   --pack-3-to: #0d5f4e;
   --pack-3-accent: #6ee7b7;
   --pack-4-from: #0a3f55;   /* premium aqua to deep blue (featured pack) */
   --pack-4-to: #123a72;
-  --pack-4-accent: #9ae9ec;
+  --pack-4-accent: #c8def7;
 
   /* Card-fill tints: translucent veils over the dark ground, carrying LIGHT
      text. Alpha stays low (~14%) so the fill tints the card without ever
      competing with the copy on top; each clears 4.5:1 behind --tint-body. */
-  --tint-lavender: rgba(127, 212, 224, 0.14);
-  --tint-sky: rgba(88, 196, 221, 0.14);
-  --tint-sand: rgba(154, 223, 230, 0.12);
-  --tint-mint: rgba(138, 232, 234, 0.12);
-  --tint-pink: rgba(37, 144, 182, 0.18);
-  --tint-butter: rgba(154, 223, 230, 0.14);
-  --tint-peach: rgba(138, 232, 234, 0.14);
-  --tint-coral: rgba(37, 144, 182, 0.2);
+  --tint-lavender: rgba(168, 203, 243, 0.14);
+  --tint-sky: rgba(139, 186, 238, 0.14);
+  --tint-sand: rgba(188, 215, 245, 0.12);
+  --tint-mint: rgba(111, 180, 255, 0.12);
+  --tint-pink: rgba(22, 135, 255, 0.18);
+  --tint-butter: rgba(188, 215, 245, 0.14);
+  --tint-peach: rgba(111, 180, 255, 0.14);
+  --tint-coral: rgba(22, 135, 255, 0.2);
   /* Body copy on those translucent fills. Light, cooled to sit with the
      palette rather than reading as plain grey. */
-  --tint-body: #eef6f8;
+  --tint-body: #f2f5f9;
 
   /* Card titles: brightened companions to each swatch, so each heading
      still echoes its own card colour while clearing 4.5:1 on the fill. */
-  --deep-lavender: #a6e4ec;
-  --deep-sky: #9adfe6;
-  --deep-sand: #bfe9ef;
-  --deep-mint: #9ff0f0;
-  --deep-pink: #7fd4e0;
-  --deep-butter: #bfe9ef;
-  --deep-peach: #9ff0f0;
-  --deep-coral: #7fd4e0;
+  --deep-lavender: #c5dcf7;
+  --deep-sky: #bcd7f5;
+  --deep-sand: #d1e4f8;
+  --deep-mint: #d2e4f9;
+  --deep-pink: #a8cbf3;
+  --deep-butter: #d1e4f8;
+  --deep-peach: #d2e4f9;
+  --deep-coral: #a8cbf3;
 
   /* Text. --on-accent rides on top of the saturated brand fills (buttons,
      the brand mark). Near-black teal rather than near-black violet, so the
      label sits in the same family as the fill under it. */
-  --text: #eef6f8;
-  --muted: #c3dbe4;
-  --muted-dim: #bfd8e0;
-  --on-accent: #052029;
+  --text: #f2f5f9;
+  --muted: #ccd9e8;
+  --muted-dim: #c9d5e5;
+  --on-accent: #07112e;
+
+  /* ---- Action blue (2026-09-26) ----
+     Reference: DIGITAL BLUE #1687FF from the LEVEL UP IA charter
+     (LEVEL_UP_IA_CHARTE_GRAPHIQUE_MASTER.pdf), the blue end of the logo's
+     blue-violet gradient. Sarra's visual sample was #3978D5, the same hue a
+     little deeper. Every action fills with this blue: nav links, "Démarrer
+     un projet" and every .button, cart buttons, cart badge, the active
+     language chip and the chat button. #1687FF itself gives white text only
+     3.5:1, so fills use two deeper steps of the same hue (#1E6FDC 4.8:1,
+     #1466D1 5.5:1 under white); the charter value is kept for glows,
+     borders and focus rings. The neon-cyan card edges stay cyan. */
+  --digital-blue: #1687ff;
+  --digital-blue-rgb: 22, 135, 255;
+  --blue-fill-from: #1e6fdc;
+  --blue-fill-to: #1466d1;
+  --blue-fill-hover-from: #2474e0;   /* 4.5:1 under white */
+  --blue-fill-hover-to: #1a6bd6;     /* 5.1:1 */
+  --blue-deep: #0f5bc2;              /* 6.4:1, secondary buttons */
+  --blue-light: #8cc4ff;             /* focus rings and edges on dark */
+  --on-blue: #ffffff;
+  --button-fill: linear-gradient(150deg, var(--blue-fill-from), var(--blue-fill-to));
+  --button-fill-hover: linear-gradient(150deg, var(--blue-fill-hover-from), var(--blue-fill-hover-to));
+  --button-edge: rgba(140, 196, 255, 0.55);
 
   /* Structure. Hairlines are light-on-dark, and the shadow is pure black:
      a tinted shadow reads as haze against a dark ground. */
-  --line: rgba(238, 246, 248, 0.12);
-  --line-strong: rgba(238, 246, 248, 0.22);
-  --shadow: 0 30px 90px rgba(3, 17, 23, 0.55);
+  --line: rgba(242, 245, 249, 0.12);
+  --line-strong: rgba(242, 245, 249, 0.22);
+  --shadow: 0 30px 90px rgba(4, 16, 31, 0.55);
   --radius: 26px;
   --radius-sm: 16px;
 
