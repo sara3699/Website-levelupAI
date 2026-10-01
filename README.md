@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LevelUp AI website
 
-## Getting Started
+The Level Up AI marketing site (levelupia.agency): websites, AI photo and video
+shoots, and digital creation for small businesses. French and English, built
+with Next.js.
 
-First, run the development server:
+## Run it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open http://localhost:3000/fr (or `/en`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx tsc --noEmit
+npm test
+npm run build
+```
 
-## Learn More
+## Where things are
 
-To learn more about Next.js, take a look at the following resources:
+- Texts in both languages: `src/i18n/dictionaries/fr.json` and `en.json`
+- Colours and gradient: `src/styles/tokens.css`, section styles in `src/app/globals.css`
+- Page sections (hero, packs, services, about, FAQ, contact): `src/components/sections/`
+- Hero videos and how each one was made: `public/videos/hero/` and its README
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Settings
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`NEXT_PUBLIC_PLATFORM_URL` is where "Ajouter au panier" sends visitors. It
+defaults to https://levelupia.app, so nothing needs to be set for the normal
+setup. The chat assistant runs inside the site and needs no API key.
 
-## Deploy on Vercel
+## Deploying
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Server setup (Nginx, PM2, HTTPS) is in `docs/DEPLOIEMENT.md` (French) and
+`deploy/README.md`. On Vercel the project builds as Next.js (`vercel.json`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Older version
+
+The previous static HTML site and the client/admin portal prototype are kept on
+the `old-site-2026-08-18` branch.
