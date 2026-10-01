@@ -17,24 +17,31 @@ export const DEFAULT_CURRENCY: Currency = "TND";
 export const CURRENCY_COOKIE = "PRICE_CURRENCY";
 export const CURRENCY_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
-/** Country -> currency. Only countries we actually want to differ from the
- *  TND default are listed; everything else falls through to it. */
+/** Country -> currency (Sarra, 2026-10-01): Europe in euros, Switzerland
+ *  included, except the UK in pounds; Tunisia, Morocco and Algeria in their
+ *  own currencies; every other country in dollars (see OTHER_COUNTRIES_CURRENCY),
+ *  Canada, the Gulf and Asia included. Turkey and Russia count as "other". */
 const COUNTRY_CURRENCY: Record<string, Currency> = {
   // Eurozone
   FR: "EUR", BE: "EUR", DE: "EUR", ES: "EUR", IT: "EUR", NL: "EUR",
   PT: "EUR", IE: "EUR", AT: "EUR", LU: "EUR", FI: "EUR", GR: "EUR",
   SK: "EUR", SI: "EUR", EE: "EUR", LV: "EUR", LT: "EUR", CY: "EUR",
   MT: "EUR", HR: "EUR", MC: "EUR",
-  // Non-euro Europe / North America
+  // Rest of Europe, also shown in euros
+  CH: "EUR", PL: "EUR", SE: "EUR", DK: "EUR", CZ: "EUR",
+  HU: "EUR", RO: "EUR", BG: "EUR", NO: "EUR", IS: "EUR", LI: "EUR",
+  AD: "EUR", SM: "EUR", VA: "EUR", AL: "EUR", BA: "EUR", ME: "EUR",
+  MK: "EUR", RS: "EUR", XK: "EUR", MD: "EUR", UA: "EUR",
+  // The UK keeps pounds
   GB: "GBP",
-  CH: "CHF",
-  US: "USD",
-  CA: "CAD",
-  // Maghreb neighbours
+  // Maghreb: each in its own currency
   MA: "MAD",
   DZ: "DZD",
   TN: "TND",
 };
+
+/** Any country not listed above: the USA, Canada, the Gulf, Asia… */
+const OTHER_COUNTRIES_CURRENCY: Currency = "USD";
 
 export function isCurrency(value: string): value is Currency {
   return (CURRENCIES as readonly string[]).includes(value);
@@ -42,7 +49,7 @@ export function isCurrency(value: string): value is Currency {
 
 export function currencyFromCountry(country: string | null | undefined): Currency | null {
   if (!country) return null;
-  return COUNTRY_CURRENCY[country.toUpperCase()] ?? DEFAULT_CURRENCY;
+  return COUNTRY_CURRENCY[country.toUpperCase()] ?? OTHER_COUNTRIES_CURRENCY;
 }
 
 /**

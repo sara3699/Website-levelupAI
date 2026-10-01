@@ -35,15 +35,35 @@ function detectCountry(request: NextRequest): string | null {
     const value = request.headers.get(header);
     if (value) return value;
   }
+  // The local preview has no edge in front of it, so no location at all.
+  // DEV_COUNTRY (in .env.development.local, never deployed) stands in for
+  // it, so the preview shows the reviewer's own currency instead of TND.
+  if (process.env.NODE_ENV === "development" && process.env.DEV_COUNTRY) {
+    return process.env.DEV_COUNTRY;
+  }
   return null;
 }
 
-/** Display currency, resolved from the same geo signal as the locale.
- *  An explicit cookie wins, exactly as it does for language. */
+/** Display currency, from where the visitor is right now (Sarra,
+ *  2026-10-01: "it should follow the IP"). The cookie used to win for a
+ *  year, so the first currency a browser got stuck even after the visitor
+ *  moved, used a VPN or travelled. Nobody picks a currency on the site, so
+ *  the cookie is only a cache: used when no location is available. */
 function detectCurrency(request: NextRequest): Currency {
+  const byCountry = currencyFromCountry(detectCountry(request));
+  if (byCountry) return byCountry;
   const cookie = request.cookies.get(CURRENCY_COOKIE)?.value;
   if (cookie && isCurrency(cookie)) return cookie;
-  return currencyFromCountry(detectCountry(request)) ?? DEFAULT_CURRENCY;
+  return DEFAULT_CURRENCY;
+}
+
+/** Stores the currency in the visitor's browser for the client-side cart. */
+function applyCurrency(response: NextResponse, currency: Currency) {
+  response.cookies.set(CURRENCY_COOKIE, currency, {
+    maxAge: CURRENCY_COOKIE_MAX_AGE,
+    sameSite: "lax",
+    path: "/",
+  });
 }
 
 function detectLocale(request: NextRequest): Locale {
@@ -72,14 +92,12 @@ export function proxy(request: NextRequest) {
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`)
   );
   if (hasLocale) {
-    const passthrough = NextResponse.next();
-    if (!request.cookies.get(CURRENCY_COOKIE)) {
-      passthrough.cookies.set(CURRENCY_COOKIE, detectCurrency(request), {
-        maxAge: CURRENCY_COOKIE_MAX_AGE,
-        sameSite: "lax",
-        path: "/",
-      });
-    }
+    // Also rewritten on the request this page renders from (Services reads
+    // it with `cookies()`), so a stale value never shows even once.
+    const currency = detectCurrency(request);
+    request.cookies.set(CURRENCY_COOKIE, currency);
+    const passthrough = NextResponse.next({ request: { headers: request.headers } });
+    applyCurrency(passthrough, currency);
     return passthrough;
   }
 
@@ -96,11 +114,7 @@ export function proxy(request: NextRequest) {
     sameSite: "lax",
     path: "/",
   });
-  response.cookies.set(CURRENCY_COOKIE, detectCurrency(request), {
-    maxAge: CURRENCY_COOKIE_MAX_AGE,
-    sameSite: "lax",
-    path: "/",
-  });
+  applyCurrency(response, detectCurrency(request));
   return response;
 }
 
