@@ -38,8 +38,3 @@ setup. The chat assistant runs inside the site and needs no API key.
 
 Server setup (Nginx, PM2, HTTPS) is in `docs/DEPLOIEMENT.md` (French) and
 `deploy/README.md`. On Vercel the project builds as Next.js (`vercel.json`).
-
-## Older version
-
-The previous static HTML site and the client/admin portal prototype are kept on
-the `old-site-2026-08-18` branch.
