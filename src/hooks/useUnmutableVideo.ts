@@ -2,10 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-/** Remembers the visitor's own choice across reloads and locale switches.
- *  Only an explicit toggle writes here — a browser-refused autoplay
- *  attempt must never be recorded as "this visitor wants silence", or one
- *  policy block would permanently opt them out. */
+/** Remembers the visitor's own choice across reloads and locale switches,
+ *  for this visit only (sessionStorage). It used to be kept forever
+ *  (localStorage): one press on "mute" then silenced every later visit, with
+ *  no sound on opening and no click-anywhere, only the button (2026-09-30,
+ *  Sarra wants sound by default on every visit). Only an explicit toggle
+ *  writes here — a browser-refused autoplay attempt must never be recorded
+ *  as "this visitor wants silence". */
 const STORAGE_KEY = "levelup:hero-sound";
 
 /** Seconds from the start still treated as "at the beginning". */
@@ -19,7 +22,14 @@ function isOnScreen(el: HTMLElement): boolean {
 
 function readPreference(): boolean {
   try {
-    return window.localStorage.getItem(STORAGE_KEY) !== "off";
+    // The old permanent copy is ignored and cleared, so visitors who once
+    // pressed mute get sound by default again.
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Nothing stored, or storage blocked.
+  }
+  try {
+    return window.sessionStorage.getItem(STORAGE_KEY) !== "off";
   } catch {
     // Private mode / blocked storage — fall back to the default (on).
     return true;
@@ -28,7 +38,7 @@ function readPreference(): boolean {
 
 function writePreference(wantsSound: boolean) {
   try {
-    window.localStorage.setItem(STORAGE_KEY, wantsSound ? "on" : "off");
+    window.sessionStorage.setItem(STORAGE_KEY, wantsSound ? "on" : "off");
   } catch {
     // Nothing to do — the preference simply does not survive this session.
   }
@@ -88,14 +98,17 @@ export function useUnmutableVideo() {
   const detachSyncRef = useRef<(() => void) | null>(null);
   /** The element's `loop` as rendered, restored when it goes silent again. */
   const baseLoopRef = useRef(true);
+  /** True once the voice has actually been heard in this page. */
+  const heardRef = useRef(false);
   /** The audible attempt in flight, shared by every caller until it settles. */
   const attemptRef = useRef<Promise<boolean> | null>(null);
   /** Frame handle for the autoplay ladder scheduled by the latest attach. */
   const startRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    wantsSoundRef.current = readPreference();
-  }, []);
+  /** The stored choice is read once, at the first ladder run. An effect ran
+   *  too late: the first sound attempt happened before it, so a visitor who
+   *  had pressed mute could still get the voice on reload. */
+  const preferenceReadRef = useRef(false);
 
   /** Plays without sound. Always safe — no browser refuses muted autoplay. */
   const playMuted = useCallback((video: HTMLVideoElement) => {
@@ -131,6 +144,7 @@ export function useUnmutableVideo() {
         try {
           await video.play();
           if (video.muted || video.paused) throw new Error("play() resolved but the clip is not audible");
+          heardRef.current = true;
           setUnmuted(true);
           return true;
         } catch {
@@ -172,9 +186,11 @@ export function useUnmutableVideo() {
       // and mute it straight back, restarting the ad on every press.
       if (event.target instanceof Element && event.target.closest("[data-sound-toggle]")) return;
       const video = videoRef.current;
-      // Once the clip has played to its end, a stray tap must not bring the
-      // voice back — replaying is the sound button's job.
-      if (!video || !wantsSoundRef.current || video.ended) {
+      // Once the voice has played to its end, a stray tap must not bring it
+      // back — replaying is the sound button's job. A clip that ended
+      // silently (the hero is 33 s and plays once) has not been heard yet,
+      // so the first click replays it from the start with the voice.
+      if (!video || !wantsSoundRef.current || (video.ended && heardRef.current)) {
         disarmRef.current?.();
         return;
       }
@@ -239,6 +255,8 @@ export function useUnmutableVideo() {
       // (the hero). The stored preference is left alone — the toggle simply
       // offers the full pass again.
       const onEnded = () => {
+        // Ended without the voice ever playing: stay armed (see above).
+        if (video.muted && !heardRef.current) return;
         disarmRef.current?.();
         if (video.muted) return;
         if (baseLoopRef.current) {
@@ -280,6 +298,10 @@ export function useUnmutableVideo() {
       startRef.current = requestAnimationFrame(() => {
         startRef.current = null;
         if (videoRef.current !== video) return;
+        if (!preferenceReadRef.current) {
+          preferenceReadRef.current = true;
+          wantsSoundRef.current = readPreference();
+        }
         if (!wantsSoundRef.current) {
           playMuted(video);
           return;
