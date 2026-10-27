@@ -38,7 +38,7 @@ describe("intentions prises en charge — français", () => {
   });
 
   it("détaille un pack nommé", () => {
-    const pack = fr.services.packs[2]!; // Pack Croissance
+    const pack = fr.services.packs[3]!; // Pack Croissance
     const r = answer("Que contient le pack Croissance ?", "fr");
     expect(r.reply).toContain(pack.title);
     expect(r.reply).toContain(pack.price);
@@ -47,7 +47,8 @@ describe("intentions prises en charge — français", () => {
 
   it("reconnaît un pack par son numéro", () => {
     const r = answer("le pack 01", "fr");
-    expect(r.reply).toContain(fr.services.packs[0]!.title);
+    // Les deux offres de site n'ont pas de numéro : « PACK 01 » est le Pack Lancement.
+    expect(r.reply).toContain(`PACK 01 — ${fr.services.packs[2]!.title}`);
   });
 
   it("liste les abonnements", () => {
@@ -101,9 +102,9 @@ describe("intentions prises en charge — anglais", () => {
 
   it("details a named pack, even with the French name", () => {
     const r = answer("tell me about the Growth pack", "en");
-    expect(r.reply).toContain(en.services.packs[2]!.title);
+    expect(r.reply).toContain(en.services.packs[3]!.title);
     const r2 = answer("pack croissance", "en");
-    expect(r2.reply).toContain(en.services.packs[2]!.title);
+    expect(r2.reply).toContain(en.services.packs[3]!.title);
   });
 
   it("explains how it works", () => {
@@ -214,21 +215,22 @@ describe("conseil par budget", () => {
     expect(detectBudget("10 visuels")).toBeNull();
   });
 
-  it("« j'ai 2000 TND » propose les packs dans le budget, et pas les autres", () => {
-    const q = "J'ai 2000 TND, que puis-je avoir ?";
+  it("« j'ai 800 TND » propose les offres dans le budget, et pas les autres", () => {
+    const q = "J'ai 800 TND, que puis-je avoir ?";
     const r = answer(q, "fr");
-    expect(r.reply).toContain("Pack Découverte");
+    expect(r.reply).toContain("Site vitrine");
     expect(r.reply).toContain("Pack Lancement");
+    expect(r.reply).not.toContain("Site marchand"); // 890
     expect(r.reply).not.toContain("Pack Croissance");
-    expect(r.reply).toContain("Starter"); // abonnement ≤ 2 000
+    expect(r.reply).toContain("Starter"); // abonnement ≤ 800
     assertNoInventedPrice(r.reply, q);
   });
 
   it("un budget trop bas : le prix d'entrée, et les abonnements accessibles", () => {
-    const r = answer("mon budget est de 500 TND", "fr");
-    expect(r.reply).toContain("890");
-    expect(r.reply).toContain("Gestion des réseaux sociaux"); // 290 TND/mois
-    expect(r.reply).not.toContain("Pack Découverte ·");
+    const r = answer("mon budget est de 200 TND", "fr");
+    expect(r.reply).toContain("299");
+    expect(r.reply).toContain("Gestion des réseaux sociaux"); // 149 TND/mois
+    expect(r.reply).not.toContain("Site vitrine ·");
   });
 });
 
@@ -237,13 +239,13 @@ describe("conseil par besoin", () => {
     const r = answer("je veux des vidéos pour mes réseaux", "fr");
     expect(r.reply).toContain("Pack Lancement");
     expect(r.reply).toContain("4 vidéos");
-    expect(r.reply).not.toContain("Pack Découverte");
+    expect(r.reply).not.toContain("Site vitrine");
     assertNoInventedPrice(r.reply);
   });
 
   it("« I need a website » → tous les packs qui en incluent un", () => {
     const r = answer("I need a website for my shop", "en");
-    expect(r.reply).toContain("Discovery Pack");
+    expect(r.reply).toContain("Showcase website");
     expect(r.reply).toContain("Pro Max Pack");
   });
 
@@ -255,13 +257,13 @@ describe("conseil par besoin", () => {
 });
 
 describe("comparaison de packs", () => {
-  it("« différence entre Découverte et Lancement »", () => {
-    const r = answer("Quelle est la différence entre Découverte et Lancement ?", "fr");
+  it("« différence entre Lancement et Croissance »", () => {
+    const r = answer("Quelle est la différence entre Lancement et Croissance ?", "fr");
     expect(r.reply).toContain(fr.chat.buddy.compareIntro);
-    expect(r.reply).toContain("Pack Découverte · À partir de 890 TND");
-    expect(r.reply).toContain("Pack Lancement · 1 890 TND");
-    expect(r.reply).toContain("En plus dans Pack Lancement");
-    expect(r.reply).toContain("4 vidéos");
+    expect(r.reply).toContain("Pack Lancement · 690 TND");
+    expect(r.reply).toContain("Pack Croissance · 990 TND");
+    expect(r.reply).toContain("En plus dans Pack Croissance");
+    expect(r.reply).toContain("6 vidéos");
   });
 
   it("« Growth or Pro Max? »", () => {
@@ -271,6 +273,6 @@ describe("comparaison de packs", () => {
   });
 
   it("un seul pack nommé reste un détail", () => {
-    expect(answer("le pack Croissance", "fr").reply).toContain("PACK 03");
+    expect(answer("le pack Croissance", "fr").reply).toContain("PACK 02");
   });
 });

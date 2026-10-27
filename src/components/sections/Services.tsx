@@ -13,17 +13,20 @@ import {
   localizePrice,
 } from "@/i18n/currency";
 
-/** Visual-only per-pack data. Each pack owns a distinct gradient pair plus
- *  the accent its number, title and cart button are drawn in, so the four
- *  cards are told apart at a glance instead of reading as one block. The
- *  values live in tokens.css (--pack-N-*) rather than here, so the palette
- *  stays in one place and both locales render from the same source. */
-const PACK_VISUALS = [
-  { accent: "var(--pack-1-accent)", from: "var(--pack-1-from)", to: "var(--pack-1-to)" },
-  { accent: "var(--pack-2-accent)", from: "var(--pack-2-from)", to: "var(--pack-2-to)" },
-  { accent: "var(--pack-3-accent)", from: "var(--pack-3-from)", to: "var(--pack-3-to)" },
-  { accent: "var(--pack-4-accent)", from: "var(--pack-4-from)", to: "var(--pack-4-to)" },
-];
+/** Visual-only per-offer data, keyed by platform code. Each card owns a
+ *  distinct gradient pair plus the accent its number, title and cart button
+ *  are drawn in, so the cards are told apart at a glance instead of reading
+ *  as one block. The values live in tokens.css (--pack-N-*) rather than
+ *  here, so the palette stays in one place and both locales render from the
+ *  same source. The site vitrine keeps the violet of the former Pack 01 and
+ *  each pack keeps its colour through the renumbering (2026-10-27). */
+const PACK_VISUALS: Record<string, { accent: string; from: string; to: string }> = {
+  SITE_VITRINE: { accent: "var(--pack-1-accent)", from: "var(--pack-1-from)", to: "var(--pack-1-to)" },
+  SITE_MARCHAND: { accent: "var(--pack-5-accent)", from: "var(--pack-5-from)", to: "var(--pack-5-to)" },
+  PACK_LANCEMENT: { accent: "var(--pack-2-accent)", from: "var(--pack-2-from)", to: "var(--pack-2-to)" },
+  PACK_CROISSANCE: { accent: "var(--pack-3-accent)", from: "var(--pack-3-from)", to: "var(--pack-3-to)" },
+  PACK_PRO_MAX: { accent: "var(--pack-4-accent)", from: "var(--pack-4-from)", to: "var(--pack-4-to)" },
+};
 
 export default async function Services({ lang }: { lang: string }) {
   const t = getDictionary(isLocale(lang) ? lang : DEFAULT_LOCALE);
@@ -34,11 +37,15 @@ export default async function Services({ lang }: { lang: string }) {
   const rawCurrency = cookieStore.get(CURRENCY_COOKIE)?.value;
   const currency = rawCurrency && isCurrency(rawCurrency) ? rawCurrency : DEFAULT_CURRENCY;
 
-  const packs = t.services.packs.map((pack, i) => ({
+  const offers = t.services.packs.map((pack) => ({
     ...pack,
-    ...PACK_VISUALS[i],
+    ...PACK_VISUALS[pack.code],
     price: localizePrice(pack.price, currency),
   }));
+  // The two website offers (no pack number) sit on their own row above the
+  // numbered packs, so neither row ends with a lone card beside a gap.
+  const rows = [offers.filter((o) => !o.number), offers.filter((o) => o.number)];
+  const lastPack = rows[1].at(-1)?.code;
 
   return (
     <section className="section section-dark section-dark-bridge" id="packs">
@@ -51,25 +58,27 @@ export default async function Services({ lang }: { lang: string }) {
           </div>
         </Reveal>
 
-        <div className="services">
-          {packs.map((service, index) => (
-            // Fly in one by one (2026-09-29, Sarra's pick "E"); the hover
-            // spotlight ("C") is in globals.css.
-            <Reveal key={service.number} delay={index * 0.14} variant="fly">
-              <ServicePackCard
-                pack={service}
-                accent={service.accent}
-                gradientFrom={service.from}
-                gradientTo={service.to}
-                featured={index === 3}
-                showDetails={t.services.showDetails}
-                hideDetails={t.services.hideDetails}
-                addToCart={t.services.addToCart}
-                addedToCart={t.services.addedToCart}
-              />
-            </Reveal>
-          ))}
-        </div>
+        {rows.map((row, rowIndex) => (
+          <div className={rowIndex === 0 ? "services services-sites" : "services services-packs"} key={rowIndex}>
+            {row.map((service, index) => (
+              // Fly in one by one (2026-09-29, Sarra's pick "E"); the hover
+              // spotlight ("C") is in globals.css.
+              <Reveal key={service.code} delay={(index + rowIndex * 2) * 0.14} variant="fly">
+                <ServicePackCard
+                  pack={service}
+                  accent={service.accent}
+                  gradientFrom={service.from}
+                  gradientTo={service.to}
+                  featured={service.code === lastPack}
+                  showDetails={t.services.showDetails}
+                  hideDetails={t.services.hideDetails}
+                  addToCart={t.services.addToCart}
+                  addedToCart={t.services.addedToCart}
+                />
+              </Reveal>
+            ))}
+          </div>
+        ))}
 
         {/* Monthly subscriptions — moved here from the Pricing section so it
             sits directly beneath the pack cards it relates to. */}

@@ -127,21 +127,33 @@
     "lead": "Pas besoin d'un budget d'agence. Choisissez le pack qui correspond à votre situation aujourd'hui — site web, visuels et vidéo, réunis à un tarif clair.",
     "packs": [
       {
-        "number": "PACK 01",
-        "title": "Pack Découverte",
-        "price": "À partir de 890 TND",
-        "copy": "La façon la plus simple de commencer. Choisissez ce dont votre entreprise a le plus besoin maintenant, et faisons-le bien.",
-        "list": [
-          "Site web (5 à 6 pages)",
-          "Site marchand sur devis"
-        ],
+        "number": "",
+        "code": "SITE_VITRINE",
+        "title": "Site vitrine",
+        "badge": "Best Deal",
+        "price": "299 TND",
+        "copy": "",
+        "list": [],
         "cta": "",
-        "summary": "Site web (5 à 6 pages)\nSite marchand sur devis"
+        "summary": "Présentez votre activité, vos services et vos coordonnées dans un site professionnel qui inspire confiance et facilite la prise de contact."
       },
       {
-        "number": "PACK 02",
+        "number": "",
+        "code": "SITE_MARCHAND",
+        "title": "Site marchand",
+        "badge": "",
+        "price": "890 TND",
+        "copy": "",
+        "list": [],
+        "cta": "",
+        "summary": "Transformez votre catalogue en une véritable expérience d’achat. Une boutique en ligne pensée pour mettre en valeur vos produits et guider vos clients jusqu’à la commande, avec une structure et un parcours d’achat adaptés à la vente en ligne."
+      },
+      {
+        "number": "PACK 01",
+        "code": "PACK_LANCEMENT",
         "title": "Pack Lancement",
-        "price": "1 890 TND",
+        "badge": "",
+        "price": "690 TND",
         "copy": "Tout ce qu'il faut pour vous lancer en confiance : un site web, une série complète de visuels et votre première vidéo.",
         "list": [
           "Site vitrine IA",
@@ -152,9 +164,11 @@
         "summary": "Site vitrine IA + shooting produit IA (10 visuels) + 4 vidéos"
       },
       {
-        "number": "PACK 03",
+        "number": "PACK 02",
+        "code": "PACK_CROISSANCE",
         "title": "Pack Croissance",
-        "price": "3 490 TND",
+        "badge": "",
+        "price": "990 TND",
         "copy": "Conçu pour les marques qui vendent déjà. Plus de visuels, plus de vidéo, et et de quoi rester visible chaque semaine.",
         "list": [
           "Site vitrine IA",
@@ -165,9 +179,11 @@
         "summary": "Site vitrine IA + shooting produit IA (20 visuels) + 6 vidéos"
       },
       {
-        "number": "PACK 04",
+        "number": "PACK 03",
+        "code": "PACK_PRO_MAX",
         "title": "Pack Pro Max",
-        "price": "4 900 TND",
+        "badge": "",
+        "price": "1 290 TND",
         "copy": "Notre offre complète. Toute une bibliothèque de contenu entière pour les marques qui veulent dominer leur marché toute l'année.",
         "list": [
           "Site vitrine IA",
@@ -192,13 +208,13 @@
       {
         "title": "Avatar et porte-parole virtuel et doublage multi-langues",
         "copy": "Voix off, doublage multilingue et porte-parole virtuel réunis dans une offre.",
-        "price": "99 TND",
+        "price": "99 TND / vidéo",
         "code": "AVATAR_VOIX",
         "tiers": []
       },
       {
         "title": "Automatisation",
-        "copy": "Une offre complète pour les prospects, puis une automatisation adaptée à vos besoins. Le parcours sur mesure est chiffré après étude des outils et du périmètre.",
+        "copy": "Une offre complète pour les prospects, puis une automatisation adaptée à vos besoins.",
         "price": "",
         "code": "",
         "tiers": [
@@ -208,19 +224,19 @@
             "audience": "",
             "copy": "Classer les demandes par besoin et urgence, les attribuer au bon responsable et créer une tâche de suivi. Après un devis, programmer une relance et l'arrêter une fois le dossier marqué répondu ou accepté.",
             "items": [],
-            "price": "250 TND",
+            "price": "190 TND",
             "code": "AUTOMATISATION_N1",
             "quote": false
           },
           {
-            "level": "",
+            "level": "Niveau 2",
             "name": "Automatisation sur mesure",
             "audience": "",
-            "copy": "Pour les parcours complexes ou propres à votre activité. Étapes, outils et règles sont définis selon vos besoins, puis chiffrés après étude du périmètre.",
+            "copy": "Pour les parcours complexes ou propres à votre activité. Étapes, outils et règles sont définis selon vos besoins.",
             "items": [],
-            "price": "Sur devis",
-            "code": "",
-            "quote": true
+            "price": "350 TND",
+            "code": "AUTOMATISATION_N2",
+            "quote": false
           }
         ]
       },
@@ -233,7 +249,7 @@
           {
             "level": "",
             "name": "SEO Starter",
-            "audience": "Petites entreprises",
+            "audience": "",
             "copy": "",
             "items": [
               "Audit initial",
@@ -241,14 +257,14 @@
               "Recommandations SEO",
               "Rapport mensuel"
             ],
-            "price": "99 TND",
+            "price": "99 TND / mois",
             "code": "SEO_STARTER",
             "quote": false
           },
           {
             "level": "",
             "name": "SEO Business",
-            "audience": "PME",
+            "audience": "",
             "copy": "",
             "items": [
               "Suivi de 30 mots-clés",
@@ -256,7 +272,7 @@
               "Analyse concurrentielle",
               "Rapport détaillé"
             ],
-            "price": "290 TND",
+            "price": "149 TND / mois",
             "code": "SEO_BUSINESS",
             "quote": false
           }
@@ -265,7 +281,7 @@
       {
         "title": "Identité visuelle express",
         "copy": "Logo et charte graphique générés rapidement pour améliorer votre image et être à la pointe de la technologie.",
-        "price": "149 TND",
+        "price": "140 TND",
         "code": "IDENTITE_EXPRESS",
         "tiers": []
       }
@@ -285,17 +301,17 @@
       {
         "name": "Starter",
         "content": "12 visuels + 4 vidéos par mois.",
-        "price": "1 190 TND/mois"
+        "price": "490 TND/mois"
       },
       {
         "name": "Pro",
         "content": "20 visuels + 6 vidéos par mois.",
-        "price": "1 490 TND/mois"
+        "price": "690 TND/mois"
       },
       {
         "name": "Gestion des réseaux sociaux",
         "content": "Gestion de feed (Instagram, Facebook, LinkedIn).",
-        "price": "290 TND/mois"
+        "price": "149 TND/mois"
       }
     ],
     "cta": "Parlons de votre pack",
@@ -560,7 +576,7 @@
       "budgetIntro": "Avec un budget de {budget} TND, voici ce que vous pouvez choisir :",
       "budgetSubs": "Et en formule mensuelle :",
       "budgetNone": "Aucun pack n'entre dans un budget de {budget} TND — le premier commence à {min} TND. Deux pistes :",
-      "budgetQuote": "Le site marchand se fait sur devis : écrivez-nous à contact@levelupia.agency.",
+      "budgetQuote": "Pour un besoin précis, écrivez-nous à contact@levelupia.agency.",
       "needIntro": "Pour « {need} », voici ce qui correspond :",
       "needNone": "Je ne trouve pas d'offre qui mentionne « {need} ». Écrivez-nous à contact@levelupia.agency, nous vous répondrons précisément.",
       "compareIntro": "Comparaison :",

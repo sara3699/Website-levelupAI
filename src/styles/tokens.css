@@ -119,6 +119,9 @@
   --pack-4-from: #13205a;   /* aqua (featured pack) */
   --pack-4-to: #1d4f86;
   --pack-4-accent: #b8f1f5;
+  --pack-5-from: #241048;   /* orchid (site marchand, 2026-10-27) */
+  --pack-5-to: #57207f;
+  --pack-5-accent: #e0b3ff;
 
   /* Card-fill tints: translucent veils over the dark ground, carrying light
      text. Alpha stays low so the fill tints the card without competing

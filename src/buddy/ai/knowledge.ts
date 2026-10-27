@@ -38,7 +38,7 @@ export function siteChunks(locale: Locale): Chunk[] {
     `${d.hero.proof[0] ?? ""}. ${fr ? "Exemples de secteurs" : "Sample sectors"} : ${Object.values(d.carousel.labels).join(", ")}. ` +
     `${fr ? "Exemples de publicités IA réalisées" : "Sample AI commercials produced"} : ${ads.join(", ")}. ${d.carousel.lead}`);
   for (const [i, p] of d.services.packs.entries()) {
-    add(`pack-${i}`, p.title, `${p.title} (${p.number}) : ${p.price}. ${p.copy} ${fr ? "Comprend" : "Includes"} : ${p.list.join(" ; ")}. ${p.summary}`);
+    add(`pack-${i}`, p.title, `${p.title}${p.number ? ` (${p.number})` : ""} : ${p.price}. ${p.copy} ${p.list.length ? `${fr ? "Comprend" : "Includes"} : ${p.list.join(" ; ")}.` : ""} ${p.summary}`);
   }
   add("subscriptions", d.pricing.subscriptionsTitle,
     d.pricing.subscriptions.map((s) => `${s.name} : ${s.content} ${s.price}`).join(" | "));

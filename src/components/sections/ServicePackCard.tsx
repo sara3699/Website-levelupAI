@@ -3,14 +3,18 @@
 import { useState, type CSSProperties } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import GlassCard from "@/components/ui/GlassCard";
-import { PACK_CODES } from "@/lib/checkout";
 import { addToCart, openCart } from "@/lib/cart";
 import { useCart } from "@/hooks/useCart";
 import CartButtonIcon from "./CartButtonIcon";
 
 type Pack = {
+  /** Empty for the two website offers, which carry no pack number. */
   number: string;
+  /** Platform code the cart sends (SITE_VITRINE, PACK_LANCEMENT…). */
+  code: string;
   title: string;
+  /** Small label under the title ("Best Deal"); empty for none. */
+  badge: string;
   price: string;
   summary: string;
   copy: string;
@@ -60,7 +64,10 @@ export default function ServicePackCard({
 }: Props) {
   const [open, setOpen] = useState(false);
   const [announce, setAnnounce] = useState("");
-  const code = PACK_CODES[pack.number];
+  const code = pack.code;
+  // The website offers say everything in their summary, so they have no
+  // "See details" toggle at all rather than one that opens nothing.
+  const hasDetails = Boolean(pack.copy || pack.list.length > 0 || pack.cta);
   const inCart = useCart().some((item) => item.code === code);
 
   // Adds the pack to the site's cart (the nav badge counts it) and stays on
@@ -91,15 +98,25 @@ export default function ServicePackCard({
           <span key={i}>✦</span>
         ))}
       </span>
-      <div className="service-number">{pack.number}</div>
-      <h3>{pack.title}</h3>
+      {pack.number && <div className="service-number">{pack.number}</div>}
+      {pack.badge ? (
+        // Title and badge share one row: the badge gets its own slot on the
+        // right (wrapping under the title on narrow cards) instead of being
+        // positioned over the card, so it can never cover the title or price.
+        <div className="service-head">
+          <h3>{pack.title}</h3>
+          <span className="service-badge">{pack.badge}</span>
+        </div>
+      ) : (
+        <h3>{pack.title}</h3>
+      )}
       <div className="service-price">{pack.price}</div>
 
       {/* Always visible: the compact contents line. */}
       <p className="service-summary">{pack.summary}</p>
 
       <AnimatePresence initial={false}>
-        {open && (
+        {open && hasDetails && (
           <motion.div
             className="service-details"
             key="details"
@@ -137,29 +154,31 @@ export default function ServicePackCard({
           across all four cards however uneven their copy is, and can never
           be pushed out of the card or overlapped by the list above it. */}
       <div className="service-actions">
-        <button
-          type="button"
-          className="service-toggle"
-          aria-expanded={open}
-          onClick={() => setOpen((value) => !value)}
-        >
-          {open ? hideDetails : showDetails}
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={2.2}
-            aria-hidden="true"
-            style={{ transform: open ? "rotate(180deg)" : "none" }}
+        {hasDetails && (
+          <button
+            type="button"
+            className="service-toggle"
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
           >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </button>
+            {open ? hideDetails : showDetails}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.2}
+              aria-hidden="true"
+              style={{ transform: open ? "rotate(180deg)" : "none" }}
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+        )}
 
         <button
           type="button"
           className="service-cart"
-          data-pack={pack.number}
+          data-pack={code}
           data-in-cart={inCart || undefined}
           onClick={addToCartClick}
         >

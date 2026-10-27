@@ -2302,3 +2302,69 @@ footer .brand-logo { height: 40px; }
 /* Cartes simples des services : autant de colonnes que de cartes (max 3), pleine largeur. */
 .pricing-services-simple { grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); }
 @media (max-width: 640px) { .pricing-services-simple { grid-template-columns: 1fr; } }
+
+/* Offres et tarifs (revue du 27 octobre 2026) : les deux offres de site sur
+   leur propre rangée, puis les trois packs numérotés, pour qu'aucune rangée
+   ne finisse sur une carte seule. Placé en fin de fichier pour passer après
+   les règles responsive de .services (même spécificité). */
+.services-sites { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.services-packs { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 16px; }
+@media (max-width: 740px) {
+  .services-sites, .services-packs { grid-template-columns: 1fr; }
+}
+/* Badge « Best Deal » du site vitrine (2026-10-27, deuxième passe) : accent
+   promotionnel champagne doré, à droite du titre dans son propre espace
+   (.service-head), jamais posé par-dessus le titre, le prix ou la bordure. */
+.service-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 28px; /* 28px laisse la place à l'étoile ✦ du titre (h3::after) */
+  margin-bottom: 8px;
+}
+.service-head h3 { margin-bottom: 0; }
+.service-badge {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  margin-left: auto; /* reste à droite, même passé sous un titre long */
+  margin-block: -3px; /* n'agrandit pas la ligne du titre : prix alignés avec la carte voisine */
+  overflow: hidden;
+  padding: 8px 15px 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 244, 214, 0.95);
+  background: linear-gradient(140deg, #fff6dc 0%, #f6dc9c 42%, #e6bd6a 100%);
+  color: #2b0b4d;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(140, 92, 24, 0.35),
+    0 6px 16px rgba(8, 4, 30, 0.45),
+    0 0 20px rgba(246, 220, 156, 0.35);
+}
+/* Reflet occasionnel : un passage lumineux toutes les 7 s, rien entre deux. */
+.service-badge::after {
+  content: "";
+  position: absolute;
+  inset: -2px auto -2px 0;
+  width: 45%;
+  background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.75) 50%, transparent 100%);
+  transform: translateX(-160%) skewX(-18deg);
+  animation: badge-shine 7s ease-in-out 1.2s infinite;
+  pointer-events: none;
+}
+@keyframes badge-shine {
+  0% { transform: translateX(-160%) skewX(-18deg); }
+  14%, 100% { transform: translateX(320%) skewX(-18deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .service-badge::after { animation: none; display: none; }
+}
+/* L'étoile décorative du coin haut droit occupait la place du badge. */
+.service:has(.service-badge) .service-sparkles span:nth-child(1) { display: none; }

@@ -25,14 +25,6 @@ export const PLATFORM_URL = (
   // un port interne (…:3000) ne serait pas joignable depuis l'extérieur
   .replace(/^(https:\/\/[^/:]+):\d+$/, "$1");
 
-/** Numéro de pack affiché → code attendu par la plateforme. */
-export const PACK_CODES: Record<string, string> = {
-  "PACK 01": "PACK_DECOUVERTE",
-  "PACK 02": "PACK_LANCEMENT",
-  "PACK 03": "PACK_CROISSANCE",
-  "PACK 04": "PACK_PRO_MAX",
-};
-
 /**
  * Nom d'abonnement → code plateforme. La comparaison est faite sans accents ni
  * casse pour rester valable en français comme en anglais.
@@ -62,14 +54,15 @@ export function startCheckout(packCode: string): boolean {
 export function offerForCode(
   code: string,
   dict: {
-    services: { packs: Array<{ number: string; title: string; price: string }> };
+    services: { packs: Array<{ code: string; title: string; price: string }> };
     pricing: {
       subscriptions: Array<{ name: string; price: string }>;
       aiServices: Array<{ title: string; price: string; code: string; tiers: Array<{ name: string; price: string; code: string }> }>;
     };
   }
 ): { title: string; price: string } | null {
-  const pack = dict.services.packs.find((p) => PACK_CODES[p.number] === code);
+  // Sites et packs portent leur code plateforme dans le dictionnaire (revue du 27 octobre 2026).
+  const pack = dict.services.packs.find((p) => p.code === code);
   if (pack) return { title: pack.title, price: pack.price };
   const sub = dict.pricing.subscriptions.find((s) => subscriptionCode(s.name) === code);
   if (sub) return { title: sub.name, price: sub.price };

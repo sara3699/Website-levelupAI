@@ -99,6 +99,11 @@ export function answer(rawMessage: string, locale: Locale): BuddyReply {
   return { ...render(result.id, k, t, suggestions), open: explain && !result.id.startsWith("pack:") };
 }
 
+/** « PACK 01 — Pack Lancement · 690 TND » ; les offres de site n'ont pas de numéro (revue du 27 octobre 2026). */
+function packLabel(p: PackRecord): string {
+  return `${[p.number, p.title].filter(Boolean).join(" — ")} · ${p.price}`;
+}
+
 /* ------------------------------------------------------------ conseil */
 
 function renderBudget(budget: number, k: Knowledge, t: BuddyDict): BuddyReply {
@@ -119,7 +124,7 @@ function renderBudget(budget: number, k: Knowledge, t: BuddyDict): BuddyReply {
   return {
     reply: paragraphs(
       fill(t.budgetIntro, { budget: budget.toLocaleString("fr-FR") }),
-      bullets(packs.map(({ pack }) => `${pack.number} — ${pack.title} · ${pack.price}\n  ${pack.summary}`)),
+      bullets(packs.map(({ pack }) => `${packLabel(pack)}\n  ${pack.summary}`)),
       subs,
       t.budgetQuote,
     ),
@@ -162,9 +167,9 @@ function render(id: VitrineIntentId, k: Knowledge, t: BuddyDict, suggestions: st
     if (!pack) return { reply: t.noEvidence, suggestions };
     return {
       reply: paragraphs(
-        `${pack.number} — ${pack.title} · ${pack.price}`,
+        packLabel(pack),
         pack.copy,
-        `${t.packIncludes}\n${bullets(pack.includes)}`,
+        pack.includes.length ? `${t.packIncludes}\n${bullets(pack.includes)}` : pack.summary,
         t.orderHelp,
       ),
     };
@@ -184,7 +189,7 @@ function render(id: VitrineIntentId, k: Knowledge, t: BuddyDict, suggestions: st
       return {
         reply: paragraphs(
           t.packsIntro,
-          bullets(k.packs.map((p) => `${p.number} — ${p.title} · ${p.price}\n  ${p.summary}`)),
+          bullets(k.packs.map((p) => `${packLabel(p)}\n  ${p.summary}`)),
           t.packsOutro,
         ),
         suggestions: k.packs.map((p) => p.title),

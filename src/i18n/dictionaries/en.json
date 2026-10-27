@@ -127,21 +127,33 @@
     "lead": "You do not need a giant agency budget. Pick the pack that matches where your business is today — website, visuals, and video, bundled at one clear price.",
     "packs": [
       {
-        "number": "PACK 01",
-        "title": "Discovery Pack",
-        "price": "From 890 TND",
-        "copy": "The simplest way to get started. Pick what your business needs most right now, and let's do it properly.",
-        "list": [
-          "Website (5 to 6 pages)",
-          "E-commerce website on quote"
-        ],
+        "number": "",
+        "code": "SITE_VITRINE",
+        "title": "Showcase website",
+        "badge": "Best Deal",
+        "price": "299 TND",
+        "copy": "",
+        "list": [],
         "cta": "",
-        "summary": "Website (5 to 6 pages)\nE-commerce website on quote"
+        "summary": "Present your business, your services and your contact details on a professional website that builds trust and makes it easy to get in touch."
       },
       {
-        "number": "PACK 02",
+        "number": "",
+        "code": "SITE_MARCHAND",
+        "title": "E-commerce website",
+        "badge": "",
+        "price": "890 TND",
+        "copy": "",
+        "list": [],
+        "cta": "",
+        "summary": "Turn your catalogue into a real shopping experience. An online store designed to showcase your products and guide your customers all the way to the order, with a structure and a buying journey built for selling online."
+      },
+      {
+        "number": "PACK 01",
+        "code": "PACK_LANCEMENT",
         "title": "Launch Pack",
-        "price": "1,890 TND",
+        "badge": "",
+        "price": "690 TND",
         "copy": "Everything you need to go live with confidence: a website, a full set of visuals, and your first video.",
         "list": [
           "AI showcase website",
@@ -152,9 +164,11 @@
         "summary": "AI showcase website + AI product shoot (10 visuals) + 4 videos"
       },
       {
-        "number": "PACK 03",
+        "number": "PACK 02",
+        "code": "PACK_CROISSANCE",
         "title": "Growth Pack",
-        "price": "3,490 TND",
+        "badge": "",
+        "price": "990 TND",
         "copy": "Built for brands already selling. More visuals, more video, and enough content to stay visible every week.",
         "list": [
           "AI showcase website",
@@ -165,9 +179,11 @@
         "summary": "AI showcase website + AI product shoot (20 visuals) + 6 videos"
       },
       {
-        "number": "PACK 04",
+        "number": "PACK 03",
+        "code": "PACK_PRO_MAX",
         "title": "Pro Max Pack",
-        "price": "4,900 TND",
+        "badge": "",
+        "price": "1,290 TND",
         "copy": "Our complete package. A full content library for brands that want to dominate their market all year.",
         "list": [
           "AI showcase website",
@@ -192,13 +208,13 @@
       {
         "title": "Avatar, virtual spokesperson and multilingual dubbing",
         "copy": "Voiceover, multilingual dubbing and a virtual spokesperson, bundled in one offer.",
-        "price": "99 TND",
+        "price": "99 TND / video",
         "code": "AVATAR_VOIX",
         "tiers": []
       },
       {
         "title": "Automation",
-        "copy": "A complete offer for your leads, then an automation tailored to your needs. Custom journeys are quoted after reviewing your tools and scope.",
+        "copy": "A complete offer for your leads, then an automation tailored to your needs.",
         "price": "",
         "code": "",
         "tiers": [
@@ -208,19 +224,19 @@
             "audience": "",
             "copy": "Sort requests by need and urgency, assign them to the right person and create a follow-up task. After a quote, schedule a reminder and stop it once the file is marked answered or accepted.",
             "items": [],
-            "price": "250 TND",
+            "price": "190 TND",
             "code": "AUTOMATISATION_N1",
             "quote": false
           },
           {
-            "level": "",
+            "level": "Level 2",
             "name": "Custom automation",
             "audience": "",
-            "copy": "For complex journeys or ones specific to your business. Steps, tools and rules are defined around your needs, then quoted after a scope review.",
+            "copy": "For complex journeys or ones specific to your business. Steps, tools and rules are defined around your needs.",
             "items": [],
-            "price": "On quote",
-            "code": "",
-            "quote": true
+            "price": "350 TND",
+            "code": "AUTOMATISATION_N2",
+            "quote": false
           }
         ]
       },
@@ -233,7 +249,7 @@
           {
             "level": "",
             "name": "SEO Starter",
-            "audience": "Small businesses",
+            "audience": "",
             "copy": "",
             "items": [
               "Initial audit",
@@ -241,14 +257,14 @@
               "SEO recommendations",
               "Monthly report"
             ],
-            "price": "99 TND",
+            "price": "99 TND / month",
             "code": "SEO_STARTER",
             "quote": false
           },
           {
             "level": "",
             "name": "SEO Business",
-            "audience": "SMEs",
+            "audience": "",
             "copy": "",
             "items": [
               "30 keywords tracked",
@@ -256,7 +272,7 @@
               "Competitor analysis",
               "Detailed report"
             ],
-            "price": "290 TND",
+            "price": "149 TND / month",
             "code": "SEO_BUSINESS",
             "quote": false
           }
@@ -265,7 +281,7 @@
       {
         "title": "Express visual identity",
         "copy": "Logo and brand guidelines generated quickly to improve your image and keep up with the latest technology.",
-        "price": "149 TND",
+        "price": "140 TND",
         "code": "IDENTITE_EXPRESS",
         "tiers": []
       }
@@ -285,17 +301,17 @@
       {
         "name": "Starter",
         "content": "12 visuals + 4 videos per month.",
-        "price": "1,190 TND/mo"
+        "price": "490 TND/mo"
       },
       {
         "name": "Pro",
         "content": "20 visuals + 6 videos per month.",
-        "price": "1,490 TND/mo"
+        "price": "690 TND/mo"
       },
       {
         "name": "Social media management",
         "content": "Feed management (Instagram, Facebook, LinkedIn).",
-        "price": "290 TND/mo"
+        "price": "149 TND/mo"
       }
     ],
     "cta": "Talk to us about a pack",
@@ -560,7 +576,7 @@
       "budgetIntro": "With a budget of {budget} TND, here is what you can choose:",
       "budgetSubs": "And as a monthly plan:",
       "budgetNone": "No pack fits a budget of {budget} TND — the first one starts at {min} TND. Two options:",
-      "budgetQuote": "E-commerce websites are quoted on request: write to contact@levelupia.agency.",
+      "budgetQuote": "For a specific need, write to contact@levelupia.agency.",
       "needIntro": "For “{need}”, here is what matches:",
       "needNone": "I can't find an offer that mentions “{need}”. Write to contact@levelupia.agency and we'll answer precisely.",
       "compareIntro": "Comparison:",
